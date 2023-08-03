@@ -10,7 +10,7 @@ import { useForgetPasswordRequestMutation, useNewPasswordRequestMutation, useSig
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { useChangePasswordPostRequestMutation } from "../../store/Slices/ChangePassword";
 import { useAuthSignUpMutation } from "../../store/Slices/Products";
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, firestore } from "../../utils/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -48,25 +48,36 @@ const Login = () => {
         role:"user",
         url: window?.location?.origin + "/user-verification"
       };
-      createUserWithEmailAndPassword(auth, values?.email, values.password).then(response => {
-        console.log("response", response);
+      createUserWithEmailAndPassword(auth, values?.email, values.password)
+      .then(response => {
+        // Save user data to Firestore
         setDoc(doc(firestore, "users", response.user.uid), {
           email: values.email,
           username: values.username,
-          role:payload.role,
-        }).then(result =>   navigate("/login")
-        )
+          role: payload.role,
+        }).then(() => {
+          // Check if the user is not null before sending the verification email
+          if (auth.currentUser !== null) {
+            // Send email verification to the user
+            sendEmailVerification(auth.currentUser)
+              .then(() => {
+                console.log("Verification email sent!");
+                navigate("/login");
+              })
+              .catch(error => {
+                console.error("Error sending verification email:", error);
+                // Handle the error or notify the user appropriately
+              });
+          } else {
+            console.error("Current user is null. Cannot send verification email.");
+            // Handle this scenario appropriately (e.g., show an error message)
+          }
+        });
       })
-      // const { error, data }: any = await authSignUp({
-      //   payload:{...payload ,role:"user"},
-
-      // });
-
-      // if (!error) {
-      //   navigate("/login");
-      // } else {
-      //   setChangePasswordErrorMessage(error?.data?.message);
-      // }
+      .catch(error => {
+        console.error("Error creating user:", error);
+      });
+     
     } else {
       setChangePasswordErrorMessage(
         "New Password and Confirm New Password Should Be Equal"
