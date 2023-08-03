@@ -26,7 +26,7 @@ export const navItems = [
     toshowforrole: [
        'user',"newUser"
     ],
-    title: "Shoes",
+    title: "Grounds",
     path: "/dashboard",
     lightIcon: shoes,
     alt: "dashboard",
@@ -35,7 +35,7 @@ export const navItems = [
         toshowforrole: [
           'user',"newUser"
         ],
-        title: "Oxford and Derby",
+        title: "Cricket",
         path: "/dashboard",
         shoeType:"OxfordandDerby"
       },
@@ -43,7 +43,7 @@ export const navItems = [
         toshowforrole: [
           'user',"newUser"
         ],
-        title: "Loafers",
+        title: "Football",
         path: "/dashboard",
         shoeType:"Loafers"
       },
@@ -51,7 +51,7 @@ export const navItems = [
         toshowforrole: [
           'user',"newUser"
         ],
-        title: "Monks",
+        title: "Hockey",
         path: "/dashboard",
         shoeType:"Monks"
       },
@@ -59,7 +59,7 @@ export const navItems = [
         toshowforrole: [
           'user',"newUser"
         ],
-        title: "Boots",
+        title: "Badminton",
         path: "/dashboard",
         shoeType:"Boots"
       },
@@ -69,7 +69,7 @@ export const navItems = [
     toshowforrole: [
        'user',"newUser"
     ],
-    title: "Jackets",
+    title: "Parks",
     path: "/jacket-details",
     lightIcon: jacket,
     alt: "dashboard"

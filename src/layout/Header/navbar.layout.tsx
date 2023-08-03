@@ -166,7 +166,7 @@ const NavBar = () => {
    
           <div style={{display:"flex" ,justifyContent:"space-between"}}>
       <p style={{color:"white"}} className="solace-leather-online">SOLACE LEATHER ONLINE PLATFORM</p>
-      <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"10px" ,marginBottom:"0px"}}>Solace</h1>
+      <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"10px" ,marginBottom:"0px"}}>Play Book</h1>
       <div className="short_hands">
         <img src={SearchImg}  onClick={handleOpenGlobalSearchDrawer}  style={{cursor:"pointer"}}/>
           <Switch

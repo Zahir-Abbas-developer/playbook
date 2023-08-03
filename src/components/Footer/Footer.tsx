@@ -16,15 +16,15 @@ const FooterDetails=()=>{
     <section >
       <Row className="footer-main">
        <Col xs={24} md={8}>
-        <div style={{textAlign:"center",padding:"40px"}}>
-          <img src={FreeShipping}></img>
-          <p className="widget-text">Shipping Nationwide</p>
+       <div style={{textAlign:"center",padding:"40px"}}>
+          <img src={SecureCheckout}></img>
+          <p className="widget-text">Secure Checkout</p>
         </div>
        </Col>
        <Col  xs={24} md={8}>
-        <div style={{textAlign:"center",padding:"40px"}}>
-          <img src={FreeRepairs}></img>
-          <p className="widget-text" >Hand-crafted Shoes</p>
+       <div style={{textAlign:"center",padding:"40px"}}>
+          <img src={SecureCheckout}></img>
+          <p className="widget-text">Secure Checkout</p>
         </div>
        </Col>
        <Col  xs={24} md={8}>
@@ -38,11 +38,11 @@ const FooterDetails=()=>{
         <Col xs={24} md={8}>
        <div style={{textAlign:"center"}}>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}} >Address </p>
-         <p style={{color:"#fff" ,marginTop:"0px"}}>Saddar ,Rawalpindi </p>
+         <p style={{color:"#fff" ,marginTop:"0px"}}>Pakistan ,Rawalpindi </p>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}}>Phone</p>
-         <p style={{color:"#fff" ,marginTop:"0px"}}>+923075209625</p>
+         <p style={{color:"#fff" ,marginTop:"0px"}}>+923495269625</p>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}}>Email </p>
-         <p style={{color:"#fff" ,marginTop:"0px"}}>SolaceLeather@gmail.com</p>
+         <p style={{color:"#fff" ,marginTop:"0px"}}>playbook@gmail.com</p>
        </div>
         </Col>
         <Col xs={24} md={8}>
@@ -50,10 +50,8 @@ const FooterDetails=()=>{
       <p>  <Link  to="/contact-details" style={{color:"#fff"}}>Contact</Link></p>
           <p> <Link  to="" style={{color:"#fff"}}>Privacy Policy</Link></p>
           <p> <Link  to="/login" style={{color:"#fff"}}>My Account</Link></p>
-          <p>
-          <Link  to="" style={{color:"#fff"}}>Delivery & Returns</Link>
-          </p>
-       
+         
+  
     
 <p>         <Link  to="" style={{color:"#fff"}}>Terms & Conditions</Link></p>
       </div>
