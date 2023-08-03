@@ -77,20 +77,18 @@ const ContactDetails = () => {
             <WhatsAppOutlined style={{color:"white",fontSize:"50px"}} />
             <p style={{color:"white",fontWeight:"600",fontSize:"20px"}}>WHATSAPP</p>
             <p style={{color:"white",fontWeight:"400",fontSize:"15px",margin:"0px"}}>09AM-12PM</p>
-            <p style={{color:"white",fontWeight:"400",fontSize:"15px",marginTop:"0px"}}>+92307-520-9625</p>
+            <p style={{color:"white",fontWeight:"400",fontSize:"15px",marginTop:"0px"}}>+92300-526-9625</p>
             </div>
             <div style={{textAlign:"center"}}>
                     
                     <MailOutlined  style={{color:"white",fontSize:"50px"}} />
                     <p style={{color:"white",fontWeight:"600",fontSize:"20px"}}>CONTACT</p>
-                    <p style={{color:"white",fontWeight:"400",fontSize:"15px",margin:"0px"}}>rajaumairabbas@gmail.com</p>
+                    <p style={{color:"white",fontWeight:"400",fontSize:"15px",margin:"0px"}}>playbook@gmail.com</p>
                     <p style={{color:"white",fontWeight:"400",fontSize:"15px",marginTop:"0px"}}>+92307-520-9625</p>
                     </div>
                     <div style={{textAlign:"center"}}>
                     
-                    <WhatsAppOutlined style={{color:"white",fontSize:"50px"}} />
-                    <p style={{color:"white",fontWeight:"600",fontSize:"20px"}}>RETURNS</p>
-                    <p style={{color:"white",fontWeight:"400",fontSize:"15px",margin:"0px"}}>Office No. 1, Samama Arcade, Spring North Commercial, Bahria Town, Rawalpindi, Pakistan</p>
+                  
                     </div>
           </Col>
             <Col xs={24} lg={12} >

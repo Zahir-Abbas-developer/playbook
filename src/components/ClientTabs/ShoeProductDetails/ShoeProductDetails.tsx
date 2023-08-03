@@ -47,8 +47,7 @@ const ShoeProductDetails = () => {
     return (
         <>
             {(productsData?.length > 0 || productsData?.length == 0) ? <div>
-                <p style={{ textAlign: "center", fontSize: "18px", marginBottom: "0px" }}>BEST SELLERS</p>
-                <p style={{ textAlign: "center", fontSize: "20px", marginTop: "5px" }}>JACKETS</p>
+                <p style={{ textAlign: "center", fontSize: "20px", marginTop: "5px" }}>PARKS</p>
                 <Row gutter={[16, 16]} style={{ padding: "40px" }}>
 
 

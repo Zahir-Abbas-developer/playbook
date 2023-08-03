@@ -38,7 +38,7 @@ const FooterDetails=()=>{
         <Col xs={24} md={8}>
        <div style={{textAlign:"center"}}>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}} >Address </p>
-         <p style={{color:"#fff" ,marginTop:"0px"}}>Pakistan ,Rawalpindi </p>
+         <p style={{color:"#fff" ,marginTop:"0px"}}>Rawalpindi ,Pakistan </p>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}}>Phone</p>
          <p style={{color:"#fff" ,marginTop:"0px"}}>+923495269625</p>
          <p style={{color:"#fff" ,fontWeight:"700",marginBottom:"0px"}}>Email </p>
