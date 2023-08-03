@@ -54,7 +54,7 @@ const Login = () => {
           email: values.email,
           username: values.username,
           role:payload.role,
-        }).then(result => console.log("result", result)
+        }).then(result =>   navigate("/login")
         )
       })
       // const { error, data }: any = await authSignUp({
