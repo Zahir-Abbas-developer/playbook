@@ -1,7 +1,7 @@
 
 // Dark Mode Icons
-import shoes from "../../assets/icons/sidebar/sport-shoe.png";
-import jacket from "../../assets/icons/sidebar/jacket.png";
+import shoes from "../../assets/icons/ground.png";
+import jacket from "../../assets/icons/playground.png";
 import contact from "../../assets/icons/contact-us.png";
 import color from "../../assets/icons/sidebar/color-picker.png";
 import order from "../../assets/icons/sidebar/order.png";
