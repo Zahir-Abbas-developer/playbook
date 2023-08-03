@@ -211,7 +211,7 @@ const Login = () => {
                 </span>
                 <span > to</span>
               </h1>
-              <h3 className="heading-3" >Solace Leather</h3>
+              <h3 className="heading-3" >Play Book</h3>
             </div>
             {/* <div>
               <p className="p-tag-description-1">If you don't have an account register</p>
@@ -234,11 +234,7 @@ const Login = () => {
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
             <div className="img-div" style={{ textAlign: "center" }}>
-              <img
-                src={CareLibraryIcon}
-                alt="care-library-icon"
-                style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-              />
+             
             </div>
             <div>
               <h2 className="Sign-in-heading">Sign In</h2>
@@ -292,7 +288,7 @@ const Login = () => {
                   </Button>
                   <div style={{ textAlign: "end", margin: "10px 0px 20px 0px" }}>
                     <Link to="/sign-up" className="forgot-password-style">
-                      New to Solace Leather? <span style={{ textDecoration: "revert" }}>Sign Up</span>
+                      New to Play Book? <span style={{ textDecoration: "revert" }}>Sign Up</span>
                     </Link>
                   </div>
                 </Form.Item>
@@ -310,13 +306,7 @@ const Login = () => {
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
             <div className="img-div" style={{ textAlign: "center" }}>
-              <img
-                src={CareLibraryIcon}
-                alt="care-library-icon"
-                width={90}
-                height={90}
-                style={{ borderRadius: "50%" }}
-              />
+            
             </div>
             <div>
               <h2 className="Sign-in-heading">Change Passwod</h2>
@@ -398,13 +388,7 @@ const Login = () => {
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
             <div className="img-div" style={{ textAlign: "center" }}>
-              <img
-                src={CareLibraryIcon}
-                alt="care-library-icon"
-                width={100}
-                height={100}
-                style={{ borderRadius: "50%" }}
-              />
+              
             </div>
             <div>
               <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>Sign Up</h2>
@@ -499,13 +483,7 @@ const Login = () => {
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
             <div className="img-div" style={{ textAlign: "center" }}>
-              <img
-                src={CareLibraryIcon}
-                alt="care-library-icon"
-                width={100}
-                height={100}
-                style={{ borderRadius: "50%" }}
-              />
+             
             </div>
             <div>
               <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>Forget Password</h2>
@@ -549,13 +527,7 @@ const Login = () => {
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
             <div className="img-div" style={{ textAlign: "center" }}>
-              <img
-                src={CareLibraryIcon}
-                alt="care-library-icon"
-                width={100}
-                height={100}
-                style={{ borderRadius: "50%" }}
-              />
+             
             </div>
             <div>
               <h2 className="Sign-in-heading">New Password</h2>

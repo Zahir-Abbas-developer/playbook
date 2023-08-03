@@ -74,7 +74,7 @@ const FooterDetails=()=>{
         </Col>
         <Col xs={24} md={8}>
       <div style={{textAlign:"center"}}>
-      <p style={{color:"#fff" ,fontWeight:"700"}}>  © SOLACE LEATHER </p>
+      <p style={{color:"#fff" ,fontWeight:"700"}}>  © Play Book </p>
       </div>
 
         </Col>
