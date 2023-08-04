@@ -50,7 +50,7 @@ const BillingDetailsPage = Loadable(
   lazy(() => import("./pages/BillingDetails"))
 );
 const SelectGroundPage=Loadable(lazy(()=>import("./pages/SelectGrounds")))
-
+const SelectGroundLocationPage=Loadable(lazy(()=>import("./pages/SelectGroundLocation")))
 //Cart Details
 const CartDetailsPage=Loadable(
   lazy(() => import("./pages/CartDetails"))
@@ -162,6 +162,10 @@ export const routes: any = [
   {
     path: "reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path:"select-stadium-location",
+    element:<SelectGroundLocationPage/>
   },
   
   {

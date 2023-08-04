@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { ManageUsersData } from "../../../mock/ManageUserData";
 import { Card, Col, Layout, Row } from "antd";
-import "./SelectGroundTypes.scss";
+import "./SelectGroundLocation.scss";
 import "../../../sass/common.scss";
 // import AddUserTypeModal from "../AddUserTypeModal/AddUserTypeModal";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import AddUserType from "../../../assets/icons/ManageUser/add-user-type.svg";
 import BreadCrumb from "../../../layout/BreadCrumb/BreadCrumb";
 import ApiLoader from "../../ApiLoader/ApiLoader";
 import { selectUserType } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
-const SelectGroundTypes = () => {
+const SelectGroundLocation = () => {
   const [isOpenUserTypeModal, setIsOpenuserTypeModal] = useState<any>(false);
   const { isError, isSuccess, isLoading, data } =
     useGetAuthUserTypeRequestQuery({});
@@ -48,7 +48,7 @@ const SelectGroundTypes = () => {
             className="fs-28 fw-500 grey-color"
             style={{ marginTop: "0px", paddingBottom: "58px" }}
           >
-            SELECT GROUND
+            Searcg for
           </p>
         </div>
         {selectUserType.length>0 ?
@@ -166,4 +166,4 @@ const SelectGroundTypes = () => {
   );
 };
 
-export default SelectGroundTypes;
+export default SelectGroundLocation;

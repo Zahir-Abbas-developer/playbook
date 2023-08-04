@@ -1,24 +1,25 @@
 
+
 // Dark Mode Icons
 import shoes from "../../assets/icons/ground.png";
-import jacket from "../../assets/icons/playground.png";
+import parks from "../../assets/icons/park.png";
 import contact from "../../assets/icons/contact-us.png";
 import color from "../../assets/icons/sidebar/color-picker.png";
 import order from "../../assets/icons/sidebar/order.png";
 import add from "../../assets/icons/sidebar/add.png";
 import filing from "../../assets/icons/sidebar/filing-cabinet.png";
 import category from "../../assets/icons/sidebar/add-product.png";
-
+import home from "../../assets/icons/home.png";
 
 
 export const navItems = [
   {
     toshowforrole: [
-      "admin",
+      'user',"newUser"
     ],
     title: "HOME",
-    path: "/admin-dashboard",
-    lightIcon: jacket,
+    path: "/services",
+    lightIcon: home,
     alt: "dashboard",
     
   },
@@ -27,43 +28,9 @@ export const navItems = [
        'user',"newUser"
     ],
     title: "Grounds",
-    path: "/dashboard",
+    path: "/select-grounds",
     lightIcon: shoes,
     alt: "dashboard",
-    subItems: [
-      {
-        toshowforrole: [
-          'user',"newUser"
-        ],
-        title: "Cricket",
-        path: "/dashboard",
-        shoeType:"OxfordandDerby"
-      },
-      {
-        toshowforrole: [
-          'user',"newUser"
-        ],
-        title: "Football",
-        path: "/dashboard",
-        shoeType:"Loafers"
-      },
-      {
-        toshowforrole: [
-          'user',"newUser"
-        ],
-        title: "Hockey",
-        path: "/dashboard",
-        shoeType:"Monks"
-      },
-      {
-        toshowforrole: [
-          'user',"newUser"
-        ],
-        title: "Badminton",
-        path: "/dashboard",
-        shoeType:"Boots"
-      },
-    ],
   },
   {
     toshowforrole: [
@@ -71,7 +38,7 @@ export const navItems = [
     ],
     title: "Parks",
     path: "/jacket-details",
-    lightIcon: jacket,
+    lightIcon: parks,
     alt: "dashboard"
   },
   {
