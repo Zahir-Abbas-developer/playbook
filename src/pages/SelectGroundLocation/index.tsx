@@ -1,6 +1,8 @@
-import SelectGroundLocation from "../../components/ClientTabs/SelectGroundLocation/SelectGroundLocation"
+import StaffAllocation from "../../components/ClientTabs/SelectGroundLocation/GroundLocation"
+
+
 
 const SelectGroundLocationPage=()=>{
-return <><SelectGroundLocation/></>
+return <><StaffAllocation/></>
 }
 export default SelectGroundLocationPage

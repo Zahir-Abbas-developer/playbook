@@ -92,12 +92,7 @@ const StaffAllocationFilters = (props: any) => {
           setPagination={setPagination}
         />
 
-        <div className="bottom-filters-buttons">
-          <Button className="bottom-filter-btn apply-filter-btn">
-            Apply Filter
-          </Button>
-         
-        </div>
+       
       </div>
     
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />

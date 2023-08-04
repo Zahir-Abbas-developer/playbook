@@ -1,3 +1,17 @@
+.filter-form{
+  @media screen and (min-width: 900px) {
+    display: flex;
+  }
+ 
+}
+.search-button{
+  @media screen and (min-width: 200px) and (max-width:900px) {
+    margin-top: 20px;
+    }
+    @media screen and (min-width: 1200px)  {
+      margin-left: 10px;
+      }
+}
 .wrapper-fliters {
     width: fit-content;
   }
@@ -10,7 +24,7 @@
       margin-top: -4px;
       .col-box {
         position: relative;
-        width: 15vw;
+        width: 21vw;
         height: 44px;
         &::before {
           position: absolute;
@@ -28,7 +42,6 @@
           }
           .ant-select-selector {
             border: none ;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             border-radius: 0px;

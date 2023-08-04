@@ -163,10 +163,7 @@ export const routes: any = [
     path: "reset-password",
     element: <ResetPassword />,
   },
-  {
-    path:"select-stadium-location",
-    element:<SelectGroundLocationPage/>
-  },
+  
   
   {
     path: "/",
@@ -192,7 +189,10 @@ export const routes: any = [
        path:"select-grounds",
        element:( <SelectGroundPage/> )
       },
-
+      {
+        path:"select-stadium-location",
+        element:( <SelectGroundLocationPage/> )
+       },
       {
         path: "dashboard",
         element: (

@@ -37,7 +37,7 @@ export const navItems = [
        'user',"newUser"
     ],
     title: "Parks",
-    path: "/jacket-details",
+    path: "/services",
     lightIcon: parks,
     alt: "dashboard"
   },
