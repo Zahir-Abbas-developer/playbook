@@ -46,17 +46,18 @@ const GroundInnerFilters = (props:any) => {
                 onChange={(value:string) => {setFilterValues({...filterValues, allocationStatus : value});setPagination({...paginationStaff,page:1})}}
                 suffixIcon={<img src={arrowDownSmall} alt="" />}
                 options={[
-                  { value: 'fullday', label: 'Full Day' },
-                  { value: 'morning', label: 'Morning' },
-                  { value: 'evening', label: 'Evening' },
-                  { value: 'night', label: 'Night' },
+                  { value: 'fullday', label: 'Full Day (24 Hours)' },
+                  { value: 'morning', label: 'Morning (6AM - 12AM)' },
+                  { value: 'afternoon', label: 'Afternoon (1PM - 4PM)' },
+                  { value: 'evening', label: 'Evening (4PM - 8PM)' },
+                  { value: 'night', label: 'Night(8PM - 1AM)' },
                 ]}
               />
             </div>
           </div>
           <div className="col-box">
             <div className="area-fliters">
-              <div className='filters-label fw-600 fs-14'>Start Date & Time</div>
+              <div className='filters-label fw-600 fs-14'>Date </div>
               <DatePicker
                  showTime 
                 suffixIcon={<img src={datePicker} alt="calander" />}
@@ -67,19 +68,7 @@ const GroundInnerFilters = (props:any) => {
               />
             </div>
           </div>
-          <div className="col-box">
-            <div className="area-fliters">
-              <div className='filters-label fw-600 fs-14'>End Date & Time</div>
-              <DatePicker
-              showTime 
-                suffixIcon={<img src={datePicker} alt="calander" />}
-                className="staff-filters-select title-color"
-                style={{ width: "100%", border: "none", borderRadius: "0px" }}
-                onChange={handleChangeEndDate}
-                placeholder="From"
-              />
-            </div>
-          </div>
+        
         </div>
 
       </div>
