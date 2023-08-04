@@ -27,8 +27,6 @@ function AddProductsModal(props: any) {
   const [certificateUrlThumbnail, setCertificateUrlThumbnail] = useState("")
 
   const [fieldCount, setFieldCount] = useState(1);
-  const [quantities, setQuantities] = useState([""]); // Array to hold quantity values
-  const [sizes, setSizes] = useState([""]); // Array to hold size values
   const [fields, setFields] = useState([{ quantity: "", size: "" }]);
 
   const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role } = props;
@@ -170,10 +168,6 @@ function AddProductsModal(props: any) {
       }
     }
 
-
-
-
-
     const newValues = handleInputTrimSpaces(values);
 
     try {
@@ -200,15 +194,11 @@ function AddProductsModal(props: any) {
 
   };
 
-
   const handleFormClear = () => {
     setAddEditJobRole(false);
     form.resetFields();
     setGetFieldValues({});
   }
-
-
-
 
   return (
     <Modal
@@ -225,7 +215,7 @@ function AddProductsModal(props: any) {
       <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Row gutter={20} style={{ marginTop: "20px" }}>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Product Name</label>
+            <label className="fs-14 fw-600">Name</label>
             <Form.Item
               name="name"
               rules={[{ required: true, message: "Required field " }]}
@@ -233,87 +223,15 @@ function AddProductsModal(props: any) {
               normalize={(value: any) => handleInputTrimStart(value)}
             >
               <Input
-                placeholder="Enter product name"
+                placeholder="Enter Ground Name"
                 id="PositionName"
                 style={{ marginTop: "2px", height: "40px", }}
               />
             </Form.Item>
           </Col>
+          
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Select Category</label>
-            <Form.Item
-              name="category"
-              rules={[{ required: true, message: "Required field " }]}
-              style={{ marginBottom: "8px" }}
-            >
-              <Select
-                suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                className="d-flex"
-                placeholder="Select Category"
-                options={selectCategory}
-              />
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Select Color</label>
-            <Form.Item
-              name="color"
-              rules={[{ required: true, message: "Required field " }]}
-              style={{ marginBottom: "8px" }}
-            >
-              <Select
-                suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                className="d-flex"
-                placeholder="Select Color"
-                options={selectColor}
-              />
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Select Material</label>
-            <Form.Item
-              name="material"
-              rules={[{ required: true, message: "Required field " }]}
-              style={{ marginBottom: "8px" }}
-            >
-              <Select
-                suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                className="d-flex"
-                placeholder="Select material"
-                options={userRoleDropdown}
-              />
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Select Product</label>
-            <Form.Item
-              name="productType"
-              rules={[{ required: true, message: "Required field " }]}
-              style={{ marginBottom: "8px" }}
-            >
-              <Select
-                suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                className="d-flex"
-                placeholder="Select product"
-
-                options={[
-                  {
-                    value: 'SHOES',
-                    label: 'Shoes',
-                  },
-                  {
-                    value: 'JACKETS',
-                    label: 'Jackets',
-                  },
-
-
-
-                ]}
-              />
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Product Description</label>
+            <label className="fs-14 fw-600">Description</label>
             <Form.Item
               name="description"
               rules={[{ required: true, message: "Required field " }]}
@@ -321,14 +239,29 @@ function AddProductsModal(props: any) {
               normalize={(value: any) => handleInputTrimStart(value)}
             >
               <Input
-                placeholder="Enter product description"
+                placeholder="Enter Ground Description"
                 id="description"
                 style={{ marginTop: "2px", height: "40px", }}
               />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Product Price</label>
+            <label className="fs-14 fw-600">Location</label>
+            <Form.Item
+              name="location"
+              rules={[{ required: true, message: "Required field " }]}
+              style={{ marginBottom: "8px" }}
+              normalize={(value: any) => handleInputTrimStart(value)}
+            >
+              <Input
+                placeholder="Enter Ground Location"
+                id="description"
+                style={{ marginTop: "2px", height: "40px", }}
+              />
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
+            <label className="fs-14 fw-600">Seats</label>
             <Form.Item
               name="price"
               rules={[{ required: true, message: "Required field " }]}
@@ -336,7 +269,7 @@ function AddProductsModal(props: any) {
               normalize={(value: any) => handleInputTrimStart(value)}
             >
               <Input
-                placeholder="Enter product price"
+                placeholder="Enter Ground Seats"
                 id="price"
                 style={{ marginTop: "2px", height: "40px", }}
               />
@@ -351,113 +284,7 @@ function AddProductsModal(props: any) {
           <p style={{fontWeight:600,color:"#6E7191"}}>Thumbnail</p>
           <Thumbnail uploadCertificateThumbnail={uploadCertificateThumbnail}  />
           </Col>
-          <Col xs={24} lg={24} style={{ textAlign: "end" }}>
-            <PlusCircleOutlined style={{ marginLeft: "20px", cursor: "pointer" }} onClick={handleAddField} /> Click to  Add More Shoe Sizes and Quantity
-          </Col>
-          {fields.map((field: any, index: any) => (
-            <>  <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-              <label className="fs-14 fw-600">Product Quantity</label>
-              <Form.Item
-                name={`quantity${index}`}
-                rules={[{ required: true, message: "Required field " }]}
-                style={{ marginBottom: "8px" }}
-                normalize={(value: any) => handleInputTrimStart(value)}
-              >
-                <Input
-                  placeholder="Enter product quantity"
-                  id={`quantity${index}`}
-                  style={{ marginTop: "2px", height: "40px" }}
-                  value={field.quantity}
-                  onChange={(e) => {
-                    const newFields = [...fields];
-                    newFields[index].quantity = e.target.value;
-                    setFields(newFields);
-                  }}
-                />
-              </Form.Item>
-
-            </Col>
-              <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-                <label className="fs-14 fw-600">Select Shoe Size</label>
-                <Form.Item
-                  name={`eu${index}`}
-                  rules={[{ required: true, message: "Required field " }]}
-                  style={{ marginBottom: "8px" }}
-                >
-                  <Select
-                    suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                    className="d-flex"
-                    placeholder="Select Product Size"
-
-                    value={field.size}
-                    onChange={(value) => {
-                      const newFields = [...fields];
-                      newFields[index].size = value;
-                      setFields(newFields);
-                    }}
-                    options={[
-                      {
-                        value: '42',
-                        label: '42',
-                      },
-                      {
-                        value: '43',
-                        label: '43',
-                      },
-                      {
-                        value: '44',
-                        label: '44',
-                      },
-                      {
-                        value: '45',
-                        label: '45',
-                      },
-                      {
-                        value: '46',
-                        label: '46',
-                      },
-                      {
-                        value: '47',
-                        label: '47',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>    </>
-          ))}
-          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Product Sku</label>
-            <Form.Item
-              name="sku"
-              rules={[{ required: true, message: "Required field " }]}
-              style={{ marginBottom: "8px" }}
-              normalize={(value: any) => handleInputTrimStart(value)}
-            >
-              <Input
-                placeholder="Enter product sku"
-                id="sku"
-                style={{ marginTop: "2px", height: "40px", }}
-              />
-            </Form.Item>
-          </Col>
-          {role === ROLES.coordinator && (
-            <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-              <label className="fs-14 fw-600">Select Care Home</label>
-              <Form.Item
-                name="careHomeId"
-                rules={[{ required: true, message: "Required field " }]}
-                style={{ marginBottom: "8px" }}
-              >
-                <Select
-                  suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                  className="d-flex"
-                  placeholder="Select care home"
-                  options={userRoleDropdown}
-                  defaultValue={getTableRowValues?.careHomeData?.clientName}
-                />
-              </Form.Item>
-            </Col>
-          )}
+  
 
         </Row>
 

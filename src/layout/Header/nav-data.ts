@@ -54,7 +54,7 @@ export const navItems = [
     toshowforrole: [
        'admin',
     ],
-    title: "PRODUCTS",
+    title: "GROUNDS",
     path: "/add-products",
     lightIcon: add,
     alt: "dashboard"
@@ -63,30 +63,12 @@ export const navItems = [
     toshowforrole: [
        'admin',
     ],
-    title: "CATEGORIES",
+    title: "PARKS",
     path: "/add-categories",
     lightIcon: category,
     alt: "dashboard"
   },
   
-  {
-    toshowforrole: [
-       'admin',
-    ],
-    title: "COLORS",
-    path: "/add-colors",
-    lightIcon: color,
-    alt: "dashboard"
-  },
-  {
-    toshowforrole: [
-       'admin',
-    ],
-    title: "STYLES",
-    path: "/add-styles",
-    lightIcon: filing,
-    alt: "dashboard"
-  },
   {
     toshowforrole: [
        'admin',
