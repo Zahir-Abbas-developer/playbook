@@ -414,7 +414,6 @@ const Login = () => {
                   ]}
                 >
                   <Input
-                    style={{ color: "white" }}
                     placeholder="Username"
                     className="input-style"
                   />
