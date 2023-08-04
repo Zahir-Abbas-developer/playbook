@@ -58,6 +58,7 @@ const GroundInnerFilters = (props:any) => {
             <div className="area-fliters">
               <div className='filters-label fw-600 fs-14'>Start Date</div>
               <DatePicker
+                 showTime 
                 suffixIcon={<img src={datePicker} alt="calander" />}
                 className="staff-filters-select title-color"
                 style={{ width: "100%", border: "none", borderRadius: "0px" }}
@@ -70,6 +71,7 @@ const GroundInnerFilters = (props:any) => {
             <div className="area-fliters">
               <div className='filters-label fw-600 fs-14'>End Date</div>
               <DatePicker
+              showTime 
                 suffixIcon={<img src={datePicker} alt="calander" />}
                 className="staff-filters-select title-color"
                 style={{ width: "100%", border: "none", borderRadius: "0px" }}
