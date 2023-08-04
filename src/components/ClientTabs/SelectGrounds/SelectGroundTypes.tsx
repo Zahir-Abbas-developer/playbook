@@ -76,6 +76,17 @@ const SelectGroundTypes = () => {
                     borderRadius: "6px",
                   }}
                 >
+                   <img
+                  src={card?.icon}
+                  alt="icon"
+                  className={"add-user-image"}
+                  height={51}
+                  width={51}
+                  style={{
+                    display: "block",
+                    margin: "auto",
+                  }}
+                />
                   <div style={{ display: "block", textAlign: "center" }}>
                     <p
                       className="fs-16 fw-500"
@@ -88,7 +99,7 @@ const SelectGroundTypes = () => {
                       {card?.name.replace("_", ' ')}
                     </p>
                     <p className="fs-16 fw-400" style={{ color: "#4E4B66" }}>
-                      {card?.name}
+                      {card?.description}
                     </p>
                   </div>
                 </div>
