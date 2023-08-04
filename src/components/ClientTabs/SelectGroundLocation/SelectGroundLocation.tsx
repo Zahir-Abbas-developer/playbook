@@ -1,169 +1,108 @@
-import { Link, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { ManageUsersData } from "../../../mock/ManageUserData";
-import { Card, Col, Layout, Row } from "antd";
-import "./SelectGroundLocation.scss";
-import "../../../sass/common.scss";
-// import AddUserTypeModal from "../AddUserTypeModal/AddUserTypeModal";
 import { useState } from "react";
-import { useGetAuthUserTypeRequestQuery } from "../../../store/Slices/ManageUser";
-import AddUserType from "../../../assets/icons/ManageUser/add-user-type.svg";
-import BreadCrumb from "../../../layout/BreadCrumb/BreadCrumb";
-import ApiLoader from "../../ApiLoader/ApiLoader";
-import { selectUserType } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
-const SelectGroundLocation = () => {
-  const [isOpenUserTypeModal, setIsOpenuserTypeModal] = useState<any>(false);
-  const { isError, isSuccess, isLoading, data } =
-    useGetAuthUserTypeRequestQuery({});
+import { Button, Col, Row, Slider } from "antd";
 
-  let UserType: any;
-  if (isSuccess) {
-    UserType = data;
-  }
+import "./GroundStaffFilters.scss";
+import {
+  useAllocateCarersMutation,
+  useDeleteStaffMutation,
+} from "../../../store/Slices/StaffAllocation";
+import AppSnackbar from "../../../utils/AppSnackbar";
+import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
+import GroundInnerFilters from "./GroundInnerFilters";
 
-  const handleSaveSelectUser = (userData: any) => {
-    if (Object.keys(userData).length !== 0) {
-      ManageUsersData.splice(ManageUsersData.length - 1, 0, userData);
-    }
-    setIsOpenuserTypeModal(false);
+const handleStyling: any = {
+  color: "blue",
+  border: "7px solid white",
+  borderRadius: 5,
+  height: 29,
+  width: 16,
+  position: "absolute",
+  top: -4,
+  boxShadow: "0px 0px 4px 1px rgba(0, 0, 0, 0.25)",
+};
+
+const StaffAllocationFilters = (props: any) => {
+  
+  const {
+    filterValues,
+    setFilterValues,
+    careHomeOptions,
+    userTypeOptions,
+    selectedRows,
+    careHomeId,
+    selectedRowKeys,
+    setSelectedRowKeys,
+    paginationStaff,
+    setPagination
+  } = props;
+
+  const [inputValue, setInputValue] = useState(50);
+  const [isAllocateCarerModal, setIsAllocateCarerModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const onChange = (newValue: number) => {
+    setInputValue(newValue);
   };
-  const navigate = useNavigate();
 
-  //BreadCrumb Items 
-  const breadCrumbItems =
-    [
-      { title: "User Type", path: "", }
-      , { title: "Dashboard", path: "/dashboard", },
-    ];
+  //Allocate Carer
+  const [allocateCare] = useAllocateCarersMutation();
+
+  const handleAllocate = async () => {
+    const payload = {
+      clientId: [careHomeId],
+      staffId: selectedRows,
+    };
+    const { data ,error}: any = await allocateCare(payload);
+    if (data) {
+      setSelectedRowKeys([]);
+      AppSnackbar({ type: "success", message: data?.message });
+    }
+    if(error){
+        AppSnackbar({
+          type: "error",
+          messageHeading: "Error",
+          message: error?.data?.message ?? "Something went wrong!",
+        });
+    }
+  };
+
+  //Delete Staff
+  const [deleteStaff] = useDeleteStaffMutation();
+
+  const handleDeleteSubmit = async () => {
+    const payload: any = {
+      staffId: selectedRows,
+    };
+    const { data }: any = await deleteStaff({ id: careHomeId, payload });
+    if (data) {
+      setSelectedRowKeys([]);
+      AppSnackbar({ type: "success", message: data?.message });
+    }
+  };
+
   return (
-    <div>
-      {/* <BreadCrumb breadCrumbItems={breadCrumbItems} /> */}
-      <Layout
-        className="border-radius-8 select-user-types"
-        style={{ backgroundColor: "#FFFFFF", padding: "40px 84px 94px 84px" }}
-      >
+    <div className="inner-wrap-filters">
 
-        <div style={{ textAlign: "center" }}>
-          <p
-            className="fs-28 fw-500 grey-color"
-            style={{ marginTop: "0px", paddingBottom: "58px" }}
-          >
-            Searcg for
-          </p>
+      <div className="bottom-inset-filters d-flex justify-between align-center">
+        <GroundInnerFilters
+          careHomeOptions={careHomeOptions}
+          userTypeOptions={userTypeOptions}
+          filterValues={filterValues}
+          setFilterValues={setFilterValues}
+          paginationStaff={paginationStaff}
+          setPagination={setPagination}
+        />
+
+        <div className="bottom-filters-buttons">
+          <Button className="bottom-filter-btn apply-filter-btn">
+            Apply Filter
+          </Button>
+         
         </div>
-        {selectUserType.length>0 ?
-        <Row gutter={[80, 30]}>
-          {selectUserType.map((card: any) => (
-            <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8} key={card._id}>
-              <Card
-                className="card-hover-color cursor-pointer"
-                style={{
-                  boxShadow: "none",
-                  borderRadius: "22px",
-                  minHeight: "260px",
-                }}
-                onClick={() =>
-                  navigate("/select-stadium-location", { state: card })
-                }
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    color: "#212121",
-                    paddingTop: "4px",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    borderRadius: "6px",
-                  }}
-                >
-                   <img
-                  src={card?.icon}
-                  alt="icon"
-                  className={"add-user-image"}
-                  height={51}
-                  width={51}
-                  style={{
-                    display: "block",
-                    margin: "auto",
-                  }}
-                />
-                  <div style={{ display: "block", textAlign: "center" }}>
-                    <p
-                      className="fs-16 fw-500"
-                      style={{
-                        color: "#14142B",
-                        marginTop: "18px 18px",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      {card?.name.replace("_", ' ')}
-                    </p>
-                    <p className="fs-16 fw-400" style={{ color: "#4E4B66" }}>
-                      {card?.description}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-            </Col>
-          ))}
-
-          {/* <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8}>
-            <Card
-              className="card-hover-color cursor-pointer"
-              onClick={() => {
-                setIsOpenuserTypeModal(true);
-              }}
-              style={{
-                boxShadow: "none",
-                borderRadius: "22px",
-                border: "1px dashed #A0A3BD",
-                minHeight: "260px",
-              }}
-            >
-              <div
-                className={"add-user-image"}
-                style={{
-                  display: "flex",
-                  color: "#212121",
-                  paddingTop: "4px",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  borderRadius: "6px",
-                }}
-              >
-                <img
-                  src={AddUserType}
-                  alt="icon"
-                  className={"add-user-image"}
-                  height={51}
-                  width={51}
-                  style={{
-                    display: "block",
-                    margin: "auto",
-                  }}
-                />
-                <div style={{ display: "block", textAlign: "center" }}>
-                  <p
-                    className="fs-16 fw-500"
-                    style={{ color: "#14142B", marginTop: "18px 18px" }}
-                  >
-                    Add User Type
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </Col> */}
-
-          {/* <AddUserTypeModal
-            handleSave={handleSaveSelectUser}
-            setIsOpenuserTypeModal={setIsOpenuserTypeModal}
-            isOpenUserTypeModal={isOpenUserTypeModal}
-          /> */}
-        </Row>:<ApiLoader/>}
-      </Layout>
+      </div>
+    
+      <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );
 };
 
-export default SelectGroundLocation;
+export default StaffAllocationFilters;
