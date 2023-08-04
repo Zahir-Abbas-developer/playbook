@@ -46,17 +46,17 @@ const GroundInnerFilters = (props:any) => {
                 onChange={(value:string) => {setFilterValues({...filterValues, allocationStatus : value});setPagination({...paginationStaff,page:1})}}
                 suffixIcon={<img src={arrowDownSmall} alt="" />}
                 options={[
-                  { value: 'All', label: 'All' },
-                  { value: 'allocated', label: 'Allocated' },
-                  { value: 'non-allocated', label: 'Non Allocated' },
-                  { value: 'new', label: 'New' },
+                  { value: 'fullday', label: 'Full Day' },
+                  { value: 'morning', label: 'Morning' },
+                  { value: 'evening', label: 'Evening' },
+                  { value: 'night', label: 'Night' },
                 ]}
               />
             </div>
           </div>
           <div className="col-box">
             <div className="area-fliters">
-              <div className='filters-label fw-600 fs-14'>Start Date</div>
+              <div className='filters-label fw-600 fs-14'>Start Date & Time</div>
               <DatePicker
                  showTime 
                 suffixIcon={<img src={datePicker} alt="calander" />}
@@ -69,7 +69,7 @@ const GroundInnerFilters = (props:any) => {
           </div>
           <div className="col-box">
             <div className="area-fliters">
-              <div className='filters-label fw-600 fs-14'>End Date</div>
+              <div className='filters-label fw-600 fs-14'>End Date & Time</div>
               <DatePicker
               showTime 
                 suffixIcon={<img src={datePicker} alt="calander" />}
