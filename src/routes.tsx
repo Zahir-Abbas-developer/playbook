@@ -186,7 +186,7 @@ export const routes: any = [
       },
       {
        path:"select-grounds",
-       element:( <RequireAuth allowedRoles={[ROLES.user]}><SelectGroundPage/></RequireAuth> )
+       element:( <SelectGroundPage/> )
       },
 
       {

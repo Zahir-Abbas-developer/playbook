@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { ManageUsersData } from "../../../mock/ManageUserData";
 import { Card, Col, Layout, Row } from "antd";
-import "./ManageUsers.scss";
+import "./SelectGroundTypes.scss";
 import "../../../sass/common.scss";
 // import AddUserTypeModal from "../AddUserTypeModal/AddUserTypeModal";
 import { useState } from "react";
@@ -37,7 +37,7 @@ const SelectGroundTypes = () => {
     ];
   return (
     <div>
-      <BreadCrumb breadCrumbItems={breadCrumbItems} />
+      {/* <BreadCrumb breadCrumbItems={breadCrumbItems} /> */}
       <Layout
         className="border-radius-8 select-user-types"
         style={{ backgroundColor: "#FFFFFF", padding: "40px 84px 94px 84px" }}
@@ -97,7 +97,7 @@ const SelectGroundTypes = () => {
             </Col>
           ))}
 
-          <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8}>
+          {/* <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8}>
             <Card
               className="card-hover-color cursor-pointer"
               onClick={() => {
@@ -142,7 +142,7 @@ const SelectGroundTypes = () => {
                 </div>
               </div>
             </Card>
-          </Col>
+          </Col> */}
 
           {/* <AddUserTypeModal
             handleSave={handleSaveSelectUser}
