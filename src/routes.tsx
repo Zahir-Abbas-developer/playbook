@@ -49,6 +49,7 @@ const ProductDetailsPage = Loadable(
 const BillingDetailsPage = Loadable(
   lazy(() => import("./pages/BillingDetails"))
 );
+const SelectGroundPage=Loadable(lazy(()=>import("./pages/SelectGrounds")))
 
 //Cart Details
 const CartDetailsPage=Loadable(
@@ -183,6 +184,11 @@ export const routes: any = [
           </RequireAuth>
         ),
       },
+      {
+       path:"select-grounds",
+       element:( <RequireAuth allowedRoles={[ROLES.user]}><SelectGroundPage/></RequireAuth> )
+      },
+
       {
         path: "dashboard",
         element: (
