@@ -213,8 +213,7 @@ export const routes: any = [
    
         path:"/productDetails/cart-details/checkout-details",
             
-        element:(  <RequireAuth allowedRoles={[ROLES.user]}><BillingDetailsPage/>
-         </RequireAuth>)
+        element:(  <BillingDetailsPage/>)
       },
       {
         path:"/add-products",

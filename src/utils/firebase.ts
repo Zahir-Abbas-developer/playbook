@@ -1,7 +1,7 @@
 import {initializeApp} from 'firebase/app'
 import {getAuth} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
-const firebaseConfig = {
+const firebaseConfig:any = {
   apiKey: "AIzaSyBr7L2I0AyuFQ5VcTuxm0_2qbsTGiN-5JI",
   authDomain: "playbook-59a53.firebaseapp.com",
   projectId: "playbook-59a53",

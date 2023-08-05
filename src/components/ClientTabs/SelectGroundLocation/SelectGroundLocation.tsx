@@ -9,6 +9,7 @@ import {
 import AppSnackbar from "../../../utils/AppSnackbar";
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
 import GroundInnerFilters from "./GroundInnerFilters";
+import GroundInfo from "./GroundInfo";
 
 const handleStyling: any = {
   color: "blue",
@@ -81,7 +82,8 @@ const StaffAllocationFilters = (props: any) => {
 
   return (
     <div className="inner-wrap-filters">
-
+     <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Ground</p>
+     <p>Find The Best Grounds In Your Area.</p>
       <div className="bottom-inset-filters d-flex justify-between align-center">
         <GroundInnerFilters
           careHomeOptions={careHomeOptions}
@@ -94,7 +96,7 @@ const StaffAllocationFilters = (props: any) => {
 
        
       </div>
-    
+    <GroundInfo/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

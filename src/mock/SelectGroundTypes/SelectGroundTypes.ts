@@ -22,3 +22,14 @@ export const selectUserType=[
 
 
 ]
+export const GroundDetails=[
+    {
+        image:Cricket,
+        name:"Rawalpindi Cricket Stadium"},
+        {
+            image:Cricket,
+            name:"Rawalpindi Cricket Stadium"},
+            {
+                image:Cricket,
+                name:"Rawalpindi Cricket Stadium"},
+    ]
