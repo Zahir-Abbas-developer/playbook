@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // Ant Components
@@ -24,23 +24,19 @@ import { debouncedSearch } from "../../../utils/utils";
 // Assets
 import actionImg from "../../../assets/icons/Setting/actionImg.svg";
 import editIcon from "../../../assets/icons/edit-blue.svg";
-import crossAllocation from "../../../assets/icons/Setting/crossAllocation.svg";
 import deleteIcon from "../../../assets/icons/delete-icon-outlined.svg";
 import searchIcon from "../../../assets/icons/search.svg";
-import coloredCopyIcon from "../../../assets/icons/Report/colored-copy.png";
-import coloredCsvIcon from "../../../assets/icons/Report/colored-csv.png";
-import coloredXlsIcon from "../../../assets/icons/Report/colored-xls.png";
 
 
 // Styling
 import "./AddColors.scss";
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
 import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationModal";
-import AddModal from "../../Setting/SettingJobRole/AddModal";
 import { renderDashboard } from "../../../utils/useRenderDashboard";
 import AddColorModal from "./AddColorModal";
 import { useDeleteColorsMutation, useGetAllColorsQuery } from "../../../store/Slices/Products";
-
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
 
 const AddColors = () => {
 
@@ -59,7 +55,8 @@ const AddColors = () => {
   const [showCrossAllocation, setShowCrossAllocation] = useState<boolean>(false);
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
-
+  const [productsLoading, setProductsLoading] = useState<boolean>(false);
+  const [location, setLocation] = useState<any[]>([]);
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
   if (searchName) paramsObj["name"] = searchName;
@@ -125,17 +122,41 @@ const AddColors = () => {
   }
 
 
+  useEffect(() => {
+    fetchLocations();
+  }, []);
+
+  const fetchLocations = () => {
+    setProductsLoading(true);
+    onSnapshot(collection(firestore, "categories"), (snapshot) => {
+      setLocation(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setProductsLoading(false);
+    });
+  };
+
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
-      await deleteColors({id:jobID}).unwrap();
-      AppSnackbar({
-        type: "success",
-        messageHeading: "Deleted!",
-        message: "Information deleted successfully",
-      });
-      setIsDeleteModal(false);
-      setGetFieldValues({});
+      console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
+      deleteDoc(doc(firestore, "categories", jobID))
+        .then((response) =>
+          AppSnackbar({
+            type: "success",
+            messageHeading: "Deleted!",
+            message: "Information deleted successfully",
+          })
+        )
+        .catch((error:any) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => {
+          setIsDeleteModal(false);
+          setGetFieldValues({});
+        });
     } catch (error: any) {
       AppSnackbar({
         type: "error",
@@ -144,7 +165,6 @@ const AddColors = () => {
       });
     }
   };
-
 
   // ============================== Filter and Remove The Current Allocation For the Cross Alloocation ==============================
   const handleCrossAllocationValues = (data: any) => {
@@ -303,7 +323,7 @@ const AddColors = () => {
               setModalType("Add");
             }}
           >
-            Add Color
+            Add Location
             <PlusCircleOutlined style={{ marginLeft: "20px" }} />
           </Button>
 
@@ -398,9 +418,9 @@ const AddColors = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={allColors}
-            locale={{ emptyText: !jobRoleFilterIsLoading ? "No Data" : " " }}
-            loading={jobRoleFilterIsLoading}
+            dataSource={location}
+            locale={{ emptyText: !productsLoading ? "No Data" : " " }}
+            loading={productsLoading}
             pagination={{
               current: pagination.page,
               pageSize: pagination.limit,

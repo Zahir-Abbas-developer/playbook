@@ -8,12 +8,13 @@ import {
   Select,
 } from "antd";
 import arrowDown from "../../../assets/icons/arrow-down-icon.svg"
-import { usePostJobRequestMutation, useUpdateJobRequestMutation } from "../../../store/Slices/Setting/JobRole";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import { ROLES } from "../../../constants/Roles";
 import { useGetClientsQuery } from "../../../store/Slices/Setting/StaffSettings/RegisterationConfiguration";
-import { handleInputTrimSpaces, handleInputTrimStart } from "../../../utils/useInputTrim";
+import {  handleInputTrimStart } from "../../../utils/useInputTrim";
 import {  usePostColorsMutation, useUpdateColorsMutation,  } from "../../../store/Slices/Products";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
 
 function AddColorModal(props: any) {
   const [form] = Form.useForm();
@@ -21,7 +22,7 @@ function AddColorModal(props: any) {
   const { data: clientData, isSuccess: isClientDataSuccess, } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
   const [postColors, { isLoading: isPostJobRequestMutation }] = usePostColorsMutation();
   const [updateColors, { isLoading: isUpdateJobRequestMutation }] = useUpdateColorsMutation();
-
+  const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
 
 
   // ------------------ Error cases Variable ------------------
@@ -41,7 +42,7 @@ function AddColorModal(props: any) {
   
   if (modalType !== "Add") {
     const formValues = {
-      name: getTableRowValues.name,
+      location: getTableRowValues.location,
       description: getTableRowValues.description,
     }
     form.setFieldsValue(formValues)
@@ -56,34 +57,39 @@ function AddColorModal(props: any) {
 
   // ---------------- On Finish used to reset form fields in form ----------------
   const onFinish = async (values: any) => {
-   
-
-
-    try {
-      if (modalType !== 'Edit') {
-        await  postColors({payload:values}).unwrap();
-        setAddEditJobRole(false)
-        AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" });
-        // apiErrorMessage = '';
-      }
-      else {
-        await updateColors({ payload: values ,id:jobID  }).unwrap();
-        setAddEditJobRole(false)
-        AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" });
-        // apiErrorMessage = '';
-      }
-
-      handleFormClear();
-
-    } catch (error: any) {
-      AppSnackbar({
-        type: "error",
-        messageHeading: "Error",
-        message: error?.data?.message ?? "Something went wrong!"
-      });
+    // -------- for error cases --------
+    if (modalType !== "Add") {
+     
+     
+      setDoc(doc(firestore, "categories", getTableRowValues?.id), values)
+        .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" }))
+        .catch((error) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => handleFormClear());
+    } else {
+      const addProductValues = {
+        ...values,
+        createdAt: serverTimestamp(),
+        createdBy: userId ?? "",
+      };
+      addDoc(collection(firestore, "categories"), addProductValues)
+        .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }))
+        .catch((error) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => handleFormClear());
     }
-
   };
+
 
 
   const handleFormClear = () => {
@@ -97,7 +103,7 @@ function AddColorModal(props: any) {
 
   return (
     <Modal
-      title="Add Category"
+      title="Add Location"
       open={addEditJobRole}
       onOk={() => handleFormClear()}
       onCancel={() => handleFormClear()}
@@ -110,23 +116,23 @@ function AddColorModal(props: any) {
       <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Row gutter={20} style={{ marginTop: "20px" }}>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Color Name</label>
+            <label className="fs-14 fw-600">Location Name</label>
             <Form.Item
-              name="name"
+              name="location"
               rules={[{ required: true, message: "Required field " }]}
               style={{ marginBottom: "8px" }}
               normalize={(value: any) => handleInputTrimStart(value)}
             >
               <Input
-                placeholder="Enter position name"
-                id="name"
+                placeholder="Enter location"
+                id="location"
                 style={{ marginTop: "2px", height: "40px", }}
               />
             </Form.Item>
           </Col>
         
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-            <label className="fs-14 fw-600">Color Description</label>
+            <label className="fs-14 fw-600">Location Description</label>
             <Form.Item
               name="description"
               rules={[{ required: true, message: "Required field " }]}
@@ -134,30 +140,13 @@ function AddColorModal(props: any) {
               normalize={(value: any) => handleInputTrimStart(value)}
             >
               <Input
-                placeholder="Enter position short form"
+                placeholder="Enter location"
                 id="description"
                 style={{ marginTop: "2px", height: "40px", }}
               />
             </Form.Item>
           </Col>
-          {role === ROLES.coordinator && (
-            <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-              <label className="fs-14 fw-600">Select Care Home</label>
-              <Form.Item
-                name="careHomeId"
-                rules={[{ required: true, message: "Required field " }]}
-                style={{ marginBottom: "8px" }}
-              >
-                <Select
-                  suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                  className="d-flex"
-                  placeholder="Select care home"
-                  options={userRoleDropdown}
-                  defaultValue={getTableRowValues?.careHomeData?.clientName}
-                />
-              </Form.Item>
-            </Col>
-          )}
+          
 
         </Row>
 

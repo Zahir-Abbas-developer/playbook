@@ -14,7 +14,8 @@ import { ROLES } from "../../../constants/Roles";
 import { useGetClientsQuery } from "../../../store/Slices/Setting/StaffSettings/RegisterationConfiguration";
 import { handleInputTrimSpaces, handleInputTrimStart } from "../../../utils/useInputTrim";
 import { usePostCategoriesMutation, useUpdateCategoriesMutation } from "../../../store/Slices/Products";
-
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
 function AddCategoryModal(props: any) {
   const [form] = Form.useForm();
   const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role ,jobID} = props;
@@ -23,7 +24,7 @@ function AddCategoryModal(props: any) {
   const [updateCategories, { isLoading: isUpdateJobRequestMutation }] = useUpdateCategoriesMutation();
   const [postCategories]=usePostCategoriesMutation()
 
-
+  const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   // ------------------ Error cases Variable ------------------
   let userRoleDropdown: any;
   let clientAPIData: any;
@@ -56,33 +57,40 @@ function AddCategoryModal(props: any) {
 
   // ---------------- On Finish used to reset form fields in form ----------------
   const onFinish = async (values: any) => {
-   
-
-
-    try {
-      if (modalType !== 'Edit') {
-        await  postCategories({payload:values}).unwrap();
-        setAddEditJobRole(false)
-        AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" });
-        // apiErrorMessage = '';
-      }
-      else {
-        await updateCategories({ payload: values ,id:jobID  }).unwrap();
-        setAddEditJobRole(false)
-        AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" });
-        // apiErrorMessage = '';
-      }
-
-      handleFormClear();
-
-    } catch (error: any) {
-      AppSnackbar({
-        type: "error",
-        messageHeading: "Error",
-        message: error?.data?.message ?? "Something went wrong!"
-      });
+    // -------- for error cases --------
+    if (modalType !== "Add") {
+      const updateProductValues = {
+        ...values,
+        price: parseInt(values?.price),
+      };
+     
+      setDoc(doc(firestore, "categories", getTableRowValues?.id), updateProductValues)
+        .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" }))
+        .catch((error) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => handleFormClear());
+    } else {
+      const addProductValues = {
+        ...values,
+        createdAt: serverTimestamp(),
+        createdBy: userId ?? "",
+      };
+      addDoc(collection(firestore, "categories"), addProductValues)
+        .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }))
+        .catch((error) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => handleFormClear());
     }
-
   };
 
 
@@ -91,9 +99,6 @@ function AddCategoryModal(props: any) {
     form.resetFields();
     setGetFieldValues({});
   }
-
-
-
 
   return (
     <Modal
@@ -140,25 +145,6 @@ function AddCategoryModal(props: any) {
               />
             </Form.Item>
           </Col>
-          {role === ROLES.coordinator && (
-            <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
-              <label className="fs-14 fw-600">Select Care Home</label>
-              <Form.Item
-                name="careHomeId"
-                rules={[{ required: true, message: "Required field " }]}
-                style={{ marginBottom: "8px" }}
-              >
-                <Select
-                  suffixIcon={<img src={arrowDown} alt='arrow down' />}
-                  className="d-flex"
-                  placeholder="Select care home"
-                  options={userRoleDropdown}
-                  defaultValue={getTableRowValues?.careHomeData?.clientName}
-                />
-              </Form.Item>
-            </Col>
-          )}
-
         </Row>
 
         <Form.Item>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // Ant Components
@@ -30,7 +30,8 @@ import searchIcon from "../../../assets/icons/search.svg";
 import coloredCopyIcon from "../../../assets/icons/Report/colored-copy.png";
 import coloredCsvIcon from "../../../assets/icons/Report/colored-csv.png";
 import coloredXlsIcon from "../../../assets/icons/Report/colored-xls.png";
-
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
 
 // Styling
 import "./AddCategories.scss";
@@ -59,7 +60,8 @@ const AddCategories = () => {
   const [showCrossAllocation, setShowCrossAllocation] = useState<boolean>(false);
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
-
+  const [productsLoading, setProductsLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<any[]>([]);
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
   if (searchName) paramsObj["name"] = searchName;
@@ -124,17 +126,41 @@ const AddCategories = () => {
   }
 
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = () => {
+    setProductsLoading(true);
+    onSnapshot(collection(firestore, "categories"), (snapshot) => {
+      setCategories(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setProductsLoading(false);
+    });
+  };
+
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
-      await deleteCategories({id:jobID}).unwrap();
-      AppSnackbar({
-        type: "success",
-        messageHeading: "Deleted!",
-        message: "Information deleted successfully",
-      });
-      setIsDeleteModal(false);
-      setGetFieldValues({});
+      console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
+      deleteDoc(doc(firestore, "categories", jobID))
+        .then((response) =>
+          AppSnackbar({
+            type: "success",
+            messageHeading: "Deleted!",
+            message: "Information deleted successfully",
+          })
+        )
+        .catch((error:any) =>
+          AppSnackbar({
+            type: "error",
+            messageHeading: "Error",
+            message: error?.data?.message ?? "Something went wrong!",
+          })
+        )
+        .finally(() => {
+          setIsDeleteModal(false);
+          setGetFieldValues({});
+        });
     } catch (error: any) {
       AppSnackbar({
         type: "error",
@@ -143,6 +169,7 @@ const AddCategories = () => {
       });
     }
   };
+
 
 
   // ============================== Filter and Remove The Current Allocation For the Cross Alloocation ==============================
@@ -302,7 +329,7 @@ const AddCategories = () => {
               setModalType("Add");
             }}
           >
-            Add Category
+            Add Ground Category
             <PlusCircleOutlined style={{ marginLeft: "20px" }} />
           </Button>
 
@@ -397,9 +424,9 @@ const AddCategories = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={allCategories}
-            locale={{ emptyText: !jobRoleFilterIsLoading ? "No Data" : " " }}
-            loading={jobRoleFilterIsLoading}
+            dataSource={categories}
+            locale={{ emptyText: !productsLoading ? "No Data" : " " }}
+            loading={productsLoading}
             pagination={{
               current: pagination.page,
               pageSize: pagination.limit,

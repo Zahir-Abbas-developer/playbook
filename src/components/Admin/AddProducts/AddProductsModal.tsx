@@ -34,29 +34,15 @@ const locationOptions = [
 
 function AddProductsModal(props: any) {
   const [form] = Form.useForm();
-  const [certificateUrl, setCertificateUrl] = useState([]);
   const [certificateUrlThumbnail, setCertificateUrlThumbnail] = useState("");
-
-  const [fieldCount, setFieldCount] = useState(1);
-  const [fields, setFields] = useState([{ quantity: "", size: "" }]);
-
   const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role } = props;
   const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   // ------------------ Error cases Variable ------------------
 
-  console.log(fields);
-
-  const uploadCertificateId = (url: any) => {
-    setCertificateUrl(url);
-  };
   const uploadCertificateThumbnail = (url: any) => {
     setCertificateUrlThumbnail(url);
   };
-  const handleAddField = () => {
-    setFieldCount(fieldCount + 1);
 
-    setFields([...fields, { quantity: "", size: "" }]);
-  };
 
   if (modalType !== "Add") {
     const formValues = {
