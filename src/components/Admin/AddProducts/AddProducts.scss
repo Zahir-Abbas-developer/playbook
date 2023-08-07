@@ -12,10 +12,10 @@
     }
 
     .add-job-role-btn {
-      color: #6E7191;
+      color: #6e7191;
       box-shadow: 0px 0px 3px rgba(101, 205, 240, 0.15);
       border: solid 3px transparent;
-      background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #69BBD7, #65CDF0);
+      background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #69bbd7, #65cdf0);
       background-origin: border-box;
       background-clip: content-box, border-box;
       box-shadow: 2px 1000px 1px #fff inset;
@@ -28,16 +28,15 @@
       }
 
       svg {
-        color: #65CDF0;
-        box-shadow: 0px 0px 3px 0px #61C8EB;
+        color: #65cdf0;
+        box-shadow: 0px 0px 3px 0px #61c8eb;
         border-radius: 50%;
         font-size: 20px;
       }
-
     }
 
     label {
-      color: #4E4B66;
+      color: #4e4b66;
     }
 
     .ant-select-single {
@@ -60,8 +59,8 @@
       padding-top: 5px;
     }
 
-    .ant-select .ant-select-arrow .anticon>svg {
-      color: #6E7191;
+    .ant-select .ant-select-arrow .anticon > svg {
+      color: #6e7191;
     }
   }
 
@@ -80,15 +79,13 @@
       .search-input {
         width: 345px;
 
-        @media screen and (max-width:1100px) {
+        @media screen and (max-width: 1100px) {
           width: 100% !important;
         }
       }
-
     }
 
-
-    @media screen and (max-width:980px) {
+    @media screen and (max-width: 980px) {
       // flex-direction: column-reverse;
 
       .input-export-icons {
@@ -111,7 +108,6 @@
         filter: brightness(1);
       }
     }
-
   }
 
   // .custom-pagination-wrapper-class {
@@ -131,7 +127,7 @@
     .ant-select-single:not(.ant-select-customize-input) {
       .ant-select-selector {
         background: $white-color;
-        border: 1px solid #D9DBE9;
+        border: 1px solid #d9dbe9;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
         border-radius: 0px;
 
@@ -148,7 +144,7 @@
 
       .ant-select-dropdown {
         // background: #F7F7FC;
-        border: 1px solid #D9DBE9;
+        border: 1px solid #d9dbe9;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
         border-radius: 3px;
         padding: 0px;
@@ -168,12 +164,11 @@
         }
 
         .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-          background: #F7F7FC;
+          background: #f7f7fc;
           // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
         }
       }
     }
-
 
     .ant-pagination-next,
     .ant-pagination-prev,
@@ -194,13 +189,13 @@
     .app-select-wrap-class {
       .ant-select-selector {
         border-radius: 0px;
-        border-top: 1px solid #D9DBE9;
-        border-bottom: 1px solid #D9DBE9;
+        border-top: 1px solid #d9dbe9;
+        border-bottom: 1px solid #d9dbe9;
         border-left: none;
         border-right: none;
 
         &:hover {
-          border-color: #D9DBE9 !important;
+          border-color: #d9dbe9 !important;
           box-shadow: none !important;
         }
 
@@ -209,17 +204,14 @@
           font-size: 14px;
           font-weight: 400;
         }
-
       }
     }
 
-
     .ant-select-focused.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
-      border-color: #D9DBE9 !important;
+      border-color: #d9dbe9 !important;
       box-shadow: none !important;
       outline: 0;
     }
-
 
     & :not(:first-child) {
       .filter-column {
@@ -235,12 +227,12 @@
           bottom: 20%;
           top: 20%;
           left: 0;
-          background: #4E4B66;
+          background: #4e4b66;
         }
 
-        @media screen and (max-width:767px) {
-          border-left: 1px solid #D9DBE9;
-          border-right: 1px solid #D9DBE9;
+        @media screen and (max-width: 767px) {
+          border-left: 1px solid #d9dbe9;
+          border-right: 1px solid #d9dbe9;
 
           &::after {
             display: none;
@@ -251,25 +243,24 @@
 
     & :last-child {
       .filter-column {
-        border-right: 1px solid #D9DBE9 !important;
+        border-right: 1px solid #d9dbe9 !important;
       }
     }
 
     & :first-child {
       .filter-column {
-        border-left: 1px solid #D9DBE9;
+        border-left: 1px solid #d9dbe9;
 
-        @media screen and (max-width:767px) {
-          border-right: 1px solid #D9DBE9;
+        @media screen and (max-width: 767px) {
+          border-right: 1px solid #d9dbe9;
         }
       }
     }
 
-
-    @media (min-width: 768px) and (max-width:991px) {
+    @media (min-width: 768px) and (max-width: 991px) {
       & :nth-child(odd) {
         .filter-column {
-          border-left: 1px solid #D9DBE9;
+          border-left: 1px solid #d9dbe9;
 
           &::after {
             display: none;
@@ -280,22 +271,21 @@
       & :nth-child(even) {
         .filter-column {
           border-left: none !important;
-          border-right: 1px solid #D9DBE9 !important;
+          border-right: 1px solid #d9dbe9 !important;
         }
       }
 
-      & :nth-last-child(-n+2) {
+      & :nth-last-child(-n + 2) {
         .not-a-border-col.filter-column {
-          border-right: 1px solid #D9DBE9 !important;
+          border-right: 1px solid #d9dbe9 !important;
         }
       }
     }
 
-
     @media screen and (min-width: 1199px) {
-      & :nth-last-child(-n+1) {
+      & :nth-last-child(-n + 1) {
         .filter-column {
-          border-right: 1px solid #D9DBE9 !important;
+          border-right: 1px solid #d9dbe9 !important;
         }
       }
 
@@ -303,20 +293,17 @@
       & :nth-child(3):not(:last-child) {
         .filter-column {
           &.not-a-border-col {
-            border-right: 1px solid #D9DBE9 !important;
+            border-right: 1px solid #d9dbe9 !important;
           }
         }
       }
     }
   }
-
-
-
 }
 
 .common-setting-table {
   .ant-table {
-    border: 1px solid #D9DBE9;
+    border: 1px solid #d9dbe9;
     padding: 0;
     border-radius: 10px !important;
 
@@ -329,11 +316,11 @@
           font-weight: 600 !important;
           font-size: 14px !important;
           line-height: 17px !important;
-          color: #4E4B66 !important;
+          color: #4e4b66 !important;
 
           // border-bottom: 1px solid #D9DBE9 !important;
           &::before {
-            background-color: #4E4B66 !important;
+            background-color: #4e4b66 !important;
           }
         }
       }
@@ -342,7 +329,7 @@
     .ant-table-tbody {
       tr {
         height: 71px;
-        border-bottom: 1px solid #D9DBE9;
+        border-bottom: 1px solid #d9dbe9;
 
         .ant-table-cell {
           padding: 10px 16px !important;
@@ -358,22 +345,21 @@
       }
     }
   }
-
 }
 
 .add-Manage-Job-Role {
   label {
-    color: #6E7191;
+    color: #6e7191;
   }
 
   input {
-    border: 1.5px solid #A0A3BD;
+    border: 1.5px solid #a0a3bd;
     border-radius: 3px;
     // margin-bottom: 20px;
   }
 
   .ant-select-single .ant-select-selector {
-    border: 1.5px solid #A0A3BD;
+    border: 1.5px solid #a0a3bd;
     height: 40px;
     display: flex;
     align-items: center;
@@ -382,7 +368,7 @@
   }
 
   svg {
-    color: #4E132C;
+    color: #4e132c;
   }
 
   .ant-btn-loading-icon {
@@ -390,34 +376,35 @@
       color: white;
     }
   }
-
+  .ant-input-number-handler-wrap {
+    display: none;
+  }
 }
 
 .app-select-popup-wrap-class {
-  background: #F7F7FC;
-  border: 1px solid #D9DBE9;
+  background: #f7f7fc;
+  border: 1px solid #d9dbe9;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
   padding: 0px;
   text-transform: capitalize;
 
   .ant-select-item-option-active {
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 0px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px;
   }
 
   .ant-select-item {
-      border-radius: 0px;
-      background-color: #fff;
+    border-radius: 0px;
+    background-color: #fff;
 
-      &.ant-select-item-option {
-          border-radius: 3px;
-      }
+    &.ant-select-item-option {
+      border-radius: 3px;
+    }
   }
 
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-      background: #F7F7FC;
-      // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-
+    background: #f7f7fc;
+    // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   }
 }

@@ -1,7 +1,6 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
 
-
 import Login from "./components/Authentication/Login";
 import NotFound from "./components/Authentication/NotFound";
 import SignUp from "./components/Authentication/SignUp";
@@ -16,16 +15,12 @@ import OurCollectionTabDetails from "./components/ClientTabs/OurCollectionTabDet
 import OurCustomOrderDetails from "./components/ClientTabs/CustomOrderTabDetails/CustomOrderTabDetails";
 import DashboardLayout from "./layout/Header/dashboard.layout";
 
-
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
   (
     <Suspense
       fallback={
-        <div
-          className="d-flex justify-center align-center"
-          style={{ height: "80vh" }}
-        >
-          <img src={LoadingSvg} height={200} width={200} alt="LoadingSvg" /> 
+        <div className="d-flex justify-center align-center" style={{ height: "80vh" }}>
+          <img src={LoadingSvg} height={200} width={200} alt="LoadingSvg" />
         </div>
       }
     >
@@ -35,117 +30,66 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
 
 const ReviewCareHomesPage = Loadable(lazy(() => import("./pages/Ratings")));
 
-
 const DashboardPage = Loadable(lazy(() => import("./pages/Dashboard")));
 const JacketDetailsPage = Loadable(lazy(() => import("./pages/JacketDetails")));
 
-const OverAllRatingsPage = Loadable(
-  lazy(() => import("./pages/OverAllRatings"))
-);
+const OverAllRatingsPage = Loadable(lazy(() => import("./pages/OverAllRatings")));
 
-const ProductDetailsPage = Loadable(
-  lazy(() => import("./pages/ProductDetails"))
-);
-const BillingDetailsPage = Loadable(
-  lazy(() => import("./pages/BillingDetails"))
-);
-const SelectGroundPage=Loadable(lazy(()=>import("./pages/SelectGrounds")))
-const SelectGroundLocationPage=Loadable(lazy(()=>import("./pages/SelectGroundLocation")))
+const ProductDetailsPage = Loadable(lazy(() => import("./pages/ProductDetails")));
+const BillingDetailsPage = Loadable(lazy(() => import("./pages/BillingDetails")));
+const SelectGroundPage = Loadable(lazy(() => import("./pages/SelectGrounds")));
+const SelectGroundLocationPage = Loadable(lazy(() => import("./pages/SelectGroundLocation")));
 //Cart Details
-const CartDetailsPage=Loadable(
-  lazy(() => import("./pages/CartDetails"))
-);
+const CartDetailsPage = Loadable(lazy(() => import("./pages/CartDetails")));
 //UserVerification page
-const UserVerficationPage=Loadable(
-  lazy(() => import("./pages/UserVerification"))
-);
+const UserVerficationPage = Loadable(lazy(() => import("./pages/UserVerification")));
 
-const StaffAllocationPage = Loadable(
-  lazy(() => import("./pages/StaffAllocation"))
-);
+const StaffAllocationPage = Loadable(lazy(() => import("./pages/StaffAllocation")));
 
-
-const AddProductsPage = Loadable(
-  lazy(() => import("./pages/AddProducts"))
-);
-const AddCategoriesPage = Loadable(
-  lazy(() => import("./pages/AddCategories"))
-);
-const AddColorsPage = Loadable(
-  lazy(() => import("./pages/AddColors"))
-);
-const AddStylesPage = Loadable(
-  lazy(() => import("./pages/AddStyles"))
-);
-const AddOrdersPage = Loadable(
-  lazy(() => import("./pages/AddOrders"))
-);
+const AddProductsPage = Loadable(lazy(() => import("./pages/AddProducts")));
+const AddCategoriesPage = Loadable(lazy(() => import("./pages/AddCategories")));
+const AddColorsPage = Loadable(lazy(() => import("./pages/AddColors")));
+const AddStylesPage = Loadable(lazy(() => import("./pages/AddStyles")));
+const AddOrdersPage = Loadable(lazy(() => import("./pages/AddOrders")));
 
 // Reports and its Child Routes Ends Here
 
 const SettingsPage = Loadable(lazy(() => import("./pages/Settings")));
-const RatingsFeedback = Loadable(
-  lazy(() => import("./pages/RatingAndFeedback"))
-);
-
-
+const RatingsFeedback = Loadable(lazy(() => import("./pages/RatingAndFeedback")));
 
 const KeyInfo = Loadable(lazy(() => import("./pages/Settings/KeyInfo")));
 const JobRole = Loadable(lazy(() => import("./pages/Settings/JobRole")));
-const ShiftTimeSettings = Loadable(
-  lazy(() => import("./pages/Settings/ShiftTimeSettings"))
-);
-const Services=Loadable(
-  lazy(() => import("./components/ClientTabs/Services/Services"))
-);
-const StaffSettings = Loadable(
-  lazy(() => import("./pages/Settings/StaffSettings"))
-);
-const BankHolidays = Loadable(
-  lazy(() => import("./pages/Settings/BankHolidays"))
-);
-const DBSConfiguration = Loadable(
-  lazy(() => import("./pages/Settings/DBSConfiguration"))
-);
-const EmailNotification = Loadable(
-  lazy(() => import("./pages/Settings/EmailNotification"))
-);
-const ResetEmailPhone = Loadable(
-  lazy(() => import("./pages/Settings/ResetEmailPhone"))
-);
-const WeekStartDay = Loadable(
-  lazy(() => import("./pages/Settings/WeekStartDay"))
-);
+const ShiftTimeSettings = Loadable(lazy(() => import("./pages/Settings/ShiftTimeSettings")));
+const Services = Loadable(lazy(() => import("./components/ClientTabs/Services/Services")));
+const StaffSettings = Loadable(lazy(() => import("./pages/Settings/StaffSettings")));
+const BankHolidays = Loadable(lazy(() => import("./pages/Settings/BankHolidays")));
+const DBSConfiguration = Loadable(lazy(() => import("./pages/Settings/DBSConfiguration")));
+const EmailNotification = Loadable(lazy(() => import("./pages/Settings/EmailNotification")));
+const ResetEmailPhone = Loadable(lazy(() => import("./pages/Settings/ResetEmailPhone")));
+const WeekStartDay = Loadable(lazy(() => import("./pages/Settings/WeekStartDay")));
 const ClientTermsCondition = Loadable(lazy(() => import("./pages/Settings/ClientTermsConditionPage")));
-const FestivalDayGreeting = Loadable(
-  lazy(() => import("./pages/Settings/FestivalDayGreeting"))
-);
+const FestivalDayGreeting = Loadable(lazy(() => import("./pages/Settings/FestivalDayGreeting")));
 const BreakTime = Loadable(lazy(() => import("./pages/Settings/BreakTime")));
-const ChangePassword = Loadable(
-  lazy(() => import("./pages/Settings/ChangePassword"))
-);
-const ElectronicAttendanceMonitoring = Loadable(
-  lazy(() => import("./pages/Settings/ElectronicAttendanceMonitoring"))
-);
+const ChangePassword = Loadable(lazy(() => import("./pages/Settings/ChangePassword")));
+const ElectronicAttendanceMonitoring = Loadable(lazy(() => import("./pages/Settings/ElectronicAttendanceMonitoring")));
 
-const ContactDetailsPage=Loadable((lazy(()=>import("./pages/ContactDetails"))))
+const ContactDetailsPage = Loadable(lazy(() => import("./pages/ContactDetails")));
 
 export const routes: any = [
   { path: "/", element: <Navigate to="services" /> },
-  
+
   {
     path: "login",
     element: <Login />,
   },
-  {path:"forget-password", element: <Login />,
-},
+  { path: "forget-password", element: <Login /> },
   {
     path: "change-password",
     element: <Login />,
   },
   {
-    path:"user-verification",
-    element:<UserVerficationPage/>
+    path: "user-verification",
+    element: <UserVerficationPage />,
   },
   {
     path: "reset-password",
@@ -163,8 +107,7 @@ export const routes: any = [
     path: "reset-password",
     element: <ResetPassword />,
   },
-  
-  
+
   {
     path: "/",
     element: <DashboardLayout />,
@@ -173,7 +116,7 @@ export const routes: any = [
         path: "services",
         element: (
           // <RequireAuth allowedRoles={[ROLES.superAdmin]}>
-            <Services />
+          <Services />
           // </RequireAuth>
         ),
       },
@@ -186,77 +129,96 @@ export const routes: any = [
         ),
       },
       {
-       path:"select-grounds",
-       element:( <SelectGroundPage/> )
+        path: "select-grounds",
+        element: <SelectGroundPage />,
       },
       {
-        path:"select-stadium-location",
-        element:( <SelectGroundLocationPage/> )
-       },
+        path: "select-stadium-location",
+        element: <SelectGroundLocationPage />,
+      },
       {
         path: "dashboard",
         element: (
           // <RequireAuth allowedRoles={[ROLES.user]}>
-            <DashboardPage />
+          <DashboardPage />
           //  </RequireAuth>
         ),
       },
       {
-        path:"contact-details",
-        element:<ContactDetailsPage/>
+        path: "contact-details",
+        element: <ContactDetailsPage />,
       },
       {
-        path:"productDetails",
-        element:<ProductDetailsPage/>
+        path: "productDetails",
+        element: <ProductDetailsPage />,
       },
       {
-   
-        path:"/productDetails/cart-details/checkout-details",
-            
-        element:(  <BillingDetailsPage/>)
+        path: "/productDetails/cart-details/checkout-details",
+
+        element: <BillingDetailsPage />,
       },
       {
-        path:"/add-products",
-        element: (<RequireAuth allowedRoles={[ROLES.admin]}> <AddProductsPage/></RequireAuth>)  
+        path: "/add-products",
+        element: (
+          // <RequireAuth
+          // allowedRoles={[ROLES.admin]}
+          // >
+          // {" "}
+          <AddProductsPage />
+          // </RequireAuth>
+        ),
       },
       {
-        path:"/jacket-details",
-        element:(<JacketDetailsPage/>)
+        path: "/jacket-details",
+        element: <JacketDetailsPage />,
       },
       {
-        path:"/add-categories",
-        element:(<RequireAuth allowedRoles={[ROLES.admin]}><AddCategoriesPage/></RequireAuth> )
+        path: "/add-categories",
+        element: (
+          <RequireAuth allowedRoles={[ROLES.admin]}>
+            <AddCategoriesPage />
+          </RequireAuth>
+        ),
       },
       {
-        path:"/add-orders",
-        element:(<RequireAuth allowedRoles={[ROLES.admin]}><AddOrdersPage/></RequireAuth> )
+        path: "/add-orders",
+        element: (
+          <RequireAuth allowedRoles={[ROLES.admin]}>
+            <AddOrdersPage />
+          </RequireAuth>
+        ),
       },
       {
-        path:"/add-colors",
-        element:(<RequireAuth allowedRoles={[ROLES.admin]}><AddColorsPage/></RequireAuth> )
+        path: "/add-colors",
+        element: (
+          <RequireAuth allowedRoles={[ROLES.admin]}>
+            <AddColorsPage />
+          </RequireAuth>
+        ),
       },
       {
-        path:"/add-styles",
-        element:(<RequireAuth allowedRoles={[ROLES.admin]}><AddStyles/></RequireAuth> )
+        path: "/add-styles",
+        element: (
+          <RequireAuth allowedRoles={[ROLES.admin]}>
+            <AddStyles />
+          </RequireAuth>
+        ),
       },
-     
-     
+
       {
-        path:"productDetails/cart-details",
-        element:<CartDetailsPage/>
+        path: "productDetails/cart-details",
+        element: <CartDetailsPage />,
       },
-      
 
       {
         path: "shoes-products",
         element: (
           <RequireAuth allowedRoles={[ROLES.user]}>
-          
-            <OurCollectionTabDetails/>
+            <OurCollectionTabDetails />
           </RequireAuth>
         ),
       },
-     
+
       {
         path: "ratings",
         element: (
@@ -265,15 +227,14 @@ export const routes: any = [
           </RequireAuth>
         ),
       },
-      
-   
+
       {
         path: "",
         children: [
           {
             path: "ratings/reviewed",
             element: (
-              <RequireAuth allowedRoles={[ROLES.carer,ROLES.client,ROLES.coordinator]}>
+              <RequireAuth allowedRoles={[ROLES.carer, ROLES.client, ROLES.coordinator]}>
                 <OverAllRatingsPage />
               </RequireAuth>
             ),
@@ -281,7 +242,7 @@ export const routes: any = [
           {
             path: "ratings/review-care-homes",
             element: (
-              <RequireAuth allowedRoles={[ROLES.carer,ROLES.client,ROLES.coordinator]}>
+              <RequireAuth allowedRoles={[ROLES.carer, ROLES.client, ROLES.coordinator]}>
                 <ReviewCareHomesPage />
               </RequireAuth>
             ),
@@ -294,9 +255,7 @@ export const routes: any = [
           {
             path: "settings",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
                 <SettingsPage />
               </RequireAuth>
             ),
@@ -304,9 +263,7 @@ export const routes: any = [
           {
             path: "settings/Key-info",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <KeyInfo />
               </RequireAuth>
             ),
@@ -314,9 +271,7 @@ export const routes: any = [
           {
             path: "settings/job-role",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
                 <JobRole />
               </RequireAuth>
             ),
@@ -324,9 +279,7 @@ export const routes: any = [
           {
             path: "settings/shift-time-settings",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <ShiftTimeSettings />
               </RequireAuth>
             ),
@@ -334,9 +287,7 @@ export const routes: any = [
           {
             path: "settings/staff-settings",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <StaffSettings />
               </RequireAuth>
             ),
@@ -344,9 +295,7 @@ export const routes: any = [
           {
             path: "settings/bank-holidays",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <BankHolidays />
               </RequireAuth>
             ),
@@ -354,9 +303,7 @@ export const routes: any = [
           {
             path: "settings/dbs-configuration",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin]}>
                 <DBSConfiguration />
               </RequireAuth>
             ),
@@ -364,9 +311,7 @@ export const routes: any = [
           {
             path: "settings/email-notification",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin]}>
                 <EmailNotification />
               </RequireAuth>
             ),
@@ -374,9 +319,7 @@ export const routes: any = [
           {
             path: "settings/set-email-Phone",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <ResetEmailPhone />
               </RequireAuth>
             ),
@@ -384,9 +327,7 @@ export const routes: any = [
           {
             path: "settings/week-start-day",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
                 <WeekStartDay />
               </RequireAuth>
             ),
@@ -394,9 +335,7 @@ export const routes: any = [
           {
             path: "settings/festival-day-greeting",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin,ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
                 <FestivalDayGreeting />
               </RequireAuth>
             ),
@@ -409,13 +348,11 @@ export const routes: any = [
               </RequireAuth>
             ),
           },
-        
+
           {
             path: "settings/break-time-settings",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
                 <BreakTime />
               </RequireAuth>
             ),
@@ -423,9 +360,7 @@ export const routes: any = [
           {
             path: "settings/change-password",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.coordinator]}
-              >
+              <RequireAuth allowedRoles={[ROLES.coordinator]}>
                 <ChangePassword />
               </RequireAuth>
             ),
@@ -433,16 +368,14 @@ export const routes: any = [
           {
             path: "settings/electronic-attendance-monitoring",
             element: (
-              <RequireAuth
-                allowedRoles={[ROLES.client]}
-              >
+              <RequireAuth allowedRoles={[ROLES.client]}>
                 <ElectronicAttendanceMonitoring />
               </RequireAuth>
             ),
           },
         ],
       },
-     
+
       //client
       {
         path: "",
@@ -451,18 +384,16 @@ export const routes: any = [
             path: "client-booking-calendar",
             element: (
               <RequireAuth allowedRoles={[ROLES.user]}>
-                 <OurCustomOrderDetails /> 
+                <OurCustomOrderDetails />
               </RequireAuth>
             ),
           },
-          
         ],
       },
-     
     ],
   },
   {
     path: "*",
-    element: <NotFound />
-  }
+    element: <NotFound />,
+  },
 ];

@@ -9,8 +9,18 @@ export const theme = {
     // colorTextBase: "#264653",
   },
   components: {
-    Button: { borderRadius: 2, controlHeight: 40, controlHeightLG: 48, controlHeightSM: 24, paddingContentHorizontal: 35, fontSize: 16, colorPrimaryHover: "none" },
+    Button: {
+      borderRadius: 2,
+      controlHeight: 40,
+      controlHeightLG: 48,
+      controlHeightSM: 24,
+      paddingContentHorizontal: 35,
+      fontSize: 16,
+      colorPrimaryHover: "none",
+    },
     Input: { controlHeight: 45, controlHeightLG: 45, controlHeightSM: 38, colorBorder: "#A0A3BD", borderRadius: 3 },
+    InputNumber: { controlHeight: 45, controlHeightLG: 45, controlHeightSM: 38, colorBorder: "#A0A3BD", borderRadius: 3 },
+
     // Typography: { colorTextHeading: "#14142B" },
   },
 };

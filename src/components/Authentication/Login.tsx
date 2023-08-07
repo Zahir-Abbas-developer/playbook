@@ -16,18 +16,16 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 
 //comment for testing
 const Login = () => {
-  const [errorMessage, setErrorMessage] = useState(false);
-  const [changePasswordErrorMessage, setChangePasswordErrorMessage] =
-    useState("");
+  const [errorMessage, setErrorMessage] = useState<any>(false);
+  const [changePasswordErrorMessage, setChangePasswordErrorMessage] = useState("");
   let navigate = useNavigate();
   const location = useLocation();
   const [signInPostRequest, { isLoading }] = useSignInPostRequestMutation();
-  const [forgetPasswordRequest, { isLoading: isLoadingForgetPassword }] = useForgetPasswordRequestMutation()
-  const [resetPasswordRequest, { isLoading: isLoadingNewPassword }] = useNewPasswordRequestMutation()
+  const [forgetPasswordRequest, { isLoading: isLoadingForgetPassword }] = useForgetPasswordRequestMutation();
+  const [resetPasswordRequest, { isLoading: isLoadingNewPassword }] = useNewPasswordRequestMutation();
 
-  const [authSignUp] = useAuthSignUpMutation()
-  const [changePasswordPostRequest, { isLoading: changePasswordLoading }] =
-    useChangePasswordPostRequestMutation();
+  const [authSignUp] = useAuthSignUpMutation();
+  const [changePasswordPostRequest, { isLoading: changePasswordLoading }] = useChangePasswordPostRequestMutation();
 
   function renderDashboard(role: string): string {
     if (role === "user") {
@@ -39,74 +37,72 @@ const Login = () => {
     }
   }
   const onFinishSignUp = async (values: any) => {
-    delete values?.confirmpassWord
+    delete values?.confirmpassWord;
     if (values?.password === values?.confirmPassword) {
       const payload = {
         email: values.email,
         password: values.password,
         username: values?.username,
-        role:"user",
-        url: window?.location?.origin + "/user-verification"
+        role: "admin",
+        url: window?.location?.origin + "/user-verification",
       };
       createUserWithEmailAndPassword(auth, values?.email, values.password)
-      .then(response => {
-        // Save user data to Firestore
-        setDoc(doc(firestore, "users", response.user.uid), {
-          email: values.email,
-          username: values.username,
-          role: payload.role,
-        }).then(() => {
-          // Check if the user is not null before sending the verification email
-          if (auth.currentUser !== null) {
-            // Send email verification to the user
-            sendEmailVerification(auth.currentUser)
-              .then(() => {
-                console.log("Verification email sent!");
-                navigate("/login");
-              })
-              .catch(error => {
-                console.error("Error sending verification email:", error);
-                // Handle the error or notify the user appropriately
-              });
-          } else {
-            console.error("Current user is null. Cannot send verification email.");
-            // Handle this scenario appropriately (e.g., show an error message)
+        .then((response) => {
+          // Save user data to Firestore
+          setDoc(doc(firestore, "users", response.user.uid), {
+            email: values.email,
+            username: values.username,
+            role: payload.role,
+          }).then(() => {
+            // Check if the user is not null before sending the verification email
+            if (auth.currentUser !== null) {
+              // Send email verification to the user
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  console.log("Verification email sent!");
+                  navigate("/login");
+                })
+                .catch((error) => {
+                  console.error("Error sending verification email:", error);
+                  // Handle the error or notify the user appropriately
+                });
+            } else {
+              console.error("Current user is null. Cannot send verification email.");
+              // Handle this scenario appropriately (e.g., show an error message)
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error creating user:", error);
+        });
+    } else {
+      setChangePasswordErrorMessage("New Password and Confirm New Password Should Be Equal");
+    }
+  };
+
+  const onFinish = async (values: any) => {
+    const payload = {
+      emailOrUsername: values?.emailOrUsername, // values.username,
+      password: values?.password, //values.password,
+    };
+
+    signInWithEmailAndPassword(auth, values.emailOrUsername, values.password)
+      .then((response) => {
+        if (!response?.user?.emailVerified) {
+          setErrorMessage("Email is not Verified");
+          return;
+        }
+        getDoc(doc(firestore, "users", response.user.uid)).then((result) => {
+          if (result.exists()) {
+            const userData: any = { id: result.id, ...result.data() };
+            localStorage.setItem("user", JSON.stringify(userData));
+            navigate(renderDashboard(userData?.role || "user"));
           }
         });
       })
-      .catch(error => {
-        console.error("Error creating user:", error);
-      });
-     
-    } else {
-      setChangePasswordErrorMessage(
-        "New Password and Confirm New Password Should Be Equal"
-      );
-    }
-
-  }
-
-  const onFinish = async (values: any) => {
-      const payload = {
-        emailOrUsername: values?.emailOrUsername, // values.username,
-        password: values?.password,//values.password,
-
-      };
-
-      signInWithEmailAndPassword(auth, values.emailOrUsername, values.password)
-      .then(response => {
-        getDoc(doc(firestore, "users", response.user.uid)).then(result => {
-          if (result.exists()) {
-            
-            localStorage.setItem('user', JSON.stringify(result));
-            const userData:any={id:result.id,...result.data()}
-            navigate(renderDashboard(userData?.role||"user"))
-          }
-        })
-      }).catch(err=>{
+      .catch((err) => {
         setErrorMessage(err?.message);
-      })
-  
+      });
 
     // const { error, data }: any = await signInPostRequest({
     //   payload,
@@ -114,7 +110,6 @@ const Login = () => {
 
     // let token
     // const role = data?.data?.user?.roleData?.name;
-
 
     // // console.log("test data", data?.data?.session)
 
@@ -144,37 +139,33 @@ const Login = () => {
   const onFinishForgetPassword = async (values: any) => {
     const payload = {
       email: values?.email,
-      url: window?.location?.origin + "/reset-password"
-    }
+      url: window?.location?.origin + "/reset-password",
+    };
     try {
-      sendPasswordResetEmail(auth,values?.email).then(response=>{}).catch(err=>console.log("error",err))
+      sendPasswordResetEmail(auth, values?.email)
+        .then((response) => {})
+        .catch((err) => console.log("error", err));
       // const res: any = await forgetPasswordRequest({ payload }).unwrap()
       // console.log(res)
       // navigate(`/reset-password?token=${res?.token}`)
-
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  };
   const myParam = useLocation().search;
   const resetToken = new URLSearchParams(myParam).get("token");
   const onFinishNewPassword = async (values: any) => {
     const payload = {
       password: values?.password,
-      token: resetToken
-    }
+      token: resetToken,
+    };
     try {
-      const res = await resetPasswordRequest({ payload }).unwrap()
-      console.log(res)
+      const res = await resetPasswordRequest({ payload }).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-
-  }
-
-
+  };
 
   const onFinishChangePassword = async (values: any) => {
     if (values?.newPassword === values?.confirmNewPassword) {
@@ -191,9 +182,7 @@ const Login = () => {
         setChangePasswordErrorMessage(error?.data?.message);
       }
     } else {
-      setChangePasswordErrorMessage(
-        "New Password and Confirm New Password Should Be Equal"
-      );
+      setChangePasswordErrorMessage("New Password and Confirm New Password Should Be Equal");
     }
   };
   const validateEmail = (rule: any, value: any, callback: any) => {
@@ -218,13 +207,11 @@ const Login = () => {
             <div>
               <h1 className="heading-1">
                 <span className="pink-color" style={{ color: "#e76f51" }}>
-                  {location?.pathname === "/login"
-                    ? "Sign In"
-                    : location?.pathname === "/sign-up" ? "Sign Up" : "Change Password"}
+                  {location?.pathname === "/login" ? "Sign In" : location?.pathname === "/sign-up" ? "Sign Up" : "Change Password"}
                 </span>
-                <span > to</span>
+                <span> to</span>
               </h1>
-              <h3 className="heading-3" >Play Book</h3>
+              <h3 className="heading-3">Play Book</h3>
             </div>
             {/* <div>
               <p className="p-tag-description-1">If you don't have an account register</p>
@@ -246,9 +233,7 @@ const Login = () => {
       {location?.pathname === "/login" && (
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
-            <div className="img-div" style={{ textAlign: "center" }}>
-             
-            </div>
+            <div className="img-div" style={{ textAlign: "center" }}></div>
             <div>
               <h2 className="Sign-in-heading">Sign In</h2>
               <Form name="emailOrUsername" onFinish={onFinish}>
@@ -277,9 +262,7 @@ const Login = () => {
                   <Input.Password
                     placeholder="Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <p style={{ color: "red" }}>{errorMessage}</p>
@@ -290,13 +273,7 @@ const Login = () => {
                   </Link>
                 </div>
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isLoading}
-                    className=" btn-signin fw-600 "
-                    block
-                  >
+                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
                     Sign In
                   </Button>
                   <div style={{ textAlign: "end", margin: "10px 0px 20px 0px" }}>
@@ -318,9 +295,7 @@ const Login = () => {
       {location?.pathname === "/change-password" && (
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
-            <div className="img-div" style={{ textAlign: "center" }}>
-            
-            </div>
+            <div className="img-div" style={{ textAlign: "center" }}></div>
             <div>
               <h2 className="Sign-in-heading">Change Passwod</h2>
               <Form name="currentPassword" onFinish={onFinishChangePassword}>
@@ -333,10 +308,7 @@ const Login = () => {
                     },
                   ]}
                 >
-                  <Input.Password
-                    placeholder="Current Password"
-                    className="input-style"
-                  />
+                  <Input.Password placeholder="Current Password" className="input-style" />
                 </Form.Item>
                 <Form.Item
                   name="newPassword"
@@ -351,9 +323,7 @@ const Login = () => {
                   <Input.Password
                     placeholder="New Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -369,22 +339,14 @@ const Login = () => {
                   <Input.Password
                     placeholder="Confirm New Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <p style={{ color: "red" }}>{errorMessage}</p>
                 <p style={{ color: "red" }}>{changePasswordErrorMessage}</p>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isLoading}
-                    className=" btn-signin fw-600 "
-                    block
-                  >
+                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
                     Save Password
                   </Button>
                 </Form.Item>
@@ -400,11 +362,11 @@ const Login = () => {
       {location?.pathname === "/sign-up" && (
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
-            <div className="img-div" style={{ textAlign: "center" }}>
-              
-            </div>
+            <div className="img-div" style={{ textAlign: "center" }}></div>
             <div>
-              <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>Sign Up</h2>
+              <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>
+                Sign Up
+              </h2>
               <Form name="currentPassword" onFinish={onFinishSignUp}>
                 <Form.Item
                   name="username"
@@ -415,10 +377,7 @@ const Login = () => {
                     },
                   ]}
                 >
-                  <Input
-                    placeholder="Username"
-                    className="input-style"
-                  />
+                  <Input placeholder="Username" className="input-style" />
                 </Form.Item>
                 <Form.Item
                   name="email"
@@ -445,9 +404,7 @@ const Login = () => {
                   <Input.Password
                     placeholder="Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -463,22 +420,14 @@ const Login = () => {
                   <Input.Password
                     placeholder="Confirm  Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <p style={{ color: "red" }}>{errorMessage}</p>
                 <p style={{ color: "red" }}>{changePasswordErrorMessage}</p>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isLoading}
-                    className=" btn-signin fw-600 "
-                    block
-                  >
+                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
                     Save
                   </Button>
                 </Form.Item>
@@ -494,11 +443,11 @@ const Login = () => {
       {location?.pathname === "/forget-password" && (
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
-            <div className="img-div" style={{ textAlign: "center" }}>
-             
-            </div>
+            <div className="img-div" style={{ textAlign: "center" }}></div>
             <div>
-              <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>Forget Password</h2>
+              <h2 className="Sign-in-heading" style={{ textDecoration: "revert" }}>
+                Forget Password
+              </h2>
               <Form name="currentPassword" onFinish={onFinishForgetPassword}>
                 <Form.Item
                   name="email"
@@ -509,20 +458,10 @@ const Login = () => {
                     },
                   ]}
                 >
-                  <Input
-                    style={{ color: "white" }}
-                    placeholder="Enter Email"
-                    className="input-style"
-                  />
+                  <Input style={{ color: "white" }} placeholder="Enter Email" className="input-style" />
                 </Form.Item>
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isLoadingForgetPassword}
-                    className=" btn-signin fw-600 "
-                    block
-                  >
+                  <Button type="primary" htmlType="submit" loading={isLoadingForgetPassword} className=" btn-signin fw-600 " block>
                     Save
                   </Button>
                 </Form.Item>
@@ -538,9 +477,7 @@ const Login = () => {
       {location?.pathname === "/reset-password" && (
         <Col xs={24} sm={24} lg={12} xl={10}>
           <div className="right-outer-div">
-            <div className="img-div" style={{ textAlign: "center" }}>
-             
-            </div>
+            <div className="img-div" style={{ textAlign: "center" }}></div>
             <div>
               <h2 className="Sign-in-heading">New Password</h2>
               <Form name="password" onFinish={onFinishNewPassword}>
@@ -557,9 +494,7 @@ const Login = () => {
                   <Input.Password
                     placeholder="New Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -575,20 +510,11 @@ const Login = () => {
                   <Input.Password
                     placeholder="Confirm New Password"
                     className="input-style"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
                 </Form.Item>
                 <Form.Item>
-
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isLoadingNewPassword}
-                    className=" btn-signin fw-600 "
-                    block
-                  >
+                  <Button type="primary" htmlType="submit" loading={isLoadingNewPassword} className=" btn-signin fw-600 " block>
                     Save
                   </Button>
                 </Form.Item>
