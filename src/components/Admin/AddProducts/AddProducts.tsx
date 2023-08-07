@@ -31,6 +31,9 @@ import AddProductsModal from "./AddProductsModal";
 import { useDeleteProductsMutation, useGetAllMaterialsQuery, useGetOverAllProductsQuery } from "../../../store/Slices/Products";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
+import { useAppSelector } from "../../../store";
+import { useDispatch } from "react-redux";
+import { setCategories, setGrounds, setLocations } from "../../../store/Slices/Playbook";
 
 const AddProducts = () => {
   const [pagination, setPagination] = useState({ limit: 6, page: 1 });
@@ -49,7 +52,9 @@ const AddProducts = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [grounds, setGrounds] = useState<any[]>([]);
+  const { grounds, locations, categories }: any = useAppSelector((state) => state.playbook);
+  const dispatch = useDispatch()
+
 
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
@@ -66,16 +71,32 @@ const AddProducts = () => {
   let careHomeDataDropdown: any;
 
   useEffect(() => {
-    fetchGrounds();
+    if (!grounds.length) fetchGrounds();
+    if (!locations?.length) fetchLocations()
+    if (!categories?.length) fetchCategories()
   }, []);
 
   const fetchGrounds = () => {
     setProductsLoading(true);
     onSnapshot(collection(firestore, "grounds"), (snapshot) => {
-      setGrounds(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      const groundsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setGrounds(groundsData))
       setProductsLoading(false);
     });
   };
+  const fetchCategories = () => {
+    onSnapshot(collection(firestore, "categories"), (snapshot) => {
+      const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setCategories(categoriesData))
+    });
+  };
+  const fetchLocations = () => {
+    onSnapshot(collection(firestore, "locations"), (snapshot) => {
+      const locationsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setLocations(locationsData))
+    });
+  };
+
 
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
@@ -122,6 +143,13 @@ const AddProducts = () => {
     setGetFieldValues({});
     setJobID("");
   };
+
+  const getCategoryName = (categoryId: string) => {
+    return categories?.find((category: any) => category.id === categoryId)?.name || "N/A"
+  }
+  const getLocationName = (locationId: string) => {
+    return locations?.find((location: any) => location.id === locationId)?.name || "N/A"
+  }
 
   // ============================== Table Action Dropdowns Items ==============================
   const items: MenuProps["items"] = [
@@ -185,7 +213,7 @@ const AddProducts = () => {
       dataIndex: "category",
       align: "center",
       render: (value: any, record: any, index: any) => {
-        return <span className="capitalize">{value}</span>;
+        return <span className="capitalize">{getCategoryName(record?.categoryId)}</span>;
       },
     },
     {
@@ -349,6 +377,8 @@ const AddProducts = () => {
         setGetFieldValues={setGetFieldValues}
         getTableRowValues={getTableRowValues}
         role={role}
+        categoryOptions={categories.map((category: any) => ({ label: category.name, value: category.id }))}
+        locationOptions={locations.map((location: any) => ({ label: location.location, value: location.id }))}
       />
 
       {/* ============================== Cross Allocation Modal For Job Role ============================== */}
@@ -371,7 +401,7 @@ const AddProducts = () => {
         title="Do you want to discard this Details?"
         onSubmit={handleDeleteSubmit}
         onCancel={() => setIsDeleteModal(false)}
-        // isLoading={isDeleteJobRequestMutation}
+      // isLoading={isDeleteJobRequestMutation}
       />
     </>
   );

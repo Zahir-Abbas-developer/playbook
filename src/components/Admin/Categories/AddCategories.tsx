@@ -40,7 +40,10 @@ import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationMo
 
 import { renderDashboard } from "../../../utils/useRenderDashboard";
 import AddCategoryModal from "./AddCategoryModal";
-import { useDeleteCategoriesMutation,  useGetAllCategoriessQuery } from "../../../store/Slices/Products";
+import { useDeleteCategoriesMutation, useGetAllCategoriessQuery } from "../../../store/Slices/Products";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../store";
+import { setCategories } from "../../../store/Slices/Playbook";
 
 
 const AddCategories = () => {
@@ -49,7 +52,7 @@ const AddCategories = () => {
   const [selectedFilterValue, setSelectedFilterValue] = useState<string | undefined>();
   const [selectedCareHomeFilterValue, setSelectedCareHomeFilterValue] = useState<string | undefined>();
   const [crossAllocationRecord, setCrossAllocationRecord] = useState([]);
-  const {data:getCategories ,isSuccess:isSuccessCategories}=useGetAllCategoriessQuery({})
+  const { data: getCategories, isSuccess: isSuccessCategories } = useGetAllCategoriessQuery({})
   // ============================== Filters ==============================
   const [searchName, setSearchName] = useState<string>("");
 
@@ -61,7 +64,9 @@ const AddCategories = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  // const [categories, setCategories] = useState<any[]>([]);
+  const dispatch = useDispatch()
+  const { categories } = useAppSelector(state => state.playbook)
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
   if (searchName) paramsObj["name"] = searchName;
@@ -87,9 +92,9 @@ const AddCategories = () => {
   let JobRole: any;
   let unchangeUserData: any;
   let clientAPIData: any;
-  let allCategories:any
-  if(isSuccessCategories){
-    allCategories=getCategories
+  let allCategories: any
+  if (isSuccessCategories) {
+    allCategories = getCategories
   }
 
   if (isSuccess) {
@@ -127,13 +132,14 @@ const AddCategories = () => {
 
 
   useEffect(() => {
-    fetchCategories();
+    if (!categories?.length)
+      fetchCategories();
   }, []);
 
   const fetchCategories = () => {
     setProductsLoading(true);
     onSnapshot(collection(firestore, "categories"), (snapshot) => {
-      setCategories(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      dispatch(setCategories(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
       setProductsLoading(false);
     });
   };
@@ -150,7 +156,7 @@ const AddCategories = () => {
             message: "Information deleted successfully",
           })
         )
-        .catch((error:any) =>
+        .catch((error: any) =>
           AppSnackbar({
             type: "error",
             messageHeading: "Error",
@@ -209,7 +215,7 @@ const AddCategories = () => {
       ),
       key: "1",
     },
-    
+
     {
       label: (
         <Space
@@ -252,7 +258,7 @@ const AddCategories = () => {
       dataIndex: "description",
       align: "center"
     },
-  
+
 
     ...(role === ROLES.coordinator ?
       [{
@@ -309,14 +315,14 @@ const AddCategories = () => {
     <>
 
       <BreadCrumb breadCrumbItems={[
-       {
-        title: "Categories",
-        path: "",
-      },
-      {
-        title: "Home",
-        path: renderDashboard(role),
-      },
+        {
+          title: "Categories",
+          path: "",
+        },
+        {
+          title: "Home",
+          path: renderDashboard(role),
+        },
       ]} />
 
       <div className="setting-job-role">
@@ -373,7 +379,7 @@ const AddCategories = () => {
                     onChange={(value: string) => {
                       if (selectedCareHomeFilterValue === value) {
                         setSelectedCareHomeFilterValue("")
-                    
+
                       } else {
                         setSelectedCareHomeFilterValue(value)
                       }
@@ -396,9 +402,9 @@ const AddCategories = () => {
             <Input
               className="search-input"
               placeholder="Search by category name"
-              onChange={(event: any) =>
-              {  debouncedSearch(event.target.value, setSearchName);
-                setPagination({...pagination ,page:1})
+              onChange={(event: any) => {
+                debouncedSearch(event.target.value, setSearchName);
+                setPagination({ ...pagination, page: 1 })
               }
               }
               prefix={

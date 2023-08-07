@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { emptySplitApi } from "./Services";
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider, TypedUseSelectorHook,  useDispatch, useSelector } from 'react-redux';
+import { Provider, TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from '@reduxjs/toolkit';
@@ -11,6 +11,7 @@ import productReducer from './Slices/AddToCardSlice';
 import productSlice from "./Slices/AddToCardSlice";
 
 import drawerSlice from "./Slices/OpenDrawerSlice";
+import playbookSlice from "./Slices/Playbook";
 
 
 
@@ -24,7 +25,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   products: productSlice.reducer,
-  
+
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -35,6 +36,7 @@ const store = configureStore({
     [emptySplitApi.reducerPath]: emptySplitApi.reducer,
     products: persistedReducer,
     drawer: drawerSlice.reducer,
+    playbook: playbookSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(emptySplitApi.middleware),

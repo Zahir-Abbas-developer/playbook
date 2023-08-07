@@ -37,6 +37,9 @@ import AddColorModal from "./AddColorModal";
 import { useDeleteColorsMutation, useGetAllColorsQuery } from "../../../store/Slices/Products";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../store";
+import { setLocations } from "../../../store/Slices/Playbook";
 
 const AddColors = () => {
 
@@ -56,7 +59,9 @@ const AddColors = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [location, setLocation] = useState<any[]>([]);
+  // const [location, setLocation] = useState<any[]>([]);
+  const dispatch = useDispatch()
+  const { locations } = useAppSelector(state => state.playbook)
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
   if (searchName) paramsObj["name"] = searchName;
@@ -75,7 +80,7 @@ const AddColors = () => {
   const { data: clientData, isSuccess: isClientDataSuccess } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
   const { data: jobRoleFilterData, isLoading: jobRoleFilterIsLoading } = useGetJobRequestFilterQuery({ refetchOnMountOrArgChange: true, query, pagination });
   const [deleteColors, { isLoading: isDeleteJobRequestMutation }] = useDeleteColorsMutation();
-  const {data:getColors ,isSuccess:isSuccessCategories}=useGetAllColorsQuery({})
+  const { data: getColors, isSuccess: isSuccessCategories } = useGetAllColorsQuery({})
 
 
   // ============================== Variables to Assign Values to it ==============================
@@ -83,9 +88,9 @@ const AddColors = () => {
   let JobRole: any;
   let unchangeUserData: any;
   let clientAPIData: any;
-  let allColors:any
-  if(isSuccessCategories){
-    allColors=getColors
+  let allColors: any
+  if (isSuccessCategories) {
+    allColors = getColors
   }
 
   if (isSuccess) {
@@ -123,13 +128,14 @@ const AddColors = () => {
 
 
   useEffect(() => {
-    fetchLocations();
+    if (!locations?.length)
+      fetchLocations();
   }, []);
 
   const fetchLocations = () => {
     setProductsLoading(true);
-    onSnapshot(collection(firestore, "categories"), (snapshot) => {
-      setLocation(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    onSnapshot(collection(firestore, "locations"), (snapshot) => {
+      dispatch(setLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
       setProductsLoading(false);
     });
   };
@@ -137,8 +143,7 @@ const AddColors = () => {
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
-      console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
-      deleteDoc(doc(firestore, "categories", jobID))
+      deleteDoc(doc(firestore, "locations", jobID))
         .then((response) =>
           AppSnackbar({
             type: "success",
@@ -146,7 +151,7 @@ const AddColors = () => {
             message: "Information deleted successfully",
           })
         )
-        .catch((error:any) =>
+        .catch((error: any) =>
           AppSnackbar({
             type: "error",
             messageHeading: "Error",
@@ -203,7 +208,7 @@ const AddColors = () => {
       ),
       key: "1",
     },
-   
+
     {
       label: (
         <Space
@@ -303,14 +308,14 @@ const AddColors = () => {
     <>
 
       <BreadCrumb breadCrumbItems={[
-       {
-        title: "Colors",
-        path: "",
-      },
-      {
-        title: "Home",
-        path: renderDashboard(role),
-      },
+        {
+          title: "Colors",
+          path: "",
+        },
+        {
+          title: "Home",
+          path: renderDashboard(role),
+        },
       ]} />
 
       <div className="setting-job-role">
@@ -346,7 +351,7 @@ const AddColors = () => {
                       ? (setPagination({ ...pagination, page: 1 }), setSelectedFilterValue(value))
                       : setSelectedFilterValue("")
                   }
-                  
+
                   options={optimizedUserRoleDropdown}
                 />
               </div>
@@ -367,7 +372,7 @@ const AddColors = () => {
                     onChange={(value: string) => {
                       if (selectedCareHomeFilterValue === value) {
                         setSelectedCareHomeFilterValue("")
-                    
+
                       } else {
                         setSelectedCareHomeFilterValue(value)
                       }
@@ -390,9 +395,9 @@ const AddColors = () => {
             <Input
               className="search-input"
               placeholder="Search by Color name"
-              onChange={(event: any) =>
-              {  debouncedSearch(event.target.value, setSearchName);
-                setPagination({...pagination ,page:1})
+              onChange={(event: any) => {
+                debouncedSearch(event.target.value, setSearchName);
+                setPagination({ ...pagination, page: 1 })
               }
               }
               prefix={
@@ -418,7 +423,7 @@ const AddColors = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={location}
+            dataSource={locations}
             locale={{ emptyText: !productsLoading ? "No Data" : " " }}
             loading={productsLoading}
             pagination={{

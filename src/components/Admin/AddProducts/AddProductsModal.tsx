@@ -20,22 +20,22 @@ import Thumbnail from "../../Setting/SettingKeyInfo/UploadImage/Thumbnail";
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
 
-const categoryOptions = [
-  { label: "Cricket", value: "cricket" },
-  { label: "Hockey", value: "hockey" },
-  { label: "FootBall", value: "football" },
-  { label: "BadMinton", value: "badminton" },
-];
-const locationOptions = [
-  { label: "RawalPindi", value: "rawalpindi" },
-  { label: "WahCantt", value: "wahcantt" },
-  { label: "Islamabad", value: "islamabad" },
-];
+// const categoryOptions = [
+//   { label: "Cricket", value: "cricket" },
+//   { label: "Hockey", value: "hockey" },
+//   { label: "FootBall", value: "football" },
+//   { label: "BadMinton", value: "badminton" },
+// ];
+// const locationOptions = [
+//   { label: "RawalPindi", value: "rawalpindi" },
+//   { label: "WahCantt", value: "wahcantt" },
+//   { label: "Islamabad", value: "islamabad" },
+// ];
 
 function AddProductsModal(props: any) {
   const [form] = Form.useForm();
   const [certificateUrlThumbnail, setCertificateUrlThumbnail] = useState("");
-  const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role } = props;
+  const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, categoryOptions, locationOptions } = props;
   const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   // ------------------ Error cases Variable ------------------
 
@@ -47,8 +47,8 @@ function AddProductsModal(props: any) {
   if (modalType !== "Add") {
     const formValues = {
       name: getTableRowValues.name,
-      category: getTableRowValues.category,
-      location: getTableRowValues.location,
+      categoryId: getTableRowValues.categoryId,
+      locationId: getTableRowValues.locationId,
       seats: getTableRowValues?.seats,
       description: getTableRowValues?.description,
       price: getTableRowValues?.price,
@@ -147,23 +147,23 @@ function AddProductsModal(props: any) {
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
             <label className="fs-14 fw-600">Location</label>
             <Form.Item
-              name="location"
+              name="locationId"
               rules={[{ required: true, message: "Required field " }]}
               style={{ marginBottom: "8px" }}
               normalize={(value: any) => handleInputTrimStart(value)}
             >
-              <Select placeholder="Select Ground Location" id="location" style={{ marginTop: "2px", height: "40px" }} options={locationOptions} />
+              <Select placeholder="Select Ground Location" id="locationId" style={{ marginTop: "2px", height: "40px" }} options={locationOptions} />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
             <label className="fs-14 fw-600">Category</label>
             <Form.Item
-              name="category"
+              name="categoryId"
               rules={[{ required: true, message: "Required field " }]}
               style={{ marginBottom: "8px" }}
               normalize={(value: any) => handleInputTrimStart(value)}
             >
-              <Select placeholder="Select Ground Category" id="category" style={{ marginTop: "2px", height: "40px" }} options={categoryOptions} />
+              <Select placeholder="Select Ground Category" id="categoryId" style={{ marginTop: "2px", height: "40px" }} options={categoryOptions} />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
@@ -172,7 +172,7 @@ function AddProductsModal(props: any) {
               name="seats"
               rules={[{ required: true, message: "Required field " }]}
               style={{ marginBottom: "8px" }}
-              // normalize={(value: any) => handleInputTrimStart(value)}
+            // normalize={(value: any) => handleInputTrimStart(value)}
             >
               <InputNumber min={1} placeholder="Enter Ground Seats" id="seats" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
             </Form.Item>
@@ -183,7 +183,7 @@ function AddProductsModal(props: any) {
               name="price"
               rules={[{ required: true, message: "Required field " }]}
               style={{ marginBottom: "8px" }}
-              // normalize={(value: any) => handleInputTrimStart(value)}
+            // normalize={(value: any) => handleInputTrimStart(value)}
             >
               <InputNumber min={10} placeholder="Enter Ground Price" id="price" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
             </Form.Item>
@@ -203,7 +203,7 @@ function AddProductsModal(props: any) {
           <Button
             type="primary"
             htmlType="submit"
-            //  loading={isPostJobRequestMutation || isUpdateJobRequestMutation}
+          //  loading={isPostJobRequestMutation || isUpdateJobRequestMutation}
           >
             {modalType === "Edit" ? "Update" : "Save"}
           </Button>

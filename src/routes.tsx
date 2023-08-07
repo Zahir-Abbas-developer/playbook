@@ -16,17 +16,17 @@ import OurCustomOrderDetails from "./components/ClientTabs/CustomOrderTabDetails
 import DashboardLayout from "./layout/Header/dashboard.layout";
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense
-      fallback={
-        <div className="d-flex justify-center align-center" style={{ height: "80vh" }}>
-          <img src={LoadingSvg} height={200} width={200} alt="LoadingSvg" />
-        </div>
-      }
-    >
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense
+    fallback={
+      <div className="d-flex justify-center align-center" style={{ height: "80vh" }}>
+        <img src={LoadingSvg} height={200} width={200} alt="LoadingSvg" />
+      </div>
+    }
+  >
+    <Component {...props} />
+  </Suspense>
+);
 
 const ReviewCareHomesPage = Loadable(lazy(() => import("./pages/Ratings")));
 
@@ -175,9 +175,9 @@ export const routes: any = [
       {
         path: "/add-categories",
         element: (
-          <RequireAuth allowedRoles={[ROLES.admin]}>
-            <AddCategoriesPage />
-          </RequireAuth>
+          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <AddCategoriesPage />
+          // </RequireAuth>
         ),
       },
       {
@@ -191,9 +191,9 @@ export const routes: any = [
       {
         path: "/add-colors",
         element: (
-          <RequireAuth allowedRoles={[ROLES.admin]}>
-            <AddColorsPage />
-          </RequireAuth>
+          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <AddColorsPage />
+          // </RequireAuth>
         ),
       },
       {

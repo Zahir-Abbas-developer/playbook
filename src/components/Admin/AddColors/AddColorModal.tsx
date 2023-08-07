@@ -11,14 +11,14 @@ import arrowDown from "../../../assets/icons/arrow-down-icon.svg"
 import AppSnackbar from "../../../utils/AppSnackbar";
 import { ROLES } from "../../../constants/Roles";
 import { useGetClientsQuery } from "../../../store/Slices/Setting/StaffSettings/RegisterationConfiguration";
-import {  handleInputTrimStart } from "../../../utils/useInputTrim";
-import {  usePostColorsMutation, useUpdateColorsMutation,  } from "../../../store/Slices/Products";
+import { handleInputTrimStart } from "../../../utils/useInputTrim";
+import { usePostColorsMutation, useUpdateColorsMutation, } from "../../../store/Slices/Products";
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
 
 function AddColorModal(props: any) {
   const [form] = Form.useForm();
-  const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role ,jobID} = props;
+  const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role, jobID } = props;
   const { data: clientData, isSuccess: isClientDataSuccess, } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
   const [postColors, { isLoading: isPostJobRequestMutation }] = usePostColorsMutation();
   const [updateColors, { isLoading: isUpdateJobRequestMutation }] = useUpdateColorsMutation();
@@ -39,7 +39,7 @@ function AddColorModal(props: any) {
     }));
   }
 
-  
+
   if (modalType !== "Add") {
     const formValues = {
       location: getTableRowValues.location,
@@ -59,9 +59,9 @@ function AddColorModal(props: any) {
   const onFinish = async (values: any) => {
     // -------- for error cases --------
     if (modalType !== "Add") {
-     
-     
-      setDoc(doc(firestore, "categories", getTableRowValues?.id), values)
+
+
+      setDoc(doc(firestore, "locations", getTableRowValues?.id), values)
         .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" }))
         .catch((error) =>
           AppSnackbar({
@@ -77,7 +77,7 @@ function AddColorModal(props: any) {
         createdAt: serverTimestamp(),
         createdBy: userId ?? "",
       };
-      addDoc(collection(firestore, "categories"), addProductValues)
+      addDoc(collection(firestore, "locations"), addProductValues)
         .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }))
         .catch((error) =>
           AppSnackbar({
@@ -130,7 +130,7 @@ function AddColorModal(props: any) {
               />
             </Form.Item>
           </Col>
-        
+
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
             <label className="fs-14 fw-600">Location Description</label>
             <Form.Item
@@ -146,7 +146,7 @@ function AddColorModal(props: any) {
               />
             </Form.Item>
           </Col>
-          
+
 
         </Row>
 
