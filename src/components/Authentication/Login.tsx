@@ -97,6 +97,8 @@ const Login = () => {
       .then(response => {
         getDoc(doc(firestore, "users", response.user.uid)).then(result => {
           if (result.exists()) {
+            
+            localStorage.setItem('user', JSON.stringify(result));
             const userData:any={id:result.id,...result.data()}
             navigate(renderDashboard(userData?.role||"user"))
           }
