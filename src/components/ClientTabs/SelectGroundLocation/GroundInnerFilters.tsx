@@ -3,14 +3,35 @@ import arrowDownSmall from '../../../assets/icons/arrow-small-down.svg'
 import "./GroundLocationInnerFilters.scss"
 import datePicker from "../../../assets/BookingCalander/images/date-picker.png";
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { useAppSelector } from '../../../store';
+import { firestore } from '../../../utils/firebase';
+import { setLocations } from "../../../store/Slices/Playbook";
 const GroundInnerFilters = (props:any) => {
+  const dispatch = useDispatch()
+  const { locations } = useAppSelector(state => state.playbook)
   const handleChangeStartDate=(value:any)=>{
     console.log(`selected ${value}`);
   }
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+  useEffect(() => {
+    if (!locations?.length)
+      fetchLocations();
+  }, []);
 
+  const fetchLocations = () => {
+  
+    onSnapshot(collection(firestore, "locations"), (snapshot) => {
+      dispatch(setLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+   
+    });
+  };
+console.log(locations)
+const selectLocations=locations?.map((location:any)=>{return({value:location?.id ,label:location?.location})})
   return (
     <Form className='filter-form'>
       
@@ -36,11 +57,7 @@ const GroundInnerFilters = (props:any) => {
                     style={{ width: '100%' }}
                     suffixIcon={<img src={arrowDownSmall} alt="" />}
                     onChange={handleChange}
-                    options={[
-                      { value: 'rawalpindi', label: 'Rawalpindi' },
-                      { value: 'wahcantt', label: 'WahCantt' },
-                      { value: 'islamabad', label: 'Islamabad' },
-                    ]}
+                    options={selectLocations}
                   />
                 </Form.Item>
               </div>
