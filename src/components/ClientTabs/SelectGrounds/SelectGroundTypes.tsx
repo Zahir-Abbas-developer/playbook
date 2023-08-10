@@ -5,17 +5,24 @@ import { Card, Col, Layout, Row } from "antd";
 import "./SelectGroundTypes.scss";
 import "../../../sass/common.scss";
 // import AddUserTypeModal from "../AddUserTypeModal/AddUserTypeModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAuthUserTypeRequestQuery } from "../../../store/Slices/ManageUser";
 import AddUserType from "../../../assets/icons/ManageUser/add-user-type.svg";
 import BreadCrumb from "../../../layout/BreadCrumb/BreadCrumb";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import ApiLoader from "../../ApiLoader/ApiLoader";
 import { selectUserType } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
+import { firestore } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { setCategories } from "../../../store/Slices/Playbook";
+import { useAppSelector } from "../../../store";
 const SelectGroundTypes = () => {
   const [isOpenUserTypeModal, setIsOpenuserTypeModal] = useState<any>(false);
+  const { categories, }: any = useAppSelector((state:any) => state.playbook);
+  const [categoriesLoading, setCategoriesLoading] = useState<boolean>(false);
   const { isError, isSuccess, isLoading, data } =
     useGetAuthUserTypeRequestQuery({});
-
+    const dispatch = useDispatch()
   let UserType: any;
   if (isSuccess) {
     UserType = data;
@@ -35,6 +42,18 @@ const SelectGroundTypes = () => {
       { title: "User Type", path: "", }
       , { title: "Dashboard", path: "/dashboard", },
     ];
+    const fetchCategories = () => {
+      setCategoriesLoading(true);
+      onSnapshot(collection(firestore, "categories"), (snapshot) => {
+        const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        dispatch(setCategories(categoriesData))
+        setCategoriesLoading(false);
+      });
+    };
+    useEffect(()=>{
+      if (!categories?.length) fetchCategories()
+    },[])
+  console.log(categories)
   return (
     <div>
       {/* <BreadCrumb breadCrumbItems={breadCrumbItems} /> */}
@@ -51,9 +70,9 @@ const SelectGroundTypes = () => {
             SELECT GROUND
           </p>
         </div>
-        {selectUserType.length>0 ?
+        {categories.length>0 ?
         <Row gutter={[80, 30]}>
-          {selectUserType.map((card: any) => (
+          {categories.map((card: any) => (
             <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8} key={card._id}>
               <Card
                 className="card-hover-color cursor-pointer"
