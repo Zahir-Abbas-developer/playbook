@@ -20,7 +20,7 @@ import ApiLoader from "../../ApiLoader/ApiLoader";
 import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
 
 const GroundInfo = (props: any) => {
-  const { data,pagination,setPagination,total } = props;
+  const { data,pagination,setPagination,total,grounds } = props;
   const [staffId, setStaffId] = useState("");
   const [staffDetails, setStaffDetails] = useState<any>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -152,13 +152,13 @@ const GroundInfo = (props: any) => {
     <>
       <div className="staff-info-wrapper">
         <div className="scroll-div">
-          {GroundDetails?.length > 0 ? (
-            GroundDetails?.map((item: any) => (
+          {grounds?.length > 0 ? (
+            grounds?.map((item: any) => (
               <Row gutter={[20, 20]} className="staff-mananger-wrapper" style={{ marginBlock: "0.7rem" }} align="middle">
                 <Col xs={24} lg={6} xl={4} className="staff-info">
                   <div className="border-right">
                     <Avatar
-                      src={item?.image}
+                      src={item?.thumbnail}
                       // icon={`${item?.fullName.split(' ')[0].charAt(0)}${item?.fullName.split(' ')[1].charAt(0)}`}
                       className="user-img"
                       style={{
@@ -250,7 +250,7 @@ const GroundInfo = (props: any) => {
                               {item?.name}
                             </h5>
                             <h5 className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data" style={{ color: "#4E4B66", marginTop: "8px" }}>
-                              {`${item?.name} Band`}
+                              {`${item?.seats}`}
                             </h5>
                             <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"

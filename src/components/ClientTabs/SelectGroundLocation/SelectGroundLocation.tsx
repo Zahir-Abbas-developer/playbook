@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Row, Slider } from "antd";
-
+import { firestore } from "../../../utils/firebase";
 import "./GroundStaffFilters.scss";
 import {
   useAllocateCarersMutation,
@@ -8,8 +8,12 @@ import {
 } from "../../../store/Slices/StaffAllocation";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import GroundInnerFilters from "./GroundInnerFilters";
 import GroundInfo from "./GroundInfo";
+import { useDispatch } from "react-redux";
+import { setGrounds } from "../../../store/Slices/Playbook";
+import { useAppSelector } from "../../../store";
 
 const handleStyling: any = {
   color: "blue",
@@ -39,11 +43,14 @@ const StaffAllocationFilters = (props: any) => {
 
   const [inputValue, setInputValue] = useState(50);
   const [isAllocateCarerModal, setIsAllocateCarerModal] = useState(false);
+  const [productsLoading, setProductsLoading] = useState<boolean>(false);
+  const { grounds, }: any = useAppSelector((state:any) => state.playbook);
   const [deleteModal, setDeleteModal] = useState(false);
   const onChange = (newValue: number) => {
     setInputValue(newValue);
   };
 
+  const dispatch = useDispatch()
   //Allocate Carer
   const [allocateCare] = useAllocateCarersMutation();
 
@@ -80,6 +87,19 @@ const StaffAllocationFilters = (props: any) => {
     }
   };
 
+  const fetchGrounds = () => {
+    setProductsLoading(true);
+    onSnapshot(collection(firestore, "grounds"), (snapshot) => {
+      const groundsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setGrounds(groundsData))
+      setProductsLoading(false);
+    });
+  };
+  useEffect(() => {
+    if (!grounds.length) fetchGrounds();
+  
+  }, []);
+  console.log(grounds)
   return (
     <div className="inner-wrap-filters">
      <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Ground</p>
@@ -96,7 +116,7 @@ const StaffAllocationFilters = (props: any) => {
 
        
       </div>
-    <GroundInfo/>
+    <GroundInfo grounds={grounds}/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

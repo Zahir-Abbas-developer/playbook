@@ -188,6 +188,28 @@ function AddProductsModal(props: any) {
               <InputNumber min={10} placeholder="Enter Ground Price" id="price" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
             </Form.Item>
           </Col>
+          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
+            <label className="fs-14 fw-600">Email</label>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Required field " }]}
+              style={{ marginBottom: "8px" }}
+            // normalize={(value: any) => handleInputTrimStart(value)}
+            >
+              <InputNumber min={1} placeholder="Enter Ground email" id="seats" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
+            <label className="fs-14 fw-600">Phone</label>
+            <Form.Item
+              name="phone"
+              rules={[{ required: true, message: "Required field " }]}
+              style={{ marginBottom: "8px" }}
+            // normalize={(value: any) => handleInputTrimStart(value)}
+            >
+              <InputNumber min={10} placeholder="Enter Ground Phone" id="price" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
+            </Form.Item>
+          </Col>
           {/* <Col xs={12} lg={12}>
             <p style={{ fontWeight: 600, color: "#6E7191" }}>Images</p>
             <UploadImage uploadCertificateId={uploadCertificateId} />
