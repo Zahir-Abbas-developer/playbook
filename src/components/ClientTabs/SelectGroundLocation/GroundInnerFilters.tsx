@@ -3,14 +3,15 @@ import arrowDownSmall from '../../../assets/icons/arrow-small-down.svg'
 import "./GroundLocationInnerFilters.scss"
 import datePicker from "../../../assets/BookingCalander/images/date-picker.png";
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { useAppSelector } from '../../../store';
 import { firestore } from '../../../utils/firebase';
 import { setLocations } from "../../../store/Slices/Playbook";
 const GroundInnerFilters = (props:any) => {
-  const dispatch = useDispatch()
+  const {setValues}=props;
+  const dispatch = useDispatch();
   const { locations } = useAppSelector(state => state.playbook)
   const handleChangeStartDate=(value:any)=>{
     console.log(`selected ${value}`);
@@ -30,10 +31,13 @@ const GroundInnerFilters = (props:any) => {
    
     });
   };
-console.log(locations)
+  const handleFinish=(valuesObject:any)=>{
+    setValues(valuesObject)
+  }
+
 const selectLocations=locations?.map((location:any)=>{return({value:location?.id ,label:location?.location})})
   return (
-    <Form className='filter-form'>
+    <Form className='filter-form' onFinish={handleFinish}>
       
     <div className="wrapper-fliters">
       <div className="flex-filters">

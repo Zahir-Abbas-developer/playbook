@@ -1,6 +1,6 @@
 import { Button, Modal, Input, Form, Row, Col, Select, InputNumber } from "antd";
 import arrowDown from "../../../assets/icons/arrow-down-icon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePostJobRequestMutation, useUpdateJobRequestMutation } from "../../../store/Slices/Setting/JobRole";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import { ROLES } from "../../../constants/Roles";
@@ -38,10 +38,11 @@ function AddProductsModal(props: any) {
   const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, categoryOptions, locationOptions } = props;
   const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   // ------------------ Error cases Variable ------------------
-
+  // const [selectedItems, setSelectedItems] = useState<string[]>(getTableRowValues?.slots?getTableRowValues?.slots:[]);
   const uploadCertificateThumbnail = (url: any) => {
     setCertificateUrlThumbnail(url);
   };
+
 
 
   if (modalType !== "Add") {
@@ -52,15 +53,29 @@ function AddProductsModal(props: any) {
       seats: getTableRowValues?.seats,
       description: getTableRowValues?.description,
       price: getTableRowValues?.price,
+      email:getTableRowValues?.email,
+      phone:getTableRowValues?.phone,
+      slots:getTableRowValues?.slots
     };
+    // setSelectedItems(getTableRowValues?.slots||[])
     form.setFieldsValue(formValues);
   }
 
+  
+const  options=[
+    { value: 'fullday', label: 'Full Day (24 Hours)' },
+    { value: 'morning', label: 'Morning (6AM - 12AM)' },
+    { value: 'afternoon', label: 'Afternoon (1PM - 4PM)' },
+    { value: 'evening', label: 'Evening (4PM - 8PM)' },
+    { value: 'night', label: 'Night(8PM - 1AM)' },
+  ]
   // ---------------- Failed Form Fields ----------------
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 
+
+  // const filteredOptions = options.filter((o:any) => !selectedItems.includes(o));
   // ---------------- On Finish used to reset form fields in form ----------------
   const onFinish = async (values: any) => {
     // -------- for error cases --------
@@ -196,7 +211,28 @@ function AddProductsModal(props: any) {
               style={{ marginBottom: "8px" }}
             // normalize={(value: any) => handleInputTrimStart(value)}
             >
-              <InputNumber min={1} placeholder="Enter Ground email" id="seats" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
+              <Input min={1} placeholder="Enter Ground email" id="seats" style={{ marginTop: "2px", height: "40px", width: "100%" }} />
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>
+            <label className="fs-14 fw-600">Select Slots</label>
+            <Form.Item
+              name="slots"
+              rules={[{ required: true, message: "Required field " }]}
+              style={{ marginBottom: "8px" }}
+            // normalize={(value: any) => handleInputTrimStart(value)}
+            >
+           <Select
+      mode="multiple"
+      placeholder="Select Slots"
+      // value={selectedItems}
+      // onChange={setSelectedItems}
+      style={{ width: '100%' }}
+      options={options.map((item) => ({
+        value: item.value,
+        label: item.label,
+      }))}
+    />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24} style={{ marginBottom: "20px" }}>

@@ -8,7 +8,7 @@ import {
 } from "../../../store/Slices/StaffAllocation";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { CollectionReference, collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import GroundInnerFilters from "./GroundInnerFilters";
 import GroundInfo from "./GroundInfo";
 import { useDispatch } from "react-redux";
@@ -46,6 +46,8 @@ const StaffAllocationFilters = (props: any) => {
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const { grounds, }: any = useAppSelector((state:any) => state.playbook);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [values,setValues]=useState<any>(null);
+
   const onChange = (newValue: number) => {
     setInputValue(newValue);
   };
@@ -88,18 +90,23 @@ const StaffAllocationFilters = (props: any) => {
   };
 
   const fetchGrounds = () => {
+    const  locationCollection:CollectionReference=collection(firestore, "grounds");
+    let baseQuery:any = locationCollection;
+    if(values?.location) baseQuery =query(baseQuery,where("locationId",'==',values?.location));
+    if(values?.slot) baseQuery =query(baseQuery,where("slots",'array-contains',values?.slot));
+    console.log(baseQuery)
     setProductsLoading(true);
-    onSnapshot(collection(firestore, "grounds"), (snapshot) => {
-      const groundsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setGrounds(groundsData))
+    onSnapshot(baseQuery, (snapshot:any) => {
+      const groundsData: any = snapshot.docs.map((doc:any) => ({ id: doc.id, ...doc.data() }))
+      console.log("grounds",groundsData)
       setProductsLoading(false);
+      dispatch(setGrounds(groundsData))
     });
   };
   useEffect(() => {
-    if (!grounds.length) fetchGrounds();
+     fetchGrounds();
   
-  }, []);
-  console.log(grounds)
+  }, [values]);
   return (
     <div className="inner-wrap-filters">
      <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Ground</p>
@@ -112,6 +119,7 @@ const StaffAllocationFilters = (props: any) => {
           setFilterValues={setFilterValues}
           paginationStaff={paginationStaff}
           setPagination={setPagination}
+          setValues={setValues}
         />
 
        
