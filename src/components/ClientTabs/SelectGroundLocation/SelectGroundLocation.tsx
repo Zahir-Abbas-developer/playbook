@@ -14,6 +14,7 @@ import GroundInfo from "./GroundInfo";
 import { useDispatch } from "react-redux";
 import { setGrounds } from "../../../store/Slices/Playbook";
 import { useAppSelector } from "../../../store";
+import SliderCard from "../Slider/SliderCard";
 
 const handleStyling: any = {
   color: "blue",
@@ -124,6 +125,7 @@ const StaffAllocationFilters = (props: any) => {
 
        
       </div>
+      <SliderCard/>
     <GroundInfo grounds={grounds}/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
