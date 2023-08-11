@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Avatar, Dropdown, Space, Progress, Pagination, Button } from "antd";
 import EmailIcon from "../../../assets/images/staffManager/emailIcon.png";
 import type { MenuProps } from "antd";
@@ -18,11 +18,15 @@ import { useDeleteProfileMutation } from "../../../store/Slices/StaffManager";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import ApiLoader from "../../ApiLoader/ApiLoader";
 import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
+import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
 
 const GroundInfo = (props: any) => {
   const { data,pagination,setPagination,total,grounds } = props;
   const [staffId, setStaffId] = useState("");
+  const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
+
   const [staffDetails, setStaffDetails] = useState<any>({});
+  const [toggleSnackbar, setToggleSnackbar] = useState({ message: "", isToggle: false, mode: "" });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [allocateStaff, setAllocateStaff] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -32,6 +36,15 @@ const GroundInfo = (props: any) => {
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
 
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
+  
+  useEffect(()=>{
+    setOpenFeedbackPopup(true);
+    AppSnackbar({
+      type: "error",
+      messageHeading: "Error",
+      message: "Something went wrong!",
+    });
+  },[])
 
   const handleDeleteModalSubmit = async () => {
     try {
@@ -281,7 +294,7 @@ const GroundInfo = (props: any) => {
           )}
         </div>
       </div>
-
+      {openFeedbackPopup && <FeedbackPopup open={openFeedbackPopup} feedBack={setToggleSnackbar} setOpen={setOpenFeedbackPopup} />}
       <Pagination className="staff-pagination"  current={pagination?.page}  total={data?.metadata?.total} onChange={(page,limit)=>setPagination({ page, limit })}/>
       {deleteModal && <DeleteModal
         deleteModal={deleteModal}
