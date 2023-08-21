@@ -1,0 +1,31 @@
+
+export const ratingsData=[
+    {
+     firstName:"Zahir",
+     lastName:"Abbas",
+     rating:3,
+     feedback:"Feedback",
+     ratingType:"New"
+    },
+    {
+        firstName:"Zahir",
+        lastName:"Abbas",
+        rating:3,
+        feedback:"Feedback",
+        ratingType:"New"
+       },
+       {
+        firstName:"Zahir",
+        lastName:"Abbas",
+        rating:3,
+        feedback:"Feedback",
+        ratingType:"New"
+       },
+       {
+        firstName:"Zahir",
+        lastName:"Abbas",
+        rating:3,
+        feedback:"Feedback",
+        ratingType:"New"
+       },
+]

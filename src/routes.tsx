@@ -51,6 +51,9 @@ const AddCategoriesPage = Loadable(lazy(() => import("./pages/AddCategories")));
 const AddColorsPage = Loadable(lazy(() => import("./pages/AddColors")));
 const AddStylesPage = Loadable(lazy(() => import("./pages/AddStyles")));
 const AddOrdersPage = Loadable(lazy(() => import("./pages/AddOrders")));
+const ClientFeedBackPage = Loadable(lazy(() => import("./pages/ClientFeedback")));
+const AdminFeedBackPage = Loadable(lazy(() => import("./pages/AdminFeedback")));
+
 
 // Reports and its Child Routes Ends Here
 
@@ -127,6 +130,14 @@ export const routes: any = [
             <StaffAllocationPage />
           </RequireAuth>
         ),
+      },
+      {
+        path:"feedback",
+        element:<AdminFeedBackPage/>
+      },
+      {
+        path:"feedback-details",
+        element:<ClientFeedBackPage/>
       },
       {
         path: "select-grounds",
