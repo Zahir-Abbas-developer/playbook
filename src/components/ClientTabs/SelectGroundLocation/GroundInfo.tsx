@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Avatar, Dropdown, Space, Progress, Pagination, Button } from "antd";
+import {
+  Row,
+  Col,
+  Avatar,
+  Dropdown,
+  Space,
+  Progress,
+  Pagination,
+  Button,
+} from "antd";
 import EmailIcon from "../../../assets/images/staffManager/emailIcon.png";
 import type { MenuProps } from "antd";
 import ViewProfileIcon from "../../../assets/images/staffManager/viewProfileImg.png";
@@ -21,30 +30,36 @@ import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes
 import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
 
 const GroundInfo = (props: any) => {
-  const { data,pagination,setPagination,total,grounds } = props;
+  const { data, pagination, setPagination, total, grounds } = props;
   const [staffId, setStaffId] = useState("");
   const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
 
   const [staffDetails, setStaffDetails] = useState<any>({});
-  const [toggleSnackbar, setToggleSnackbar] = useState({ message: "", isToggle: false, mode: "" });
+  const [toggleSnackbar, setToggleSnackbar] = useState({
+    message: "",
+    isToggle: false,
+    mode: "",
+  });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [allocateStaff, setAllocateStaff] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [isSendEmailModalOpen, setIsSendEmailModalOpen] = useState<boolean>(false);
+  const [isSendEmailModalOpen, setIsSendEmailModalOpen] =
+    useState<boolean>(false);
   const [IsProfileModal, setIsProfileModal] = useState(false);
   const [profileViewData, setProfileViewData] = useState();
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
+  const [groundId, setGroundId] = useState("");
 
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
-  
-  useEffect(()=>{
-    setOpenFeedbackPopup(true);
-    AppSnackbar({
-      type: "error",
-      messageHeading: "Error",
-      message: "Something went wrong!",
-    });
-  },[])
+
+  useEffect(() => {
+    // setOpenFeedbackPopup(true);
+    // AppSnackbar({
+    //   type: "error",
+    //   messageHeading: "Error",
+    //   message: "Something went wrong!",
+    // });
+  }, []);
 
   const handleDeleteModalSubmit = async () => {
     try {
@@ -73,7 +88,10 @@ const GroundInfo = (props: any) => {
   const items: MenuProps["items"] = [
     {
       label: (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }} onClick={() => setIsProfileModal(true)}>
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
+          onClick={() => setIsProfileModal(true)}
+        >
           <img src={ViewProfileIcon} alt="ViewProfile" />
           <span>View Profile</span>
         </div>
@@ -112,7 +130,10 @@ const GroundInfo = (props: any) => {
     },
     {
       label: (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }} onClick={() => setIsSendEmailModalOpen(true)}>
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
+          onClick={() => setIsSendEmailModalOpen(true)}
+        >
           <img src={SendIcon} alt="ViewProfile" width={28} height={28} />
           <span>Send Email</span>
         </div>
@@ -137,8 +158,16 @@ const GroundInfo = (props: any) => {
     },
     {
       label: (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }} onClick={() => setAllocateStaff(true)}>
-          <img src={AllocateStaffIcon} alt="ViewProfile" width={28} height={28} />
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
+          onClick={() => setAllocateStaff(true)}
+        >
+          <img
+            src={AllocateStaffIcon}
+            alt="ViewProfile"
+            width={28}
+            height={28}
+          />
           <span>Allocate Staff</span>
         </div>
       ),
@@ -167,7 +196,12 @@ const GroundInfo = (props: any) => {
         <div className="scroll-div">
           {grounds?.length > 0 ? (
             grounds?.map((item: any) => (
-              <Row gutter={[20, 20]} className="staff-mananger-wrapper" style={{ marginBlock: "0.7rem" }} align="middle">
+              <Row
+                gutter={[20, 20]}
+                className="staff-mananger-wrapper"
+                style={{ marginBlock: "0.7rem" }}
+                align="middle"
+              >
                 <Col xs={24} lg={6} xl={4} className="staff-info">
                   <div className="border-right">
                     <Avatar
@@ -180,8 +214,13 @@ const GroundInfo = (props: any) => {
                       }}
                     />
                     <div className="staff-manager-heading">
-                      <h2 style={{textTransform:'capitalize'}}>{item?.name}</h2>
-                      <p className="fs-14 fw-400 line-height-18 m-0" style={{ color: "#A0A3BD" }}>
+                      <h2 style={{ textTransform: "capitalize" }}>
+                        {item?.name}
+                      </h2>
+                      <p
+                        className="fs-14 fw-400 line-height-18 m-0"
+                        style={{ color: "#A0A3BD" }}
+                      >
                         {item?.name}
                       </p>
                       {/* <p
@@ -198,7 +237,10 @@ const GroundInfo = (props: any) => {
                     <Row gutter={[15, 20]}>
                       <Col xs={24} sm={10} md={12} xxl={5}>
                         <div>
-                          <h5 className="staff-manager-contact fs-16 fw-600 line-height-24 m-0" style={{ color: "#6E7191" }}>
+                          <h5
+                            className="staff-manager-contact fs-16 fw-600 line-height-24 m-0"
+                            style={{ color: "#6E7191" }}
+                          >
                             Contact:
                           </h5>
                           <div
@@ -242,13 +284,22 @@ const GroundInfo = (props: any) => {
                       <Col xs={24} sm={14} md={12} xxl={6}>
                         <div className="d-flex align-center justify-between">
                           <div>
-                            <h5 className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title" style={{ color: "#6E7191" }}>
+                            <h5
+                              className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
+                              style={{ color: "#6E7191" }}
+                            >
                               Status:
                             </h5>
-                            <h5 className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title" style={{ color: "#6E7191", marginTop: "8px" }}>
+                            <h5
+                              className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
+                              style={{ color: "#6E7191", marginTop: "8px" }}
+                            >
                               Seats:
                             </h5>
-                            <h5 className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title" style={{ color: "#6E7191", marginTop: "6px" }}>
+                            <h5
+                              className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
+                              style={{ color: "#6E7191", marginTop: "6px" }}
+                            >
                               Slot:
                             </h5>
                           </div>
@@ -256,13 +307,19 @@ const GroundInfo = (props: any) => {
                             <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
                               style={{
-                                color: item.status === "active" ? "#52C41A" : "#f5222d",
+                                color:
+                                  item.status === "active"
+                                    ? "#52C41A"
+                                    : "#f5222d",
                                 textTransform: "capitalize",
                               }}
                             >
                               {item?.name}
                             </h5>
-                            <h5 className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data" style={{ color: "#4E4B66", marginTop: "8px" }}>
+                            <h5
+                              className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
+                              style={{ color: "#4E4B66", marginTop: "8px" }}
+                            >
                               {`${item?.seats}`}
                             </h5>
                             <h5
@@ -278,33 +335,54 @@ const GroundInfo = (props: any) => {
                           </div>
                         </div>
                       </Col>
-                     <Col sm={24} style={{textAlign:"end"}}>
+                      <Col sm={24} style={{ textAlign: "end" }}>
                         <span>Rs 20,000 </span>
-                     <Button type="primary" htmlType="submit" className='search-button' style={{backgroundColor:"#E76F51"}}>
-                    Bookme 
-                  </Button>
-                     </Col>
+                        <Button
+                          onClick={() => {
+                            setOpenFeedbackPopup(true);
+                            setGroundId(item.id);
+                          }}
+                          type="primary"
+                          htmlType="submit"
+                          className="search-button"
+                          style={{ backgroundColor: "#E76F51" }}
+                        >
+                          Bookme
+                        </Button>
+                      </Col>
                     </Row>
                   </div>
                 </Col>
               </Row>
             ))
           ) : (
-            <ApiLoader/>
+            <ApiLoader />
           )}
         </div>
       </div>
-      {openFeedbackPopup && <FeedbackPopup open={openFeedbackPopup} feedBack={setToggleSnackbar} setOpen={setOpenFeedbackPopup} />}
-      <Pagination className="staff-pagination"  current={pagination?.page}  total={data?.metadata?.total} onChange={(page,limit)=>setPagination({ page, limit })}/>
-      {deleteModal && <DeleteModal
-        deleteModal={deleteModal}
-        title={"Are you sure you want to Delete this ?"}
-        submitTitle={"Yes, Delete"}
-        cancelTitle={"Cancel"}
-        setDeleteModal={() => setDeleteModal(false)}
-        onSubmit={handleDeleteModalSubmit}
-        onCancel={() => setDeleteModal(false)}
-      />}
+      <FeedbackPopup
+        open={openFeedbackPopup}
+        feedBack={setToggleSnackbar}
+        setOpen={setOpenFeedbackPopup}
+        productId={groundId}
+      />
+      <Pagination
+        className="staff-pagination"
+        current={pagination?.page}
+        total={data?.metadata?.total}
+        onChange={(page, limit) => setPagination({ page, limit })}
+      />
+      {deleteModal && (
+        <DeleteModal
+          deleteModal={deleteModal}
+          title={"Are you sure you want to Delete this ?"}
+          submitTitle={"Yes, Delete"}
+          cancelTitle={"Cancel"}
+          setDeleteModal={() => setDeleteModal(false)}
+          onSubmit={handleDeleteModalSubmit}
+          onCancel={() => setDeleteModal(false)}
+        />
+      )}
     </>
   );
 };

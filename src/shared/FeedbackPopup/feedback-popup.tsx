@@ -11,6 +11,8 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useDispatch } from "react-redux";
 // import { addFeedback } from "../../store/features/feedbackSlice/index";
 import { useLocation } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../../utils/firebase";
 
 
 const Transition = React.forwardRef(function Transition(
@@ -43,32 +45,59 @@ interface IFeedbackPopup {
   open: boolean;
   setOpen: any;
   feedBack: any;
-  ownerId?:any;
+  ownerId?: any;
+  productId?: any;
 }
 const FeedbackPopup = (props: IFeedbackPopup) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const ratingType = location.pathname;
-  const feedbackType=ratingType==="/appeal-process"?"APPEAL":ratingType==="/pcn"?"PCN":ratingType==="/manage/manage-vehicles"?"VEHICLE":ratingType==="/personal-services"?"SERVICE":ratingType==="/my-vehicles"?"VEHICLE":"VEHICLE"
+  const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const feedbackSubmit = () => {
-    props.setOpen(false);
-    if(values.ratingType!=="SERVICE"){
-      delete values.ownerId}
+  // const feedbackType = ratingType === "/appeal-process" ? "APPEAL" : ratingType === "/pcn" ? "PCN" : ratingType === "/manage/manage-vehicles" ? "VEHICLE" : ratingType === "/personal-services" ? "SERVICE" : ratingType === "/my-vehicles" ? "VEHICLE" : "VEHICLE"
+
+  const feedbackSubmit = async () => {
+    if (!userId || props.productId) {
+      props.feedBack({
+        message: "Feedback submission error",
+        isToggle: true,
+        mode: "error",
+      });
+    }
+    const reviewRef = doc(firestore, `grounds/${props?.productId}/reviews`, userId);
+    setDoc(reviewRef, { rating: values.rating, feedback: values.feedback }).then(result => {
+      props.setOpen(false);
+      props.feedBack({
+        message: "Feedback submitted successfully",
+        isToggle: true,
+        mode: "success",
+      });
+    }).catch(err => {
+      props.setOpen(false);
+      props.feedBack({
+        message: "Feedback submission error",
+        isToggle: true,
+        mode: "success",
+      });
+    })
+    // props.setOpen(false);
+    // if (values.ratingType !== "SERVICE") {
+    //   delete values.ownerId
+    // }
     // dispatch(addFeedback(values));
-    props.feedBack({
-      message: "Feedback submitted successfully",
-      isToggle: true,
-      mode: "success",
-    });
+    // props.feedBack({
+    //   message: "Feedback submitted successfully",
+    //   isToggle: true,
+    //   mode: "success",
+    // });
   };
   const { values, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: {
-      ratingType: feedbackType,
+      // ratingType: feedbackType,
       rating: 0,
       feedback: "",
-      ownerId:props.ownerId
-    
+      ownerId: props.ownerId
+
     },
     onSubmit: feedbackSubmit,
   });
@@ -148,7 +177,7 @@ const FeedbackPopup = (props: IFeedbackPopup) => {
                 onBlur={handleBlur}
                 placeholder="Tell us about your experience..."
               />
-              {(values.rating>0 || values.feedback.length>0) ? <Button
+              {(values.rating > 0 || values.feedback.length > 0) ? <Button
                 disableRipple
                 type="submit"
                 className="btn-primary"
@@ -157,28 +186,30 @@ const FeedbackPopup = (props: IFeedbackPopup) => {
                   textTransform: "capitalize",
                   float: "right",
                   marginTop: "30px",
-                  
+
                 }}
                 autoFocus
                 onClick={feedbackSubmit}
               >
                 Submit
-              </Button>:<Button
-                disableRipple
-                disabled
-                className="btn-primary"
-                sx={{
-                  paddingInline: "20px",
-                  textTransform: "capitalize",
-                  float: "right",
-                  marginTop: "30px",
-                  
-                }}
-                autoFocus
-              >
-                Submit
-              </Button>}
-             
+              </Button> : <></>
+                // <Button
+                //   disableRipple
+                //   disabled
+                //   className="btn-primary"
+                //   sx={{
+                //     paddingInline: "20px",
+                //     textTransform: "capitalize",
+                //     float: "right",
+                //     marginTop: "30px",
+
+                //   }}
+                //   autoFocus
+                // >
+                //   Submit
+                // </Button>
+              }
+
             </DialogContent>
           </form>
         </BootstrapDialog>
