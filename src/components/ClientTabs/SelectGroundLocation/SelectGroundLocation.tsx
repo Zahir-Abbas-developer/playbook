@@ -125,7 +125,7 @@ const StaffAllocationFilters = (props: any) => {
 
        
       </div>
-      <SliderCard/>
+    
     <GroundInfo grounds={grounds}/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>

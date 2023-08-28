@@ -34,6 +34,7 @@ import { firestore } from "../../../utils/firebase";
 import { useAppSelector } from "../../../store";
 import { useDispatch } from "react-redux";
 import { setCategories, setGrounds, setLocations } from "../../../store/Slices/Playbook";
+import { Link } from "react-router-dom";
 
 const AddProducts = () => {
   const [pagination, setPagination] = useState({ limit: 6, page: 1 });
@@ -177,6 +178,17 @@ const AddProducts = () => {
         >
           <img src={deleteIcon} className="d-flex align-center" alt="delete" height={18} width={16} />
           <span>Delete</span>
+        </Space>
+      ),
+      key: "2",
+    },
+    {
+      label: (
+        <Space
+         
+        >
+            <img src={editIcon} alt="edit" className="d-flex align-center" height={18} width={16} />
+        <Link to="/feedback">  <span>View Details</span></Link>
         </Space>
       ),
       key: "3",

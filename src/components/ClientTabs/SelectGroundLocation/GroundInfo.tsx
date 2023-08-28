@@ -28,6 +28,7 @@ import AppSnackbar from "../../../utils/AppSnackbar";
 import ApiLoader from "../../ApiLoader/ApiLoader";
 import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
 import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 const GroundInfo = (props: any) => {
   const { data, pagination, setPagination, total, grounds } = props;
@@ -47,6 +48,7 @@ const GroundInfo = (props: any) => {
     useState<boolean>(false);
   const [IsProfileModal, setIsProfileModal] = useState(false);
   const [profileViewData, setProfileViewData] = useState();
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
   const [groundId, setGroundId] = useState("");
 
@@ -341,6 +343,7 @@ const GroundInfo = (props: any) => {
                           onClick={() => {
                             setOpenFeedbackPopup(true);
                             setGroundId(item.id);
+                            setOpenDrawer(true)
                           }}
                           type="primary"
                           htmlType="submit"
@@ -360,6 +363,7 @@ const GroundInfo = (props: any) => {
           )}
         </div>
       </div>
+      <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       <FeedbackPopup
         open={openFeedbackPopup}
         feedBack={setToggleSnackbar}
