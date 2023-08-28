@@ -63,7 +63,17 @@ export const navItems = [
     toshowforrole: [
        'admin',
     ],
-    title: "CATEGORIES",
+    title: "PARKS",
+    path: "/add-parks",
+    lightIcon: category,
+    alt: "dashboard"
+  },
+  
+  {
+    toshowforrole: [
+       'admin',
+    ],
+    title: "GROUND CATEGORIES",
     path: "/add-categories",
     lightIcon: add,
     alt: "dashboard"
@@ -73,7 +83,7 @@ export const navItems = [
        'admin',
     ],
     title: "GROUND LOCATIONS",
-    path: "/add-products",
+    path: "/add-colors",
     lightIcon: add,
     alt: "dashboard"
   },
@@ -82,29 +92,12 @@ export const navItems = [
        'admin',
     ],
     title: "PARK LOCATIONS",
-    path: "/add-products",
+    path: "/add-park-location",
     lightIcon: add,
-    alt: "dashboard"
-  },
-  {
-    toshowforrole: [
-       'admin',
-    ],
-    title: "GROUNDS",
-    path: "/add-products",
-    lightIcon: add,
-    alt: "dashboard"
-  },
-  {
-    toshowforrole: [
-       'admin',
-    ],
-    title: "PARKS",
-    path: "/add-categories",
-    lightIcon: category,
     alt: "dashboard"
   },
   
+ 
   {
     toshowforrole: [
        'admin',

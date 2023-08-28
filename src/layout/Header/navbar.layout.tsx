@@ -175,9 +175,9 @@ const NavBar = () => {
             unCheckedChildren="Light"
             onChange={() => setIsDarkMode(!isDarkMode)}
           />
-          <Badge   count={products?.products?.length} showZero style={{color:"white"}}>
+          {/* <Badge   count={products?.products?.length} showZero style={{color:"white"}}>
           <ShoppingCartOutlined style={{ fontSize: '24px' }} onClick={handleOpenDrawer} />
-        </Badge>
+        </Badge> */}
         <div className="adminDetail">
         <Popover
           rootClassName="profile-dropdown"

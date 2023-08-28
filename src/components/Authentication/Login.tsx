@@ -43,7 +43,7 @@ const Login = () => {
         email: values.email,
         password: values.password,
         username: values?.username,
-        role: "admin",
+        role: "user",
         url: window?.location?.origin + "/user-verification",
       };
       createUserWithEmailAndPassword(auth, values?.email, values.password)
