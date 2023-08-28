@@ -6,6 +6,9 @@ import jacketImage4 from "../../../assets/images/jackets/tobias-tullius-Fg15Ldqp
 import { Link } from "react-router-dom"
 import { useJacketsAllProductsQuery } from "../../../store/Slices/Products"
 import { useState } from "react"
+import { CricketGrounds } from "../../../mock/PlayBookData/Grounds"
+import SliderCard from "../Slider/SliderCard"
+import ParkSlider from "../Slider/ParkSlider"
 const ShoeProductDetails = () => {
     const paramsObj: any = {};
 
@@ -47,37 +50,42 @@ const ShoeProductDetails = () => {
     return (
         <>
             {(productsData?.length > 0 || productsData?.length == 0) ? <div>
-                <p style={{ textAlign: "center", fontSize: "20px", marginTop: "5px" }}>PARKS</p>
                 <Row gutter={[16, 16]} style={{ padding: "40px" }}>
 
 
                     <Col xs={24} md={24} lg={24} >
-                        {productsData?.length > 0 ?
-                            <Row gutter={[16, 16]}>
-                                {isSuccessProducts ?
-                                    productsData?.slice(0, 4)?.map((productData: any) => (
-                                        <>
-                                            <Col xs={24} md={12} lg={6} key={productData.id}>
-                                                <Card
-                                                    style={{ background: "linear-gradient(135deg, rgba(68,68,68,1) 6%, rgba(0,0,0,1) 95%)", border: "0px solid transparent" }}
-                                                    cover={<img alt="example" src={!hoverImage ? productData?.thumbnail : productData?.images[0]} onMouseLeave={() => setHoverImage(false)} onMouseOver={() => { setHoverImage(true) }} />}
-                                                >
-                                                    <div style={{ textAlign: "center", padding: "0" }}>
+                    {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
+                <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
+                {  <ParkSlider CricketGrounds={CricketGrounds}/>}
+                {/* {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} >
+                    {CricketGrounds?.slice(0, 4)?.map((productData: any) => (
+                        <Col xs={24} md={12} lg={6} key={productData.id}>
+                            <Card
+                                
+                                style={{ background: "rgba(44 ,43 ,42,0.9)", border: "1px solid rgba(44 ,43 ,42,0.9)" }}
+                                cover={<img alt="example" src={!hoverImage?productData?.image:productData?.image} onMouseLeave={()=>setHoverImage(false)} onMouseOver={()=>{setHoverImage(true)}} style={{height:"20vh"}} />}
+                            >
+                                <div style={{ textAlign: "center", padding: "0" }}>
+                                <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px",fontFamily:" Oswald,sans-serif" }}> {productData?.name} </p>
 
-                                                        <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px" }}> {productData?.name}</p>
-                                                        <p style={{ color: "white", padding: "0px", margin: "2px" }}>{productData?.description}</p>
-                                                        <p style={{ fontWeight: "bold", color: "#65cdf0", padding: "0px", margin: "2px" }}>$ {productData?.price}</p>
-                                                    </div>
-                                                </Card>
-                                            </Col>
-                                        </>
+                                    <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px",fontFamily:" Oswald,sans-serif" }}> {productData?.seats} Seats</p>
+                                    <p style={{ color: "white", padding: "0px", margin: "2px" }}>{productData?.description}</p>
+                                    <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px" }}>{productData?.location}</p>
+                                    <Rate disabled defaultValue={productData?.ratingStars} style={{display:"block"}} />
+                                    <Link to="" > <Button style={{marginTop:"20px"}}>View Details</Button></Link>
+                                </div>
+                            </Card>
+                        </Col>
+                        
+                    ))}
+                    <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
+                        <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  GROUNDS</Link>
+                    </Col>
+                </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>} */}
 
-                                    )) : <Spin />}
-                                <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }}>
-                                    <Link to="/jacket-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText, border: "1px solid #FE5C36" }} onMouseLeave={() => { setViewAllProductsBackground("#FE5C36"); setViewAllProductsText("white") }} onMouseOver={() => { setViewAllProductsBackground("white"); setViewAllProductsText("#FE5C36") }} >VIEW ALL PRODUCTS</Link>
 
-                                </Col>
-                            </Row> : <p style={{ fontSize: "large", textAlign: "center" }}>No Products Added</p>}
+
+            </div> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
                     </Col>
 
                 </Row>

@@ -11,14 +11,14 @@ export const CricketGrounds=[
        name:"Melbourne Cricket Ground",
        ratingStars:"4",
        seats:"60000",
-       location:"Australia", 
+       location:"Rawalpindi", 
     },
     {
         image:hocketground,
         name:"Hockey  Ground",
         ratingStars:"4",
         seats:"40000",
-        location:"India", 
+        location:"Wah Cantt", 
      },
    
      {
@@ -26,14 +26,14 @@ export const CricketGrounds=[
         name:"Badminton Ground",
         ratingStars:"4",
         seats:"30000",
-        location:"England", 
+        location:"Islamabad", 
      },
      {
         image:Football,
         name:"Football  Ground",
         ratingStars:"5",
         seats:"20000",
-        location:"Pakistan", 
+        location:"Lahor", 
      },
     
 
