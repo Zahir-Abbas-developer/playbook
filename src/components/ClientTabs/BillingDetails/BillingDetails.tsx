@@ -11,6 +11,7 @@ import AppSnackbar from '../../../utils/AppSnackbar';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../store';
 import { usePostOrdersMutation } from '../../../store/Slices/Products';
+import { useLocation } from 'react-router-dom';
 const BillingDetails = () => {
   const [userInfo, setUserInfo] = useState({})
   const [form] = Form.useForm();
@@ -83,14 +84,16 @@ const BillingDetails = () => {
     quantity: "",
     price: totalPrice
   }]
+  const {state}=useLocation()
+  console.log(state)
   return (
     <>
 
       <div className="header-image">
         <div className="image-content">
-          <h1 className="image-heading-title">CHECKOUT</h1>
+          <h1 className="" style={{color:"black"}} >CHECKOUT</h1>
 
-          <p className="image-heading-subheading">We accept Visa, Mastercard,Anex,PayPal and more.</p>
+          <p className="image-heading-subheading"  style={{color:"black"}} >We accept Visa, Mastercard,Anex,PayPal and more.</p>
 
         </div>
       </div>
@@ -217,14 +220,14 @@ const BillingDetails = () => {
         </Col>
         <Col xs={24} lg={12} style={{ textAlign: "center" }} >
           <Card style={{ backgroundColor: "#000000" }}>
-            <p style={{ color: "#ffffff", marginBottom: "0px" }}>Your order</p>
+            <p style={{ color: "#ffffff", marginBottom: "0px" }}>Your Booking</p>
             <span style={{ color: "#ffffff" }}>----------</span>
             <Row>
               <Col xs={12}>
                 <p style={{ color: "#ffffff" }}>SUBTOTAL</p>
               </Col>
               <Col xs={12}>
-                <p style={{ color: "#ffffff" }}>$ {totalPrice}</p>
+                <p style={{ color: "#ffffff" }}>$ {state?.price}</p>
               </Col>
               <Col xs={12}>
                 <p style={{ color: "#ffffff" }}>SHIPPING</p>
