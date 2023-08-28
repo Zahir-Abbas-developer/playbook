@@ -54,7 +54,7 @@ const AddStylesPage = Loadable(lazy(() => import("./pages/AddStyles")));
 const AddOrdersPage = Loadable(lazy(() => import("./pages/AddOrders")));
 const ClientFeedBackPage = Loadable(lazy(() => import("./pages/ClientFeedback")));
 const AdminFeedBackPage = Loadable(lazy(() => import("./pages/AdminFeedback")));
-const AddParks=Loadable(lazy(()=>import("./pages/AddParks")))
+const AddParks = Loadable(lazy(() => import("./pages/AddParks")))
 
 
 // Reports and its Child Routes Ends Here
@@ -79,7 +79,7 @@ const ChangePassword = Loadable(lazy(() => import("./pages/Settings/ChangePasswo
 const ElectronicAttendanceMonitoring = Loadable(lazy(() => import("./pages/Settings/ElectronicAttendanceMonitoring")));
 
 const ContactDetailsPage = Loadable(lazy(() => import("./pages/ContactDetails")));
-const AddParkLocationPage=Loadable(lazy(()=>import("./pages/AddParkLocation")))
+const AddParkLocationPage = Loadable(lazy(() => import("./pages/AddParkLocation")))
 export const routes: any = [
   { path: "/", element: <Navigate to="services" /> },
 
@@ -134,49 +134,49 @@ export const routes: any = [
         ),
       },
       {
-        path:"feedback",
-        element:<RequireAuth
-        allowedRoles={[ROLES.user]}
+        path: "feedback/:id",
+        element: <RequireAuth
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-        <AdminFeedBackPage/>
-        </RequireAuth> 
+          {" "}
+          <AdminFeedBackPage />
+        </RequireAuth>
       },
       {
-        path:"feedback-details",
-        element:<RequireAuth
-        allowedRoles={[ROLES.user]}
+        path: "feedback-details",
+        element: <RequireAuth
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-        <ClientFeedBackPage/>
-        </RequireAuth> 
+          {" "}
+          <ClientFeedBackPage />
+        </RequireAuth>
       },
       {
         path: "select-grounds",
         element: <RequireAuth
-        allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-        <SelectGroundPage />,
-        </RequireAuth> 
+          {" "}
+          <SelectGroundPage />,
+        </RequireAuth>
       },
       {
         path: "select-stadium-location",
-        element:   <RequireAuth
-        allowedRoles={[ROLES.user]}
+        element: <RequireAuth
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-        <SelectGroundLocationPage />,
-        </RequireAuth> 
+          {" "}
+          <SelectGroundLocationPage />,
+        </RequireAuth>
       },
       {
-        path:"park-details",
+        path: "park-details",
         element: <RequireAuth
-        allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-        <SelectParkLocationPage/>
-        </RequireAuth> 
+          {" "}
+          <SelectParkLocationPage />
+        </RequireAuth>
       },
       {
         path: "dashboard",
@@ -188,21 +188,21 @@ export const routes: any = [
       },
       {
         path: "contact-details",
-        element:<RequireAuth
-        allowedRoles={[ROLES.user]}
+        element: <RequireAuth
+          allowedRoles={[ROLES.user]}
         >
-        {" "}
-       <ContactDetailsPage />,
-        </RequireAuth>  
+          {" "}
+          <ContactDetailsPage />,
+        </RequireAuth>
       },
       {
         path: "productDetails",
-        element:<RequireAuth
-        allowedRoles={[ROLES.admin]}
+        element: <RequireAuth
+          allowedRoles={[ROLES.admin]}
         >
-        {" "}
-        <ProductDetailsPage />,
-        </RequireAuth> 
+          {" "}
+          <ProductDetailsPage />,
+        </RequireAuth>
       },
       {
         path: "/productDetails/cart-details/checkout-details",
@@ -213,10 +213,10 @@ export const routes: any = [
         path: "/add-products",
         element: (
           <RequireAuth
-          allowedRoles={[ROLES.admin]}
+            allowedRoles={[ROLES.admin]}
           >
-          {" "}
-          <AddProductsPage />
+            {" "}
+            <AddProductsPage />
           </RequireAuth>
         ),
       },
@@ -224,10 +224,10 @@ export const routes: any = [
         path: "/add-parks",
         element: (
           <RequireAuth
-          allowedRoles={[ROLES.admin]}
+            allowedRoles={[ROLES.admin]}
           >
-          {" "}
-          <AddParks />
+            {" "}
+            <AddParks />
           </RequireAuth>
         ),
       },
@@ -239,16 +239,16 @@ export const routes: any = [
         path: "/add-categories",
         element: (
           <RequireAuth allowedRoles={[ROLES.admin]}>
-          <AddCategoriesPage />
-           </RequireAuth>
+            <AddCategoriesPage />
+          </RequireAuth>
         ),
       },
       {
-        
+
         path: "/add-park-location",
         element: (
           <RequireAuth allowedRoles={[ROLES.admin]}>
-          <AddParkLocationPage/>
+            <AddParkLocationPage />
           </RequireAuth>
         ),
       },
@@ -264,8 +264,8 @@ export const routes: any = [
         path: "/add-colors",
         element: (
           <RequireAuth allowedRoles={[ROLES.admin]}>
-          <AddColorsPage />
-           </RequireAuth>
+            <AddColorsPage />
+          </RequireAuth>
         ),
       },
       {
@@ -291,7 +291,7 @@ export const routes: any = [
         ),
       },
 
-    
+
     ],
   },
   {

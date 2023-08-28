@@ -8,9 +8,15 @@ import NoResult from "../../assets/common-images/svg/noresult.svg";
 import { v4 as uuidv4 } from "uuid";
 import "./ratings.scss";
 import { ratingsData } from "../../../mock/RatingsDataAdmin";
+import { useParams } from "react-router-dom";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
+import { orderBy } from "lodash";
 
 
 const Feedback = () => {
+  const { id } = useParams()
+  const [ratingsList, setRatingList] = useState<any>([])
   const tempArray = [
     { name: "Ratings & Feedback  " },
     {
@@ -26,7 +32,28 @@ const Feedback = () => {
   const [selectedRecord, setSelectedRecord] = useState<any>({});
 
 
- 
+  useEffect(() => {
+    if (id)
+      fetchRatings()
+  }, [])
+
+  const fetchRatings = async () => {
+    try {
+      const ratingsRef = collection(firestore, `grounds/${id}/reviews`);
+      getDocs(ratingsRef).then(async (snapshot) => {
+        const list: any = []
+        for await (let docsData of snapshot.docs) {
+          const userData = await getDoc(doc(firestore, "users", docsData.id));
+          list.push({
+            id: docsData.id, ...docsData.data(), userData: userData.data()
+          })
+        }
+        setRatingList(list)
+      })
+    } catch (err) {
+      console.log("Error", err)
+    }
+  }
 
   const editHandler = (item: string, index: number) => {
     setComment(item);
@@ -34,7 +61,7 @@ const Feedback = () => {
   };
   const handleCommentSubmit = (e: any, id: string) => {
     e.preventDefault();
-   
+
   };
   //  to find the lenth of arry object
 
@@ -43,7 +70,7 @@ const Feedback = () => {
     <>
       <Box className="feedback-system-admin feedback">
         <Box sx={{ fontSize: 20 }}>
-        
+
         </Box>
         <Box className="main border-radius-10" sx={{ py: 2 }}>
           <Box sx={{ px: 4 }}>
@@ -71,20 +98,20 @@ const Feedback = () => {
                     </Box>
                   </div>
                 )} */}
-             
+
               </Grid>
               <Grid item xs={12} sm={8} md={9} lg={9} sx={{ marginLeft: { xs: "13px", sm: "0px" }, pl: { md: 4, sm: 2.5 }, pt: 2 }}>
                 <div className="feedBack_lenth_main_wraper">
                   <h4 className="fw-500 fs-20 label-color" style={{ marginBottom: "15px" }}>
                     Feedback
                   </h4>
-                
+
                 </div>
                 <div className=" feedback_mesasges">
-                  {ratingsData?.map((obj: any, i: number) => {
+                  {ratingsList?.map((obj: any, i: number) => {
                     return (
                       <>
-                        { (
+                        {(
                           <Box className="feedback-card comment border-radius-8" key={uuidv4()} mb={2} p="14px 20px">
                             <Box className="head showComment">
                               <Box className="feedbackProfile ">
@@ -94,20 +121,20 @@ const Feedback = () => {
                                       {obj?.User?.imageId ? (
                                         <img src={process.env.REACT_APP_AWS_BASE_URL + obj?.User?.imageId} alt="user-img" />
                                       ) : (
-                                        <img src={`https://ui-avatars.com/api/?rounded=true&name=${obj?.User?.firstName} ${obj?.User?.lastName}`} alt="user-img" />
+                                        <img src={`https://ui-avatars.com/api/?rounded=true&name=${obj?.userData?.username}`} alt="user-img" />
                                       )}
                                     </Box>
                                   </Grid>
                                   <Grid item xs sm={10} md={9} lg={6} xl={5}>
                                     <Box display="flex" sx={{ flexDirection: { sm: "row" }, alignItems: "center", gap: { xs: "4px", sm: "0px" } }}>
                                       <h4 className="font-size-24 font-weight-500" style={{ marginBottom: "0px" }}>
-                                        {obj?.User?.firstName + " " + obj?.User?.lastName}
+                                        {obj?.userData?.username}
                                       </h4>
                                       <p className="account_usertype fs-12 fw-400 grey-color" style={{ marginTop: "22px" }}>
-                                        {obj?.userRole} Account
+                                        {obj?.userData?.role} Account
                                       </p>
                                     </Box>
-                                    <p className="fs-12 fw-400 selected-field-color feedback_date">{dayjs(obj?.createdAt).format("DD/MM/YYYY")}</p>
+                                    <p className="fs-12 fw-400 selected-field-color feedback_date">{dayjs.unix(obj?.createdAt?.seconds).format("DD/MM/YYYY")}</p>
                                   </Grid>
                                   <Grid container item xs={12} md={10} lg={5} xl={6}>
                                     <Grid container item xs={12}>
@@ -120,7 +147,7 @@ const Feedback = () => {
                               </Box>
                             </Box>
                             <p className="description selected-field-color fs-14"> {obj?.feedback}</p>
-                            <Box className="replySection" display="flex" justifyContent="space-between" alignItems="center">
+                            {/* <Box className="replySection" display="flex" justifyContent="space-between" alignItems="center">
                               <p className="fs-14 fw-400">
                                 Rating Type:
                                 <span className="selected-field-color" style={{ paddingLeft: "6px" }}>
@@ -174,9 +201,9 @@ const Feedback = () => {
                                                 className="selected-field-color"
                                                 onClick={() => {
                                                   setCommentId(item?.id);
-                                               
+
                                                   editHandler(item.comment, index);
-                                                 
+
                                                   setActionType("edit");
                                                 }}
                                               >
@@ -184,7 +211,7 @@ const Feedback = () => {
                                               </button>
                                               <button
                                                 className="selected-field-color"
-                                            
+
                                               >
                                                 Delete
                                               </button>
@@ -222,7 +249,7 @@ const Feedback = () => {
                                   </Box>
                                 </Box>
                               </Box>
-                            )}
+                            )} */}
                           </Box>
                         )}
                       </>
