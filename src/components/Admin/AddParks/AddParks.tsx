@@ -33,7 +33,7 @@ import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
 import { useAppSelector } from "../../../store";
 import { useDispatch } from "react-redux";
-import { setCategories, setGrounds, setLocations } from "../../../store/Slices/Playbook";
+import { setCategories, setGrounds, setLocations, setParkLocations, setParks } from "../../../store/Slices/Playbook";
 import { Link } from "react-router-dom";
 import AddParksModal from "./AddParksModal";
 
@@ -54,7 +54,7 @@ const AddParks = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const { grounds, locations, categories ,parks}: any = useAppSelector((state) => state.playbook);
+  const { grounds, locations, categories ,parks,parkLocations}: any = useAppSelector((state) => state.playbook);
   const dispatch = useDispatch()
 
 
@@ -72,17 +72,23 @@ const AddParks = () => {
 
   useEffect(() => {
     if (!parks.length) fetchParks();
+    if (!parkLocations?.length) fetchLocations()
   }, []);
 
   const fetchParks = () => {
     setProductsLoading(true);
     onSnapshot(collection(firestore, "parks"), (snapshot) => {
       const parksData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setGrounds(parksData))
+      dispatch(setParks(parksData))
       setProductsLoading(false);
     });
   };
- 
+  const fetchLocations = () => {
+    onSnapshot(collection(firestore, "parkLocations"), (snapshot) => {
+      const locationsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setParkLocations(locationsData))
+    });
+  };
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
@@ -190,36 +196,21 @@ const AddParks = () => {
       },
     },
     {
-      title: "Ground Name",
-      dataIndex: "name",
+      title: "Location Name",
+      dataIndex: "parkName",
       align: "center",
     },
     {
-      title: "Ground Description",
+      title: "Location Description",
       dataIndex: "description",
       align: "center",
     },
     {
-      title: "Ground Price",
+      title: "Park Price",
       dataIndex: "price",
       align: "center",
     },
-    {
-      title: "Category Name",
-      dataIndex: "category",
-      align: "center",
-      render: (value: any, record: any, index: any) => {
-        return <span className="capitalize">{getCategoryName(record?.categoryId)}</span>;
-      },
-    },
-    {
-      title: "Seats",
-      dataIndex: "seats",
-      align: "center",
-      // render: (value: any, record: any, index: any) => {
-      //   return <span>{record?.colorData?.name}</span>;
-      // },
-    },
+   
     // {
     //   title: "Material",
     //   dataIndex: "material",
@@ -323,13 +314,13 @@ const AddParks = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={grounds}
+            dataSource={parks}
             locale={{ emptyText: !productsLoading ? "No Data" : " " }}
             loading={productsLoading}
             pagination={{
               current: pagination.page,
               pageSize: pagination.limit,
-              total: grounds.length,
+              total: parks.length,
               onChange: (page, limit) => setPagination({ limit, page }),
             }}
             className="common-setting-table"
@@ -346,7 +337,7 @@ const AddParks = () => {
         getTableRowValues={getTableRowValues}
         role={role}
         categoryOptions={categories.map((category: any) => ({ label: category.name, value: category.id }))}
-        locationOptions={locations.map((location: any) => ({ label: location.location, value: location.id }))}
+        locationOptions={parkLocations.map((location: any) => ({ label: location.location, value: location.id }))}
       />
 
       {/* ============================== Cross Allocation Modal For Job Role ============================== */}
