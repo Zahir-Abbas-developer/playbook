@@ -185,11 +185,11 @@ const AddProducts = () => {
     {
       label: (
         <Space
-         
+
         >
-            <img src={editIcon} alt="edit" className="d-flex align-center" height={18} width={16} />
-        <Link to="/feedback">  <span>View Details</span></Link>
-        </Space>
+          <img src={editIcon} alt="edit" className="d-flex align-center" height={18} width={16} />
+          <Link to={`/feedback/${jobID}`}>  <span>View Details</span></Link>
+        </Space >
       ),
       key: "3",
     },
@@ -261,6 +261,8 @@ const AddProducts = () => {
               if (!visible) {
                 // Do something when the dropdown is closed
                 handleResetFormValues();
+              } else {
+                setJobID(text.id)
               }
             }}
           >
@@ -341,7 +343,7 @@ const AddProducts = () => {
               </Col>
             )}
           </Row>
-        </div>
+        </div>/ratings
 
         <div className="filter-bar">
           <Space className="input-export-icons input-search-wrapper" size={[30, 10]}>

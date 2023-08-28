@@ -11,7 +11,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useDispatch } from "react-redux";
 // import { addFeedback } from "../../store/features/feedbackSlice/index";
 import { useLocation } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "../../utils/firebase";
 
 
@@ -65,7 +65,7 @@ const FeedbackPopup = (props: IFeedbackPopup) => {
       });
     }
     const reviewRef = doc(firestore, `grounds/${props?.productId}/reviews`, userId);
-    setDoc(reviewRef, { rating: values.rating, feedback: values.feedback }).then(result => {
+    setDoc(reviewRef, { rating: values.rating, feedback: values.feedback, createdAt: serverTimestamp() }).then(result => {
       props.setOpen(false);
       props.feedBack({
         message: "Feedback submitted successfully",

@@ -12,25 +12,62 @@ import { useLocation } from "react-router-dom";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { storage, uploadToFirebase } from '../../../../utils/firebase';
+import { v4 as uuidv4 } from "uuid";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+
 
 const { Dragger } = Upload;
 
-const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled}: any) => {
+const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled }: any) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [showText, setShowText] = useState(true);
   const userData: any = JSON.parse(
     localStorage.getItem("careUserData") || "{}"
   );
-  const location=useLocation()
+  const location = useLocation()
 
   const props: UploadProps = {
     name: "file",
     multiple: true,
-    action: "https://thankful-onesies.cyclic.app/uploads",
-    headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJzdWIiOiI2NDM1NGY4MmUzOWQ3N2JkNTgzZTIwNzIiLCJpYXQiOjE2ODU1MzI4NDksImV4cCI6MTY4NTYxOTI0OX0.Pa6J_v8K8DUxFkCu5Mam5mfNqW9gA9YPPmpdJbtZBmI` },
+    // action: "https://thankful-onesies.cyclic.app/uploads",
+    // headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJzdWIiOiI2NDM1NGY4MmUzOWQ3N2JkNTgzZTIwNzIiLCJpYXQiOjE2ODU1MzI4NDksImV4cCI6MTY4NTYxOTI0OX0.Pa6J_v8K8DUxFkCu5Mam5mfNqW9gA9YPPmpdJbtZBmI` },
+    customRequest: async ({ file, onSuccess, onError }: any) => {
+      try {
+        const fileRef = ref(storage, `${file.uid}_${file.name}`)
+        const uploadTask = uploadBytesResumable(fileRef, file, { customMetadata: { fileName: file.name } })
+        uploadTask.on("state_changed",
+          (snapshot) => {
+            const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // onprogress({ percent });
+          },
+          (error) => {
+            onError(error);
+          },
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              uploadCertificateThumbnail(downloadURL);
+              onSuccess(null, uploadTask.snapshot.metadata);
+            } catch (error) {
+              onError(error);
+            }
+          }
+        );
+      } catch (error) {
+        onError(error);
+      }
+    },
+    onRemove: async (file) => {
+      try {
+        const fileRef = ref(storage, `${file.uid}_${file.name}`)
+        await deleteObject(fileRef)
+      } catch (err) {
+        console.log("error", err)
+      }
+    },
     onChange(info) {
-      console.log(info.file)
       if (info.fileList.length > 0) {
         setShowText(false);
       } else {
@@ -38,8 +75,8 @@ const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled}: any) => {
       }
       const { status } = info.file;
       if (status !== "uploading") {
-       
-        uploadCertificateThumbnail(info.file?.response[0]?.url);
+
+        //  uploadCertificateThumbnail(info.file?.response[0]?.url);
         console.log(info.file)
       }
       if (status === "done") {
@@ -55,7 +92,7 @@ const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled}: any) => {
 
   return (
     <>
-      { (
+      {(
         <div className="upload-image">
           {fileUrl ? (
             <Dragger disabled={disabled} {...props} accept=".pdf,.svg,.png">
@@ -83,12 +120,12 @@ const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled}: any) => {
                   <p className="ant-upload-drag-icon">
                     <CloudUploadOutlined />
                   </p>
-                {location.pathname==="/client-profile" ? <p className="ant-upload-text fs-14 fw-600 m-0">
+                  {location.pathname === "/client-profile" ? <p className="ant-upload-text fs-14 fw-600 m-0">
                     Drag and drop, or <span>Browse</span> your Product files
-                  </p> :  <p className="ant-upload-text fs-14 fw-600 m-0">
+                  </p> : <p className="ant-upload-text fs-14 fw-600 m-0">
                     Drag and drop, or <span>Browse</span> your Product files
                   </p>
-}
+                  }
                 </>
               )}
               <img
@@ -108,7 +145,7 @@ const Thumbnail = ({ uploadCertificateThumbnail, fileUrl, disabled}: any) => {
             </Dragger>
           )}
         </div>
-      ) }
+      )}
     </>
   );
 
