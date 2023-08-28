@@ -107,7 +107,7 @@ const NavBar = () => {
 
   // const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
   const { role,permissions }: any = JSON.parse(
-    localStorage.getItem("careUserData") || "{}"
+    localStorage.getItem("user") || "{}"
   );
   const handleOpenDrawer=()=>{
     dispatch(openDrawer())
