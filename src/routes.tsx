@@ -136,7 +136,7 @@ export const routes: any = [
       {
         path: "feedback/:id",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.admin]}
         >
           {" "}
           <AdminFeedBackPage />
@@ -145,7 +145,7 @@ export const routes: any = [
       {
         path: "feedback-details",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.admin]}
         >
           {" "}
           <ClientFeedBackPage />
