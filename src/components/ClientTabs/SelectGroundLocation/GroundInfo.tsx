@@ -51,7 +51,7 @@ const GroundInfo = (props: any) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
   const [groundId, setGroundId] = useState("");
-
+ const [groundData ,setGroundData]=useState("")
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
 
   useEffect(() => {
@@ -344,6 +344,7 @@ const GroundInfo = (props: any) => {
                             setOpenFeedbackPopup(true);
                             setGroundId(item.id);
                             setOpenDrawer(true)
+                            setGroundData(item)
                           }}
                           type="primary"
                           htmlType="submit"
@@ -363,7 +364,7 @@ const GroundInfo = (props: any) => {
           )}
         </div>
       </div>
-      <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} groundData={groundData} />
       <FeedbackPopup
         open={openFeedbackPopup}
         feedBack={setToggleSnackbar}

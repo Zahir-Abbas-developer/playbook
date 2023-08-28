@@ -4,7 +4,7 @@ import type { DrawerProps } from 'antd/es/drawer';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import { Link } from 'react-router-dom';
 
-const ConfirmationModal = ({openDrawer,setOpenDrawer}:any) => {
+const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
 
   const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
 
@@ -19,7 +19,7 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer}:any) => {
   const onClose = () => {
     setOpenDrawer(false);
   };
-
+console.log(groundData)
   return (
     <>
       <Space>
@@ -39,9 +39,12 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer}:any) => {
           </Space>
         }
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>Name : {groundData?.name}</p>
+        <p>Description : {groundData?.description}</p>
+        <p>Seats : {groundData?.seats}</p>
+        <p>Price : {groundData?.price}</p>
+        <p>Slots : {groundData?.slots?.map((data:any)=>{return <>{data}</>})}</p>
+        
 
        <Link  to="/productDetails/cart-details/checkout-details"> <Button type="primary" onClick={onClose}>
               Confirm Booking
