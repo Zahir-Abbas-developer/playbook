@@ -111,7 +111,7 @@ const StaffAllocationFilters = (props: any) => {
   }, [values]);
   return (
     <div className="inner-wrap-filters">
-     <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Ground</p>
+     <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Parks</p>
      <p>Find The Best Grounds In Your Area.</p>
       <div className="bottom-inset-filters d-flex justify-between align-center">
         <GroundInnerFilters
