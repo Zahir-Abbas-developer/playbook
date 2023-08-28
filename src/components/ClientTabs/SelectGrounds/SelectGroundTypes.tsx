@@ -96,7 +96,7 @@ const SelectGroundTypes = () => {
                   }}
                 >
                    <img
-                  src={card?.icon}
+                  src={card?.thumbnail}
                   alt="icon"
                   className={"add-user-image"}
                   height={51}

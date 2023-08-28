@@ -16,6 +16,8 @@ import { handleInputTrimSpaces, handleInputTrimStart } from "../../../utils/useI
 import { usePostCategoriesMutation, useUpdateCategoriesMutation } from "../../../store/Slices/Products";
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
+import Thumbnail from "../../Setting/SettingKeyInfo/UploadImage/Thumbnail";
+import { useState } from "react";
 function AddCategoryModal(props: any) {
   const [form] = Form.useForm();
   const { addEditJobRole, setAddEditJobRole, modalType, getTableRowValues, setGetFieldValues, role ,jobID} = props;
@@ -23,7 +25,7 @@ function AddCategoryModal(props: any) {
   const [postJobRequest, { isLoading: isPostJobRequestMutation }] = usePostJobRequestMutation();
   const [updateCategories, { isLoading: isUpdateJobRequestMutation }] = useUpdateCategoriesMutation();
   const [postCategories]=usePostCategoriesMutation()
-
+  const [certificateUrlThumbnail, setCertificateUrlThumbnail] = useState("");
   const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   // ------------------ Error cases Variable ------------------
   let userRoleDropdown: any;
@@ -54,6 +56,10 @@ function AddCategoryModal(props: any) {
     console.log("Failed:", errorInfo);
   };
 
+  const uploadCertificateThumbnail = (url: any) => {
+    setCertificateUrlThumbnail(url);
+  };
+
 
   // ---------------- On Finish used to reset form fields in form ----------------
   const onFinish = async (values: any) => {
@@ -61,9 +67,10 @@ function AddCategoryModal(props: any) {
     if (modalType !== "Add") {
       const updateProductValues = {
         ...values,
+        thumbnail: certificateUrlThumbnail,
         price: parseInt(values?.price),
       };
-     
+      if (certificateUrlThumbnail) updateProductValues["thumbnail"] = certificateUrlThumbnail;
       setDoc(doc(firestore, "categories", getTableRowValues?.id), updateProductValues)
         .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" }))
         .catch((error) =>
@@ -78,6 +85,7 @@ function AddCategoryModal(props: any) {
       const addProductValues = {
         ...values,
         createdAt: serverTimestamp(),
+        thumbnail: certificateUrlThumbnail,
         createdBy: userId ?? "",
       };
       addDoc(collection(firestore, "categories"), addProductValues)
@@ -144,6 +152,11 @@ function AddCategoryModal(props: any) {
                 style={{ marginTop: "2px", height: "40px", }}
               />
             </Form.Item>
+          </Col>
+          <Col xs={24} lg={24}>
+          <p style={{ fontWeight: 600, color: "#6E7191" }}>Thumbnail</p>
+            <Thumbnail uploadCertificateThumbnail={uploadCertificateThumbnail} />
+        
           </Col>
         </Row>
 
