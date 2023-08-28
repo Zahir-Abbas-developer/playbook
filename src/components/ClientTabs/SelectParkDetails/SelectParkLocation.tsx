@@ -11,7 +11,7 @@ import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
 import { CollectionReference, collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 
 import { useDispatch } from "react-redux";
-import { setGrounds } from "../../../store/Slices/Playbook";
+import { setGrounds, setParks } from "../../../store/Slices/Playbook";
 import { useAppSelector } from "../../../store";
 import SliderCard from "../Slider/SliderCard";
 import GroundInnerFilters from "./ParkInnerFilters";
@@ -46,7 +46,7 @@ const StaffAllocationFilters = (props: any) => {
   const [inputValue, setInputValue] = useState(50);
   const [isAllocateCarerModal, setIsAllocateCarerModal] = useState(false);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const { grounds, }: any = useAppSelector((state:any) => state.playbook);
+  const { parks, }: any = useAppSelector((state:any) => state.playbook);
   const [deleteModal, setDeleteModal] = useState(false);
   const [values,setValues]=useState<any>(null);
 
@@ -92,7 +92,7 @@ const StaffAllocationFilters = (props: any) => {
   };
 
   const fetchGrounds = () => {
-    const  locationCollection:CollectionReference=collection(firestore, "grounds");
+    const  locationCollection:CollectionReference=collection(firestore, "parks");
     let baseQuery:any = locationCollection;
     if(values?.location) baseQuery =query(baseQuery,where("locationId",'==',values?.location));
     if(values?.slot) baseQuery =query(baseQuery,where("slots",'array-contains',values?.slot));
@@ -100,9 +100,9 @@ const StaffAllocationFilters = (props: any) => {
     setProductsLoading(true);
     onSnapshot(baseQuery, (snapshot:any) => {
       const groundsData: any = snapshot.docs.map((doc:any) => ({ id: doc.id, ...doc.data() }))
-      console.log("grounds",groundsData)
+      console.log("parks",groundsData)
       setProductsLoading(false);
-      dispatch(setGrounds(groundsData))
+      dispatch(setParks(groundsData))
     });
   };
   useEffect(() => {
@@ -112,7 +112,7 @@ const StaffAllocationFilters = (props: any) => {
   return (
     <div className="inner-wrap-filters">
      <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Parks</p>
-     <p>Find The Best Grounds In Your Area.</p>
+     <p>Find The Best Parks In Your Area.</p>
       <div className="bottom-inset-filters d-flex justify-between align-center">
         <GroundInnerFilters
           careHomeOptions={careHomeOptions}
@@ -127,7 +127,7 @@ const StaffAllocationFilters = (props: any) => {
        
       </div>
     
-    <GroundInfo grounds={grounds}/>
+    <GroundInfo grounds={parks}/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

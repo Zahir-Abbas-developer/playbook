@@ -53,7 +53,7 @@ const GroundInfo = (props: any) => {
   const [groundId, setGroundId] = useState("");
  const [groundData ,setGroundData]=useState("")
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
-
+console.log(grounds)
   useEffect(() => {
     // setOpenFeedbackPopup(true);
     // AppSnackbar({
@@ -254,7 +254,7 @@ const GroundInfo = (props: any) => {
                             }}
                           >
                             <img src={EmailIcon} alt="email" />
-                            <p className="m-0">{item?.name}</p>
+                            <p className="m-0">{item?.email}</p>
                           </div>
                           <div
                             className="d-flex align-center contact-content"
@@ -278,7 +278,7 @@ const GroundInfo = (props: any) => {
                               <img src={CallImg} alt="email" />
                             </div>
                             <p className="m-0" style={{ margin: "0" }}>
-                              {item?.name}
+                              {item?.phone}
                             </p>
                           </div>
                         </div>
@@ -292,12 +292,7 @@ const GroundInfo = (props: any) => {
                             >
                               Status:
                             </h5>
-                            <h5
-                              className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
-                              style={{ color: "#6E7191", marginTop: "8px" }}
-                            >
-                              Seats:
-                            </h5>
+                          
                             <h5
                               className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
                               style={{ color: "#6E7191", marginTop: "6px" }}

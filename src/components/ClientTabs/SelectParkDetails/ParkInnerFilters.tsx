@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { useAppSelector } from '../../../store';
 import { firestore } from '../../../utils/firebase';
-import { setLocations } from "../../../store/Slices/Playbook";
+import { setLocations, setParkLocations } from "../../../store/Slices/Playbook";
 const GroundInnerFilters = (props:any) => {
   const {setValues}=props;
   const dispatch = useDispatch();
@@ -26,8 +26,8 @@ const GroundInnerFilters = (props:any) => {
 
   const fetchLocations = () => {
   
-    onSnapshot(collection(firestore, "locations"), (snapshot) => {
-      dispatch(setLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+    onSnapshot(collection(firestore, "parkLocations"), (snapshot) => {
+      dispatch(setParkLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
    
     });
   };
