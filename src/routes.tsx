@@ -134,19 +134,39 @@ export const routes: any = [
       },
       {
         path:"feedback",
-        element:<AdminFeedBackPage/>
+        element:<RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+        <AdminFeedBackPage/>
+        </RequireAuth> 
       },
       {
         path:"feedback-details",
-        element:<ClientFeedBackPage/>
+        element:<RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+        <ClientFeedBackPage/>
+        </RequireAuth> 
       },
       {
         path: "select-grounds",
-        element: <SelectGroundPage />,
+        element: <RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+        <SelectGroundPage />,
+        </RequireAuth> 
       },
       {
         path: "select-stadium-location",
-        element: <SelectGroundLocationPage />,
+        element:   <RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+        <SelectGroundLocationPage />,
+        </RequireAuth> 
       },
       {
         path: "dashboard",
@@ -158,11 +178,21 @@ export const routes: any = [
       },
       {
         path: "contact-details",
-        element: <ContactDetailsPage />,
+        element:<RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+       <ContactDetailsPage />,
+        </RequireAuth>  
       },
       {
         path: "productDetails",
-        element: <ProductDetailsPage />,
+        element:<RequireAuth
+        allowedRoles={[ROLES.admin]}
+        >
+        {" "}
+        <ProductDetailsPage />,
+        </RequireAuth> 
       },
       {
         path: "/productDetails/cart-details/checkout-details",
@@ -172,23 +202,23 @@ export const routes: any = [
       {
         path: "/add-products",
         element: (
-          // <RequireAuth
-          // allowedRoles={[ROLES.admin]}
-          // >
-          // {" "}
+          <RequireAuth
+          allowedRoles={[ROLES.admin]}
+          >
+          {" "}
           <AddProductsPage />
-          // </RequireAuth>
+          </RequireAuth>
         ),
       },
       {
         path: "/add-parks",
         element: (
-          // <RequireAuth
-          // allowedRoles={[ROLES.admin]}
-          // >
-          // {" "}
+          <RequireAuth
+          allowedRoles={[ROLES.admin]}
+          >
+          {" "}
           <AddParks />
-          // </RequireAuth>
+          </RequireAuth>
         ),
       },
       {
@@ -198,17 +228,18 @@ export const routes: any = [
       {
         path: "/add-categories",
         element: (
-          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <RequireAuth allowedRoles={[ROLES.admin]}>
           <AddCategoriesPage />
-          // </RequireAuth>
+           </RequireAuth>
         ),
       },
       {
+        
         path: "/add-park-location",
         element: (
-          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <RequireAuth allowedRoles={[ROLES.admin]}>
           <AddParkLocationPage/>
-          // </RequireAuth>
+          </RequireAuth>
         ),
       },
       {
@@ -222,9 +253,9 @@ export const routes: any = [
       {
         path: "/add-colors",
         element: (
-          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <RequireAuth allowedRoles={[ROLES.admin]}>
           <AddColorsPage />
-          // </RequireAuth>
+           </RequireAuth>
         ),
       },
       {
@@ -250,177 +281,7 @@ export const routes: any = [
         ),
       },
 
-      {
-        path: "ratings",
-        element: (
-          <RequireAuth allowedRoles={[ROLES.superAdmin]}>
-            <RatingsFeedback />
-          </RequireAuth>
-        ),
-      },
-
-      {
-        path: "",
-        children: [
-          {
-            path: "ratings/reviewed",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.carer, ROLES.client, ROLES.coordinator]}>
-                <OverAllRatingsPage />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "ratings/review-care-homes",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.carer, ROLES.client, ROLES.coordinator]}>
-                <ReviewCareHomesPage />
-              </RequireAuth>
-            ),
-          },
-        ],
-      },
-      {
-        path: "",
-        children: [
-          {
-            path: "settings",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
-                <SettingsPage />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/Key-info",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <KeyInfo />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/job-role",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
-                <JobRole />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/shift-time-settings",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <ShiftTimeSettings />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/staff-settings",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <StaffSettings />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/bank-holidays",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <BankHolidays />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/dbs-configuration",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin]}>
-                <DBSConfiguration />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/email-notification",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin]}>
-                <EmailNotification />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/set-email-Phone",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <ResetEmailPhone />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/week-start-day",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
-                <WeekStartDay />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/festival-day-greeting",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.client]}>
-                <FestivalDayGreeting />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/client-terms-condition",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator]}>
-                <ClientTermsCondition />
-              </RequireAuth>
-            ),
-          },
-
-          {
-            path: "settings/break-time-settings",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.admin, ROLES.coordinator, ROLES.client]}>
-                <BreakTime />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/change-password",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.coordinator]}>
-                <ChangePassword />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: "settings/electronic-attendance-monitoring",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.client]}>
-                <ElectronicAttendanceMonitoring />
-              </RequireAuth>
-            ),
-          },
-        ],
-      },
-
-      //client
-      {
-        path: "",
-        children: [
-          {
-            path: "client-booking-calendar",
-            element: (
-              <RequireAuth allowedRoles={[ROLES.user]}>
-                <OurCustomOrderDetails />
-              </RequireAuth>
-            ),
-          },
-        ],
-      },
+    
     ],
   },
   {

@@ -23,7 +23,7 @@ const DrawerNavsLinks = (props: any) => {
   // Getting user role from  local storage
   // const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
   const { role,permissions }: any = JSON.parse(
-    localStorage.getItem("careUserData") || "{}"
+    localStorage.getItem("user") || "{}"
   );
 
 
