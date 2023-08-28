@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { storage, uploadToFirebase } from '../../../../utils/firebase';
+import { storage } from '../../../../utils/firebase';
 import { v4 as uuidv4 } from "uuid";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 

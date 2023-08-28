@@ -21,24 +21,3 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
-
-export const uploadToFirebase = async (file: any) => {
-  console.log("🚀 ~ file: firebase.ts:26 ~ uploadToFirebase ~ file:", file);
-  if (file) {
-    const storageRef = ref(storage, `${uuidv4()}_${file.name}`);
-    const metaData = {
-      contentType: file?.type,
-    };
-    // const upload = await uploadBytes(storageRef, file, metaData)
-    //   .then(async (snapshot: any) => {
-    //     console.log(
-    //       "🚀 ~ file: firebase.ts:33 ~ uploadToFirebase ~ snapshot:",
-    //       snapshot
-    //     );
-    //     const downloadURL = await getDownloadURL(storageRef);
-    //     console.log("Download URL:", downloadURL);
-    //     return downloadURL;
-    //   })
-    //   .catch((err) => console.log("errir", err));
-  } else throw new Error("Please Upload File");
-};

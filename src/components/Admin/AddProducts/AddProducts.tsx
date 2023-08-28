@@ -102,7 +102,6 @@ const AddProducts = () => {
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
-      console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
       deleteDoc(doc(firestore, "grounds", jobID))
         .then((response) =>
           AppSnackbar({
@@ -343,7 +342,7 @@ const AddProducts = () => {
               </Col>
             )}
           </Row>
-        </div>/ratings
+        </div>
 
         <div className="filter-bar">
           <Space className="input-export-icons input-search-wrapper" size={[30, 10]}>
