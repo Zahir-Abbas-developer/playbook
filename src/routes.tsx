@@ -39,6 +39,7 @@ const ProductDetailsPage = Loadable(lazy(() => import("./pages/ProductDetails"))
 const BillingDetailsPage = Loadable(lazy(() => import("./pages/BillingDetails")));
 const SelectGroundPage = Loadable(lazy(() => import("./pages/SelectGrounds")));
 const SelectGroundLocationPage = Loadable(lazy(() => import("./pages/SelectGroundLocation")));
+const SelectParkLocationPage = Loadable(lazy(() => import("./pages/SelectParkDetails")));
 //Cart Details
 const CartDetailsPage = Loadable(lazy(() => import("./pages/CartDetails")));
 //UserVerification page
@@ -166,6 +167,15 @@ export const routes: any = [
         >
         {" "}
         <SelectGroundLocationPage />,
+        </RequireAuth> 
+      },
+      {
+        path:"park-details",
+        element: <RequireAuth
+        allowedRoles={[ROLES.user]}
+        >
+        {" "}
+        <SelectParkLocationPage/>
         </RequireAuth> 
       },
       {
