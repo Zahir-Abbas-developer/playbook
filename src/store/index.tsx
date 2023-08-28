@@ -36,7 +36,7 @@ const store = configureStore({
     [emptySplitApi.reducerPath]: emptySplitApi.reducer,
     products: persistedReducer,
     drawer: drawerSlice.reducer,
-    playbook: playbookSlice.reducer
+    playbook: playbookSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(emptySplitApi.middleware),

@@ -53,6 +53,7 @@ const AddStylesPage = Loadable(lazy(() => import("./pages/AddStyles")));
 const AddOrdersPage = Loadable(lazy(() => import("./pages/AddOrders")));
 const ClientFeedBackPage = Loadable(lazy(() => import("./pages/ClientFeedback")));
 const AdminFeedBackPage = Loadable(lazy(() => import("./pages/AdminFeedback")));
+const AddParks=Loadable(lazy(()=>import("./pages/AddParks")))
 
 
 // Reports and its Child Routes Ends Here
@@ -77,7 +78,7 @@ const ChangePassword = Loadable(lazy(() => import("./pages/Settings/ChangePasswo
 const ElectronicAttendanceMonitoring = Loadable(lazy(() => import("./pages/Settings/ElectronicAttendanceMonitoring")));
 
 const ContactDetailsPage = Loadable(lazy(() => import("./pages/ContactDetails")));
-
+const AddParkLocationPage=Loadable(lazy(()=>import("./pages/AddParkLocation")))
 export const routes: any = [
   { path: "/", element: <Navigate to="services" /> },
 
@@ -180,6 +181,17 @@ export const routes: any = [
         ),
       },
       {
+        path: "/add-parks",
+        element: (
+          // <RequireAuth
+          // allowedRoles={[ROLES.admin]}
+          // >
+          // {" "}
+          <AddParks />
+          // </RequireAuth>
+        ),
+      },
+      {
         path: "/jacket-details",
         element: <JacketDetailsPage />,
       },
@@ -188,6 +200,14 @@ export const routes: any = [
         element: (
           // <RequireAuth allowedRoles={[ROLES.admin]}>
           <AddCategoriesPage />
+          // </RequireAuth>
+        ),
+      },
+      {
+        path: "/add-park-location",
+        element: (
+          // <RequireAuth allowedRoles={[ROLES.admin]}>
+          <AddParkLocationPage/>
           // </RequireAuth>
         ),
       },

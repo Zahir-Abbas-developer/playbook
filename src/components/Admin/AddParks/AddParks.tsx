@@ -23,11 +23,11 @@ import deleteIcon from "../../../assets/icons/delete-icon-outlined.svg";
 import searchIcon from "../../../assets/icons/search.svg";
 
 // Styling
-import "./AddProducts.scss";
+import "./AddParks.scss";
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
 import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationModal";
 import { renderDashboard } from "../../../utils/useRenderDashboard";
-import AddProductsModal from "./AddProductsModal";
+
 import { useDeleteProductsMutation, useGetAllMaterialsQuery, useGetOverAllProductsQuery } from "../../../store/Slices/Products";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
@@ -35,8 +35,9 @@ import { useAppSelector } from "../../../store";
 import { useDispatch } from "react-redux";
 import { setCategories, setGrounds, setLocations } from "../../../store/Slices/Playbook";
 import { Link } from "react-router-dom";
+import AddParksModal from "./AddParksModal";
 
-const AddProducts = () => {
+const AddParks = () => {
   const [pagination, setPagination] = useState({ limit: 6, page: 1 });
   const [selectedFilterValue, setSelectedFilterValue] = useState<string | undefined>();
   const [selectedCareHomeFilterValue, setSelectedCareHomeFilterValue] = useState<string | undefined>();
@@ -53,7 +54,7 @@ const AddProducts = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const { grounds, locations, categories }: any = useAppSelector((state) => state.playbook);
+  const { grounds, locations, categories ,parks}: any = useAppSelector((state) => state.playbook);
   const dispatch = useDispatch()
 
 
@@ -69,41 +70,24 @@ const AddProducts = () => {
   // ============================== Variables to Assign Values to it ==============================
   let JobRole: any;
 
-  let careHomeDataDropdown: any;
-
   useEffect(() => {
-    if (!grounds.length) fetchGrounds();
-    if (!locations?.length) fetchLocations()
-    if (!categories?.length) fetchCategories()
+    if (!parks.length) fetchParks();
   }, []);
 
-  const fetchGrounds = () => {
+  const fetchParks = () => {
     setProductsLoading(true);
-    onSnapshot(collection(firestore, "grounds"), (snapshot) => {
-      const groundsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setGrounds(groundsData))
+    onSnapshot(collection(firestore, "parks"), (snapshot) => {
+      const parksData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setGrounds(parksData))
       setProductsLoading(false);
     });
   };
-  const fetchCategories = () => {
-    onSnapshot(collection(firestore, "categories"), (snapshot) => {
-      const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setCategories(categoriesData))
-    });
-  };
-  const fetchLocations = () => {
-    onSnapshot(collection(firestore, "locations"), (snapshot) => {
-      const locationsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setLocations(locationsData))
-    });
-  };
-
-
+ 
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
       console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
-      deleteDoc(doc(firestore, "grounds", jobID))
+      deleteDoc(doc(firestore, "parks", jobID))
         .then((response) =>
           AppSnackbar({
             type: "success",
@@ -287,7 +271,7 @@ const AddProducts = () => {
       <BreadCrumb
         breadCrumbItems={[
           {
-            title: "Ground",
+            title: "Park",
             path: "",
           },
           {
@@ -307,40 +291,12 @@ const AddProducts = () => {
               setModalType("Add");
             }}
           >
-            Add Ground Detail
+            Add Park Detail
             <PlusCircleOutlined style={{ marginLeft: "20px" }} />
           </Button>
 
-          {/* ============================== Job Role Top Filters ============================== */}
-          <Row gutter={[0, 20]} className="job-role-filters-wrapper">
-            {role === ROLES.coordinator && (
-              <Col xs={24} md={10} lg={8} xl={6} xxl={4}>
-                <p className="fs-14 fw-600 title-color line-height-17 m-0" style={{ marginBottom: "0.563rem" }}>
-                  Care Home
-                </p>
-                <div className="filter-column">
-                  <Select
-                    size="large"
-                    placeholder="Select care home"
-                    optionFilterProp="children"
-                    defaultValue="All"
-                    className="app-select-wrap-class"
-                    popupClassName="app-select-popup-wrap-class"
-                    style={{ width: "100%" }}
-                    onChange={(value: string) => {
-                      if (selectedCareHomeFilterValue === value) {
-                        setSelectedCareHomeFilterValue("");
-                      } else {
-                        setSelectedCareHomeFilterValue(value);
-                      }
-                    }}
-                    value={selectedCareHomeFilterValue}
-                    options={careHomeDataDropdown}
-                  />
-                </div>
-              </Col>
-            )}
-          </Row>
+         
+          
         </div>
 
         <div className="filter-bar">
@@ -382,7 +338,7 @@ const AddProducts = () => {
       </div>
 
       {/* ============================== Add Modal For Job Role ============================== */}
-      <AddProductsModal
+      <AddParksModal
         addEditJobRole={addEditJobRole}
         setAddEditJobRole={setAddEditJobRole}
         modalType={modalType}
@@ -419,4 +375,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default AddParks;

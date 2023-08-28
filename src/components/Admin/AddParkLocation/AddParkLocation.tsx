@@ -1,47 +1,58 @@
 import { useEffect, useState } from "react";
 
+
 // Ant Components
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps, Select, Space, Table, Input, Row, Col } from "antd";
 
+
 // Components
 import BreadCrumb from "../../../layout/BreadCrumb/BreadCrumb";
 
+
 // RTK Query
 import { useGetClientsQuery } from "../../../store/Slices/Setting/StaffSettings/RegisterationConfiguration";
-import { useGetJobRequestFilterQuery, useGetJobRequestQuery } from "../../../store/Slices/Setting/JobRole";
+import { useDeleteJobRequestMutation, useGetJobRequestFilterQuery, useGetJobRequestQuery } from "../../../store/Slices/Setting/JobRole";
+
 
 // Utils, Constant and Packages
 import { ROLES } from "../../../constants/Roles";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import { debouncedSearch } from "../../../utils/utils";
 
+
 // Assets
 import actionImg from "../../../assets/icons/Setting/actionImg.svg";
 import editIcon from "../../../assets/icons/edit-blue.svg";
+import crossAllocation from "../../../assets/icons/Setting/crossAllocation.svg";
 import deleteIcon from "../../../assets/icons/delete-icon-outlined.svg";
 import searchIcon from "../../../assets/icons/search.svg";
-
-// Styling
-import "./AddProducts.scss";
-import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
-import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationModal";
-import { renderDashboard } from "../../../utils/useRenderDashboard";
-import AddProductsModal from "./AddProductsModal";
-import { useDeleteProductsMutation, useGetAllMaterialsQuery, useGetOverAllProductsQuery } from "../../../store/Slices/Products";
+import coloredCopyIcon from "../../../assets/icons/Report/colored-copy.png";
+import coloredCsvIcon from "../../../assets/icons/Report/colored-csv.png";
+import coloredXlsIcon from "../../../assets/icons/Report/colored-xls.png";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
-import { useAppSelector } from "../../../store";
-import { useDispatch } from "react-redux";
-import { setCategories, setGrounds, setLocations } from "../../../store/Slices/Playbook";
-import { Link } from "react-router-dom";
 
-const AddProducts = () => {
-  const [pagination, setPagination] = useState({ limit: 6, page: 1 });
+// Styling
+import "./AddParkLocation.scss";
+import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
+import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationModal";
+
+import { renderDashboard } from "../../../utils/useRenderDashboard";
+import { useDeleteCategoriesMutation, useGetAllCategoriessQuery } from "../../../store/Slices/Products";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../store";
+import AddParkLocationModal from "./AddParkLocationModal";
+import { setParkLocations } from "../../../store/Slices/Playbook";
+
+
+const AddParkLocation = () => {
+
+  const [pagination, setPagination] = useState({ limit: 10, page: 1 });
   const [selectedFilterValue, setSelectedFilterValue] = useState<string | undefined>();
   const [selectedCareHomeFilterValue, setSelectedCareHomeFilterValue] = useState<string | undefined>();
   const [crossAllocationRecord, setCrossAllocationRecord] = useState([]);
-
+  const { data: getCategories, isSuccess: isSuccessCategories } = useGetAllCategoriessQuery({})
   // ============================== Filters ==============================
   const [searchName, setSearchName] = useState<string>("");
 
@@ -53,57 +64,91 @@ const AddProducts = () => {
   const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
   const [getTableRowValues, setGetFieldValues] = useState({});
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const { grounds, locations, categories }: any = useAppSelector((state) => state.playbook);
+  // const [categories, setCategories] = useState<any[]>([]);
   const dispatch = useDispatch()
-
-
+  const { parkLocations } = useAppSelector(state => state.playbook)
   // ============================== Query Parameters Of Search and Filter ==============================
   const paramsObj: any = {};
   if (searchName) paramsObj["name"] = searchName;
+  if (selectedFilterValue) paramsObj["userRole"] = selectedFilterValue;
+  if (selectedFilterValue === "All") paramsObj["userRole"] = "";
+  if (selectedCareHomeFilterValue) paramsObj["careHomeId"] = selectedCareHomeFilterValue;
 
-  const query = "?" + new URLSearchParams(paramsObj).toString();
+  const query = "&" + new URLSearchParams(paramsObj).toString();
 
   // ============================== ROLES ==============================
   const { role }: any = JSON.parse(localStorage.getItem("careUserData") || "{}");
 
+
+  // ============================== RTK Query ==============================
+  const { data, isSuccess } = useGetJobRequestQuery({ refetchOnMountOrArgChange: true });
+  const { data: clientData, isSuccess: isClientDataSuccess } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
+  const { data: jobRoleFilterData, isLoading: jobRoleFilterIsLoading } = useGetJobRequestFilterQuery({ refetchOnMountOrArgChange: true, query, pagination });
+  const [deleteCategories, { isLoading: isDeleteJobRequestMutation }] = useDeleteCategoriesMutation();
+
+
   // ============================== Variables to Assign Values to it ==============================
+  let optimizedUserRoleDropdown: any;
   let JobRole: any;
+  let unchangeUserData: any;
+  let clientAPIData: any;
+  let allCategories: any
+  if (isSuccessCategories) {
+    allCategories = getCategories
+  }
+
+  if (isSuccess) {
+    JobRole = jobRoleFilterData;
+    unchangeUserData = data;
+
+    // if (isNullOrEmpty(unchangeUserData)) {
+    // Making new array for dropdown from data
+    let userRoleDropdown = unchangeUserData?.data?.result?.map((item: any) => ({
+      value: item?.userRole,
+      label: item?.userRole,
+    }));
+
+    // removing duplicates from dropdowns
+    optimizedUserRoleDropdown = Array.from(
+      new Set(userRoleDropdown.map((option: any) => option.label))
+    ).map((label: any) =>
+      userRoleDropdown.find((option: any) => option.label === label)
+    );
+
+    optimizedUserRoleDropdown.push({ value: "All", label: "All" });
+    // }
+  }
 
   let careHomeDataDropdown: any;
+  if (isClientDataSuccess) {
+    clientAPIData = clientData;
+    // Making new array for dropdown from data
+    careHomeDataDropdown = clientAPIData?.data?.result?.map((item: any) => ({
+      value: item?._id,
+      label: item?.clientName,
+    }));
+
+  }
+
 
   useEffect(() => {
-    if (!grounds.length) fetchGrounds();
-    if (!locations?.length) fetchLocations()
-    if (!categories?.length) fetchCategories()
+    if (!parkLocations?.length)
+    fetchParkLocations();
   }, []);
 
-  const fetchGrounds = () => {
+  const fetchParkLocations = () => {
     setProductsLoading(true);
-    onSnapshot(collection(firestore, "grounds"), (snapshot) => {
-      const groundsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setGrounds(groundsData))
+    onSnapshot(collection(firestore, "parkLocations"), (snapshot) => {
+      dispatch(setParkLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
       setProductsLoading(false);
     });
   };
-  const fetchCategories = () => {
-    onSnapshot(collection(firestore, "categories"), (snapshot) => {
-      const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setCategories(categoriesData))
-    });
-  };
-  const fetchLocations = () => {
-    onSnapshot(collection(firestore, "locations"), (snapshot) => {
-      const locationsData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      dispatch(setLocations(locationsData))
-    });
-  };
-
 
   // ============================== Handle Delete Job Role ==============================
   const handleDeleteSubmit = async () => {
     try {
       console.log("🚀 ~ file: AddProducts.tsx:134 ~ handleDeleteSubmit ~ jobID:", jobID);
-      deleteDoc(doc(firestore, "grounds", jobID))
+      deleteDoc(doc(firestore, "parkLocations", jobID))
         .then((response) =>
           AppSnackbar({
             type: "success",
@@ -111,7 +156,7 @@ const AddProducts = () => {
             message: "Information deleted successfully",
           })
         )
-        .catch((error) =>
+        .catch((error: any) =>
           AppSnackbar({
             type: "error",
             messageHeading: "Error",
@@ -131,26 +176,22 @@ const AddProducts = () => {
     }
   };
 
+
+
   // ============================== Filter and Remove The Current Allocation For the Cross Alloocation ==============================
   const handleCrossAllocationValues = (data: any) => {
     const filteredJobRoles = JobRole?.data?.result.filter((singleItem: any) => singleItem?._id !== data?._id);
     if (filteredJobRoles) {
-      setCrossAllocationRecord(filteredJobRoles);
+      setCrossAllocationRecord(filteredJobRoles)
     }
-  };
+  }
 
   // ============================== Reset back to Initial States ==============================
   const handleResetFormValues = () => {
     setGetFieldValues({});
-    setJobID("");
-  };
+    setJobID("")
+  }
 
-  const getCategoryName = (categoryId: string) => {
-    return categories?.find((category: any) => category.id === categoryId)?.name || "N/A"
-  }
-  const getLocationName = (locationId: string) => {
-    return locations?.find((location: any) => location.id === locationId)?.name || "N/A"
-  }
 
   // ============================== Table Action Dropdowns Items ==============================
   const items: MenuProps["items"] = [
@@ -162,7 +203,13 @@ const AddProducts = () => {
             setModalType("Edit");
           }}
         >
-          <img src={editIcon} alt="edit" className="d-flex align-center" height={18} width={16} />
+          <img
+            src={editIcon}
+            alt="edit"
+            className="d-flex align-center"
+            height={18}
+            width={16}
+          />
           <span className="m-0">Edit Details</span>
         </Space>
       ),
@@ -176,24 +223,20 @@ const AddProducts = () => {
             setIsDeleteModal(true);
           }}
         >
-          <img src={deleteIcon} className="d-flex align-center" alt="delete" height={18} width={16} />
+          <img
+            src={deleteIcon}
+            className="d-flex align-center"
+            alt="delete"
+            height={18}
+            width={16}
+          />
           <span>Delete</span>
-        </Space>
-      ),
-      key: "2",
-    },
-    {
-      label: (
-        <Space
-         
-        >
-            <img src={editIcon} alt="edit" className="d-flex align-center" height={18} width={16} />
-        <Link to="/feedback">  <span>View Details</span></Link>
         </Space>
       ),
       key: "3",
     },
   ];
+
 
   // ============================== Job Role Table Columns ==============================
   const columns: any = [
@@ -202,49 +245,33 @@ const AddProducts = () => {
       dataIndex: "_id",
       key: "_id",
       render: (value: any, record: any, index: any) => {
-        return <span>{index + pagination?.limit * pagination?.page - pagination?.limit + 1}</span>;
+        return <span>{(index + pagination?.limit * pagination?.page) - pagination?.limit + 1}</span>;
       },
-    },
-    {
-      title: "Ground Name",
-      dataIndex: "name",
-      align: "center",
-    },
-    {
-      title: "Ground Description",
-      dataIndex: "description",
-      align: "center",
-    },
-    {
-      title: "Ground Price",
-      dataIndex: "price",
-      align: "center",
     },
     {
       title: "Category Name",
-      dataIndex: "category",
-      align: "center",
-      render: (value: any, record: any, index: any) => {
-        return <span className="capitalize">{getCategoryName(record?.categoryId)}</span>;
-      },
+      dataIndex: "name",
+      align: "center"
     },
     {
-      title: "Seats",
-      dataIndex: "seats",
-      align: "center",
-      // render: (value: any, record: any, index: any) => {
-      //   return <span>{record?.colorData?.name}</span>;
-      // },
+      title: "Category Description",
+      dataIndex: "description",
+      align: "center"
     },
-    // {
-    //   title: "Material",
-    //   dataIndex: "material",
-    //   align: "center",
-    //   render: (value: any, record: any, index: any) => {
-    //     return <span>{record?.materialData?.name}</span>;
-    //   },
-    // },
 
+
+    ...(role === ROLES.coordinator ?
+      [{
+        title: "Care Home",
+        align: "center",
+
+        dataIndex: "careHomeData",
+        key: "careHomeData",
+        render: (_: any, text: any) => (
+          <span className='fs-14 fw-400 m-0 line-height-22 title-color' style={{ textTransform: "capitalize" }}>{text?.careHomeData?.clientName}</span>
+        )
+      }] : []
+    ),
     {
       title: "Action",
       dataIndex: "action",
@@ -260,7 +287,7 @@ const AddProducts = () => {
             onOpenChange={(visible) => {
               if (!visible) {
                 // Do something when the dropdown is closed
-                handleResetFormValues();
+                handleResetFormValues()
               }
             }}
           >
@@ -268,7 +295,7 @@ const AddProducts = () => {
               <div
                 className="border-color cursor-pointer"
                 onClick={() => {
-                  setJobID(text.id);
+                  setJobID(text._id);
                   setGetFieldValues(text);
                   handleCrossAllocationValues(text);
                 }}
@@ -282,20 +309,21 @@ const AddProducts = () => {
     },
   ];
 
+
+
   return (
     <>
-      <BreadCrumb
-        breadCrumbItems={[
-          {
-            title: "Ground",
-            path: "",
-          },
-          {
-            title: "Home",
-            path: renderDashboard(role),
-          },
-        ]}
-      />
+
+      <BreadCrumb breadCrumbItems={[
+        {
+          title: "Categories",
+          path: "",
+        },
+        {
+          title: "Home",
+          path: renderDashboard(role),
+        },
+      ]} />
 
       <div className="setting-job-role">
         <div className="header border-radius-10">
@@ -307,17 +335,38 @@ const AddProducts = () => {
               setModalType("Add");
             }}
           >
-            Add Ground Detail
+            Add Park Location
             <PlusCircleOutlined style={{ marginLeft: "20px" }} />
           </Button>
 
           {/* ============================== Job Role Top Filters ============================== */}
-          <Row gutter={[0, 20]} className="job-role-filters-wrapper">
+          <Row gutter={[0, 20]} className='job-role-filters-wrapper'>
+            {/* <Col xs={24} md={10} lg={8} xl={6} xxl={4}>
+              <p className='fs-14 fw-600 title-color line-height-17 m-0' style={{ marginBottom: "0.563rem" }}>User Role</p>
+              <div className="filter-column">
+                <Select
+                  size="large"
+                  placeholder="Select user role"
+                  optionFilterProp="children"
+                  className="app-select-wrap-class"
+                  defaultValue="All"
+                  popupClassName="app-select-popup-wrap-class"
+                  style={{ width: "100%" }}
+                  value={selectedFilterValue}
+                  onChange={(value: string) =>
+                    value
+                      ? (setPagination({ ...pagination, page: 1 }), setSelectedFilterValue(value))
+                      : setSelectedFilterValue("")
+                  }
+                  
+                  options={optimizedUserRoleDropdown}
+                />
+              </div>
+            </Col> */}
+
             {role === ROLES.coordinator && (
               <Col xs={24} md={10} lg={8} xl={6} xxl={4}>
-                <p className="fs-14 fw-600 title-color line-height-17 m-0" style={{ marginBottom: "0.563rem" }}>
-                  Care Home
-                </p>
+                <p className='fs-14 fw-600 title-color line-height-17 m-0' style={{ marginBottom: "0.563rem" }}>Care Home</p>
                 <div className="filter-column">
                   <Select
                     size="large"
@@ -329,9 +378,10 @@ const AddProducts = () => {
                     style={{ width: "100%" }}
                     onChange={(value: string) => {
                       if (selectedCareHomeFilterValue === value) {
-                        setSelectedCareHomeFilterValue("");
+                        setSelectedCareHomeFilterValue("")
+
                       } else {
-                        setSelectedCareHomeFilterValue(value);
+                        setSelectedCareHomeFilterValue(value)
                       }
                     }}
                     value={selectedCareHomeFilterValue}
@@ -341,18 +391,31 @@ const AddProducts = () => {
               </Col>
             )}
           </Row>
+
         </div>
 
         <div className="filter-bar">
-          <Space className="input-export-icons input-search-wrapper" size={[30, 10]}>
+          <Space
+            className="input-export-icons input-search-wrapper"
+            size={[30, 10]}
+          >
             <Input
               className="search-input"
-              placeholder="Search by product name"
+              placeholder="Search by category name"
               onChange={(event: any) => {
                 debouncedSearch(event.target.value, setSearchName);
-                setPagination({ ...pagination, page: 1 });
-              }}
-              prefix={<img src={searchIcon} alt="searchIcon" width={22} height={22} style={{ marginRight: "0.623rem" }} />}
+                setPagination({ ...pagination, page: 1 })
+              }
+              }
+              prefix={
+                <img
+                  src={searchIcon}
+                  alt="searchIcon"
+                  width={22}
+                  height={22}
+                  style={{ marginRight: "0.623rem" }}
+                />
+              }
             />
             {/* <Space size={[25, 0]}>
               <img src={coloredCopyIcon} alt="csv" className="img-hover" />
@@ -367,13 +430,13 @@ const AddProducts = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={grounds}
+            dataSource={parkLocations}
             locale={{ emptyText: !productsLoading ? "No Data" : " " }}
             loading={productsLoading}
             pagination={{
               current: pagination.page,
               pageSize: pagination.limit,
-              total: grounds.length,
+              total: JobRole?.data?.metadata?.total,
               onChange: (page, limit) => setPagination({ limit, page }),
             }}
             className="common-setting-table"
@@ -382,15 +445,14 @@ const AddProducts = () => {
       </div>
 
       {/* ============================== Add Modal For Job Role ============================== */}
-      <AddProductsModal
+      <AddParkLocationModal
         addEditJobRole={addEditJobRole}
         setAddEditJobRole={setAddEditJobRole}
         modalType={modalType}
         setGetFieldValues={setGetFieldValues}
         getTableRowValues={getTableRowValues}
         role={role}
-        categoryOptions={categories.map((category: any) => ({ label: category.name, value: category.id }))}
-        locationOptions={locations.map((location: any) => ({ label: location.location, value: location.id }))}
+        jobID={jobID}
       />
 
       {/* ============================== Cross Allocation Modal For Job Role ============================== */}
@@ -410,13 +472,13 @@ const AddProducts = () => {
         deleteModal={isDeleteModal}
         submitTitle="Yes"
         cancelTitle="No"
-        title="Do you want to discard this Details?"
+        title="Do you want to delete this Details?"
         onSubmit={handleDeleteSubmit}
         onCancel={() => setIsDeleteModal(false)}
-      // isLoading={isDeleteJobRequestMutation}
+        isLoading={isDeleteJobRequestMutation}
       />
     </>
   );
 };
 
-export default AddProducts;
+export default AddParkLocation;
