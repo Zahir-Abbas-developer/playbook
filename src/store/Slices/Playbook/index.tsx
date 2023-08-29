@@ -6,6 +6,7 @@ const initialState: any = {
     locations: [],
     parks:[],
     parkLocations:[],
+    orders:[]
 };
 
 const playbookSlice = createSlice({
@@ -27,8 +28,11 @@ const playbookSlice = createSlice({
         setParkLocations(state, action) {
             return { ...state, parkLocations: action.payload };
         },
+        setOrders(state,action){
+            return {...state ,orders:action.payload}
+        }
         // Add more cases for updating, deleting, or modifying products
     },
 });
-export const { setGrounds, setLocations, setCategories,setParks,setParkLocations } = playbookSlice.actions;
+export const { setGrounds, setLocations, setCategories,setParks,setParkLocations,setOrders } = playbookSlice.actions;
 export default playbookSlice;

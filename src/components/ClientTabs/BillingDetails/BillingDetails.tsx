@@ -270,7 +270,7 @@ const BillingDetails = () => {
                         ...payloadValues,subtotal: totalPrice, total: totalPrice,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,
                     
                       };
-                      addDoc(collection(firestore, "payment"), addPayment)
+                      addDoc(collection(firestore, "order"), addPayment)
                         .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }); storage.removeItem("persist:role")})
                         .catch((error:any) =>
                           AppSnackbar({

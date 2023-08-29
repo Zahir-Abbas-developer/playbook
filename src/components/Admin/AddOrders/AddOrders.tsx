@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // Ant Components
@@ -39,7 +39,11 @@ import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationMo
 import AddModal from "../../Setting/SettingJobRole/AddModal";
 import { renderDashboard } from "../../../utils/useRenderDashboard";
 import { useGetOrdersQuery } from "../../../store/Slices/Products";
-
+import { collection, onSnapshot } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { setOrders } from "../../../store/Slices/Playbook";
+import { useAppSelector } from "../../../store";
 
 const AddOrders = () => {
 
@@ -69,15 +73,28 @@ const AddOrders = () => {
   const query = "&" + new URLSearchParams(paramsObj).toString();
 
   // ============================== ROLES ==============================
-  const { role }: any = JSON.parse(localStorage.getItem("careUserData") || "{}");
+  const { role }: any = JSON.parse(localStorage.getItem("user") || "{}");
 
-
+  const { orders } = useAppSelector(state => state.playbook)
   // ============================== RTK Query ==============================
   const { data, isSuccess } = useGetJobRequestQuery({ refetchOnMountOrArgChange: true });
   const { data: clientData, isSuccess: isClientDataSuccess } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
   const { data: jobRoleFilterData, isLoading: jobRoleFilterIsLoading } = useGetJobRequestFilterQuery({ refetchOnMountOrArgChange: true, query, pagination });
   const [deleteJobRequest, { isLoading: isDeleteJobRequestMutation }] = useDeleteJobRequestMutation();
   const {data:isGetOrders ,isSuccess:isSuccessOrders}=useGetOrdersQuery({})
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (!orders?.length)
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = () => {
+  
+    onSnapshot(collection(firestore, "order"), (snapshot) => {
+      dispatch(setOrders(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+   
+    });
+  };
   let getOrders:any
   if(isSuccessOrders){
     getOrders=isGetOrders
