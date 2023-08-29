@@ -11,7 +11,7 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
   const showDrawer = () => {
     setOpenDrawer(true);
   };
-
+  const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   const onChange = (e: RadioChangeEvent) => {
     setPlacement(e.target.value);
   };
@@ -47,9 +47,10 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
         <p>Slots : {groundData?.slots?.map((data:any)=>{return <>{data}</>})}</p>
         
 
-       <Button type="primary" onClick={onClose}>
+     <Button type="primary"  disabled={!userRole} onClick={onClose}>
               Confirm Booking
             </Button>
+          {userRole &&  <p>Please First SignIn For Booking Thanks!</p>}
       </Drawer>
     </>
   );

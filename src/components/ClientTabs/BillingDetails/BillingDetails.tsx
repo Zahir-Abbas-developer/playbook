@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../store';
 import { usePostOrdersMutation } from '../../../store/Slices/Products';
 import { useLocation } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
+import { firestore } from '../../../utils/firebase';
 const BillingDetails = () => {
   const [userInfo, setUserInfo] = useState({})
   const [form] = Form.useForm();
@@ -22,12 +24,13 @@ const BillingDetails = () => {
     dispatchOld(removeProduct(id))
     AppSnackbar({ type: "success", messageHeading: "Success!", message: "Successful Deleted!" });
   }
-  console.log(products)
+  
   let payloadValues:{}
   const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
   const onFinish = (values: any) => {
    
     payloadValues=values
+    
     console.log(userInfo)
   }
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -44,7 +47,7 @@ const BillingDetails = () => {
     });
   }, []);
 
-
+  const {state}=useLocation()
   const onApprove = (data: any, actions: any) => {
     // Implement your logic to handle the approved payment
     // Use the data object to access the payment details
@@ -79,13 +82,14 @@ const BillingDetails = () => {
     return accumulator + currentValue.price;
   }, 0); // 0 is the initial value of the accumulator
 
-  const shoeProducts = [{
-    productId: "",
-    quantity: "",
-    price: totalPrice
-  }]
-  const {state}=useLocation()
-  console.log(state)
+//   const shoeProducts = [{
+//     productId: "",
+//     quantity: "",
+//     price: totalPrice
+//   }]
+//   const {state}=useLocation()
+//   console.log(state)
+ 
   return (
     <>
 
@@ -227,20 +231,14 @@ const BillingDetails = () => {
                 <p style={{ color: "#ffffff" }}>SUBTOTAL</p>
               </Col>
               <Col xs={12}>
-                <p style={{ color: "#ffffff" }}>$ {state?.price}</p>
+                <p style={{ color: "#ffffff" }}>{state?.price} Rs</p>
               </Col>
-              <Col xs={12}>
-                <p style={{ color: "#ffffff" }}>SHIPPING</p>
-              </Col>
-              <Col xs={12}>
-                <p style={{ color: "#ffffff" }}>Flat rate: $10</p>
-                <p style={{ color: "#ffffff" }}>Shipping to WA.</p>
-              </Col>
+             
               <Col xs={12}>
                 <p style={{ color: "#ffffff" }}>TOTAL</p>
               </Col>
               <Col xs={12}>
-                <p style={{ color: "#ffffff" }}>$ {totalPrice + 10}</p>
+                <p style={{ color: "#ffffff" }}>{state?.price} Rs</p>
               </Col>
 
             </Row>
@@ -268,16 +266,26 @@ const BillingDetails = () => {
                   onApprove={function (data: any, actions: any) {
                     return actions.order.capture().then(function () {
                       console.log("ressssssssss", data);
-                      postOrders({ payload: { ...payloadValues, companyName: "asfas", additionalInfo: "asf", subtotal: totalPrice, total: totalPrice, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, shoeProducts: [{ productId: products?.products[0]?.id, shoesize:products?. products[0]?.size, quantity: "01", price:products?. products[0]?.price }] } })
-                      AppSnackbar({
-                        type: "success",
-                        messageHeading: "Congratulations!",
-                        message: "Paid Successful!",
-                      });
-                      storage.removeItem("persist:role");
-                      
-                    });
-                  }} />
+                      const addPayment = {
+                        ...payloadValues,subtotal: totalPrice, total: totalPrice,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,
+                    
+                      };
+                      addDoc(collection(firestore, "payment"), addPayment)
+                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }); storage.removeItem("persist:role")})
+                        .catch((error:any) =>
+                          AppSnackbar({
+                            type: "error",
+                            messageHeading: "Error",
+                            message: error?.data?.message ?? "Something went wrong!",
+                          })
+                        )
+                        .finally(() =>    form.resetFields());
+                    }
+                    
+                    )
+                        }
+                      }
+                  />
 
               </Col>
             </Row>
