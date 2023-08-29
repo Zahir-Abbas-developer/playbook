@@ -39,7 +39,7 @@ import CrossAllocationModal from "../../Setting/SettingJobRole/CrossAllocationMo
 import AddModal from "../../Setting/SettingJobRole/AddModal";
 import { renderDashboard } from "../../../utils/useRenderDashboard";
 import { useGetOrdersQuery } from "../../../store/Slices/Products";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { setOrders } from "../../../store/Slices/Playbook";
@@ -81,23 +81,29 @@ const AddOrders = () => {
   const { data: clientData, isSuccess: isClientDataSuccess } = useGetClientsQuery({ refetchOnMountOrArgChange: true });
   const { data: jobRoleFilterData, isLoading: jobRoleFilterIsLoading } = useGetJobRequestFilterQuery({ refetchOnMountOrArgChange: true, query, pagination });
   const [deleteJobRequest, { isLoading: isDeleteJobRequestMutation }] = useDeleteJobRequestMutation();
-  const {data:isGetOrders ,isSuccess:isSuccessOrders}=useGetOrdersQuery({})
+  const { data: isGetOrders, isSuccess: isSuccessOrders } = useGetOrdersQuery({})
   const dispatch = useDispatch()
   useEffect(() => {
     if (!orders?.length)
-    fetchOrders();
+      fetchOrders();
   }, []);
 
   const fetchOrders = () => {
-  
-    onSnapshot(collection(firestore, "order"), (snapshot) => {
-      dispatch(setOrders(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
-   
+
+    onSnapshot(collection(firestore, "order"), async (snapshot) => {
+      const ordersArray = []
+      for await (let singleorder of snapshot.docs) {
+        const userData = await getDoc(doc(firestore, "users", singleorder.data()?.userId));
+        const groundsData = await getDoc(doc(firestore, "grounds", singleorder.data()?.groundId))
+        ordersArray.push({ id: singleorder.id, ...singleorder.data(), userData: userData.data(), groundsData: groundsData.data() })
+      }
+      dispatch(setOrders(ordersArray))
+
     });
   };
-  let getOrders:any
-  if(isSuccessOrders){
-    getOrders=isGetOrders
+  let getOrders: any
+  if (isSuccessOrders) {
+    getOrders = isGetOrders
   }
 
   // ============================== Variables to Assign Values to it ==============================
@@ -380,7 +386,7 @@ const AddOrders = () => {
                       ? (setPagination({ ...pagination, page: 1 }), setSelectedFilterValue(value))
                       : setSelectedFilterValue("")
                   }
-                  
+
                   options={optimizedUserRoleDropdown}
                 />
               </div>
@@ -401,7 +407,7 @@ const AddOrders = () => {
                     onChange={(value: string) => {
                       if (selectedCareHomeFilterValue === value) {
                         setSelectedCareHomeFilterValue("")
-                    
+
                       } else {
                         setSelectedCareHomeFilterValue(value)
                       }
@@ -424,9 +430,9 @@ const AddOrders = () => {
             <Input
               className="search-input"
               placeholder="Search by position name"
-              onChange={(event: any) =>
-              {  debouncedSearch(event.target.value, setSearchName);
-                setPagination({...pagination ,page:1})
+              onChange={(event: any) => {
+                debouncedSearch(event.target.value, setSearchName);
+                setPagination({ ...pagination, page: 1 })
               }
               }
               prefix={
