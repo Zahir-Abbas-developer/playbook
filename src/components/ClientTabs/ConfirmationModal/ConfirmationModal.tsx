@@ -15,10 +15,10 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
   const onChange = (e: RadioChangeEvent) => {
     setPlacement(e.target.value);
   };
-
+  console.log(groundData)
   const onClose = () => {
     setOpenDrawer(false);
-    navigate("/productDetails/cart-details/checkout-details",{state:{price:groundData?.price}})
+    navigate("/productDetails/cart-details/checkout-details",{state:{price:groundData?.price,groundId:groundData?.id}})
   };
 
   return (
@@ -50,7 +50,7 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
      <Button type="primary"  disabled={!userRole} onClick={onClose}>
               Confirm Booking
             </Button>
-          {userRole &&  <p>Please First SignIn For Booking Thanks!</p>}
+          {!userRole &&  <p>Please First SignIn For Booking Thanks!</p>}
       </Drawer>
     </>
   );

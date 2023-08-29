@@ -104,7 +104,7 @@ const Login = () => {
             navigate(renderDashboard(userData?.role || "user"));
           }
         });
-        setIsSignInLoading(false)
+        setIsSignInLoading(true)
       })
       .catch((err) => {
         setErrorMessage(err?.message);

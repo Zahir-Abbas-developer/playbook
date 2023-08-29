@@ -24,14 +24,14 @@ const BillingDetails = () => {
     dispatchOld(removeProduct(id))
     AppSnackbar({ type: "success", messageHeading: "Success!", message: "Successful Deleted!" });
   }
-  
+  const {id} : any = JSON.parse(localStorage.getItem("user") || "{}");
   let payloadValues:{}
   const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
   const onFinish = (values: any) => {
    
     payloadValues=values
     
-    console.log(userInfo)
+  
   }
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
@@ -48,6 +48,7 @@ const BillingDetails = () => {
   }, []);
 
   const {state}=useLocation()
+  console.log(state)
   const onApprove = (data: any, actions: any) => {
     // Implement your logic to handle the approved payment
     // Use the data object to access the payment details
@@ -267,7 +268,7 @@ const BillingDetails = () => {
                     return actions.order.capture().then(function () {
                       console.log("ressssssssss", data);
                       const addPayment = {
-                        ...payloadValues,subtotal: totalPrice, total: totalPrice,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,
+                        ...payloadValues,subtotal: totalPrice, total: totalPrice,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,groundId:state?.groundId,userId:id
                     
                       };
                       addDoc(collection(firestore, "order"), addPayment)
