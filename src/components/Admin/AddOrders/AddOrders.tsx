@@ -452,7 +452,7 @@ const AddOrders = () => {
           <Table
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={getOrders}
+            dataSource={orders}
             locale={{ emptyText: !jobRoleFilterIsLoading ? "No Data" : " " }}
             loading={jobRoleFilterIsLoading}
             pagination={{
