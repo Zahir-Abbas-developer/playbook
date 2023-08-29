@@ -18,12 +18,16 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState<any>(false);
   const [changePasswordErrorMessage, setChangePasswordErrorMessage] = useState("");
+  const [signInLoading ,setIsSignInLoading]=useState(false)
+  const [signUpLoading ,setIsSignUpLoading]=useState(false)
+  const [forgotPasswordLoading ,setIsForgotPasswordLoading]=useState(false)
+
   let navigate = useNavigate();
   const location = useLocation();
   const [signInPostRequest, { isLoading }] = useSignInPostRequestMutation();
   const [forgetPasswordRequest, { isLoading: isLoadingForgetPassword }] = useForgetPasswordRequestMutation();
   const [resetPasswordRequest, { isLoading: isLoadingNewPassword }] = useNewPasswordRequestMutation();
-
+  
   const [authSignUp] = useAuthSignUpMutation();
   const [changePasswordPostRequest, { isLoading: changePasswordLoading }] = useChangePasswordPostRequestMutation();
 
@@ -88,6 +92,7 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, values.emailOrUsername, values.password)
       .then((response) => {
+        setIsSignInLoading(true)
         if (!response?.user?.emailVerified) {
           setErrorMessage("Email is not Verified");
           return;
@@ -99,6 +104,7 @@ const Login = () => {
             navigate(renderDashboard(userData?.role || "user"));
           }
         });
+        setIsSignInLoading(false)
       })
       .catch((err) => {
         setErrorMessage(err?.message);
@@ -273,7 +279,7 @@ const Login = () => {
                   </Link>
                 </div>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
+                  <Button type="primary" htmlType="submit" loading={signInLoading} className=" btn-signin fw-600 " block>
                     Sign In
                   </Button>
                   <div style={{ textAlign: "end", margin: "10px 0px 20px 0px" }}>
