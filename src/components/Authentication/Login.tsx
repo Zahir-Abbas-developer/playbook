@@ -51,7 +51,9 @@ const Login = () => {
         url: window?.location?.origin + "/user-verification",
       };
       createUserWithEmailAndPassword(auth, values?.email, values.password)
+      
         .then((response) => {
+          setIsSignUpLoading(true)
           // Save user data to Firestore
           setDoc(doc(firestore, "users", response.user.uid), {
             email: values.email,
@@ -66,6 +68,7 @@ const Login = () => {
                   console.log("Verification email sent!");
                   navigate("/login");
                 })
+               
                 .catch((error) => {
                   console.error("Error sending verification email:", error);
                   // Handle the error or notify the user appropriately
@@ -74,6 +77,7 @@ const Login = () => {
               console.error("Current user is null. Cannot send verification email.");
               // Handle this scenario appropriately (e.g., show an error message)
             }
+            setIsSignUpLoading(true)
           });
         })
         .catch((error) => {
@@ -148,12 +152,15 @@ const Login = () => {
       url: window?.location?.origin + "/reset-password",
     };
     try {
+      setIsForgotPasswordLoading(true)
       sendPasswordResetEmail(auth, values?.email)
+    
         .then((response) => {})
         .catch((err) => console.log("error", err));
       // const res: any = await forgetPasswordRequest({ payload }).unwrap()
       // console.log(res)
       // navigate(`/reset-password?token=${res?.token}`)
+      setIsForgotPasswordLoading(true)
     } catch (error) {
       console.log(error);
     }
@@ -213,7 +220,7 @@ const Login = () => {
             <div>
               <h1 className="heading-1">
                 <span className="pink-color" style={{ color: "#e76f51" }}>
-                  {location?.pathname === "/login" ? "Sign In" : location?.pathname === "/sign-up" ? "Sign Up" : "Change Password"}
+                  {location?.pathname === "/login" ? "Sign In" : location?.pathname === "/sign-up" ? "Sign Up" :  location?.pathname === "/forget-password"?"Forgot Password":"Change Password"}
                 </span>
                 <span> to</span>
               </h1>
@@ -433,7 +440,7 @@ const Login = () => {
                 <p style={{ color: "red" }}>{changePasswordErrorMessage}</p>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
+                  <Button type="primary" htmlType="submit" loading={signUpLoading} className=" btn-signin fw-600 " block>
                     Save
                   </Button>
                 </Form.Item>
@@ -467,7 +474,7 @@ const Login = () => {
                   <Input style={{ color: "white" }} placeholder="Enter Email" className="input-style" />
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" loading={isLoadingForgetPassword} className=" btn-signin fw-600 " block>
+                  <Button type="primary" htmlType="submit" loading={forgotPasswordLoading} className=" btn-signin fw-600 " block>
                     Save
                   </Button>
                 </Form.Item>
