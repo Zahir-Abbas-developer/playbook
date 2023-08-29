@@ -159,7 +159,7 @@ const Login = () => {
         .catch((err) => console.log("error", err));
       // const res: any = await forgetPasswordRequest({ payload }).unwrap()
       // console.log(res)
-      // navigate(`/reset-password?token=${res?.token}`)
+      navigate("/login");
       setIsForgotPasswordLoading(true)
     } catch (error) {
       console.log(error);
@@ -282,7 +282,7 @@ const Login = () => {
 
                 <div style={{ textAlign: "end", margin: "10px 0px 20px 0px" }}>
                   <Link to="/forget-password" className="forgot-password-style">
-                    Forget Password?
+                    Forgot Password?
                   </Link>
                 </div>
                 <Form.Item>

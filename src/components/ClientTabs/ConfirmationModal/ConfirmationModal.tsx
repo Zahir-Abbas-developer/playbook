@@ -26,23 +26,16 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
       <Space>
       </Space>
       <Drawer
-        title="Drawer with extra actions"
+        title=""
         placement={placement}
         width={500}
         onClose={onClose}
         open={openDrawer}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button type="primary" onClick={onClose}>
-              OK
-            </Button>
-          </Space>
-        }
+     
       >
         <p>Name : {groundData?.name}</p>
         <p>Description : {groundData?.description}</p>
-        <p>Seats : {groundData?.seats}</p>
+   {groundData?.seats &&     <p>Seats : {groundData?.seats}</p>}
         <p>Price : {groundData?.price}</p>
         <p>Slots : {groundData?.slots?.map((data:any)=>{return <>{data}</>})}</p>
         

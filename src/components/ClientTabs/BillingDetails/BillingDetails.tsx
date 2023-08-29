@@ -179,11 +179,11 @@ const BillingDetails = () => {
                   <Input placeholder="Type here" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={12} lg={12} className='onBoarding-input'>
+              <Col xs={24} sm={24} md={12} lg={12} className=''>
                 <Form.Item
                   label="POSTCODE / ZIP"
                   name="postcode"
-
+                  className="custom-form-item" 
                   rules={[{ required: true, message: 'Required field' }]}
                 >
                   <Input placeholder="Type here" />

@@ -975,7 +975,7 @@
 .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
   display: inline-flex;
   flex-direction: row-reverse;
-  color: var(--grey-color);
+  color: white !important; // Remove the double quotes
 }
 
 .capitalize {
