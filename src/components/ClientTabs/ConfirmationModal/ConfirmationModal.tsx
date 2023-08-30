@@ -4,10 +4,10 @@ import type { DrawerProps } from 'antd/es/drawer';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import { Link, useNavigate } from 'react-router-dom';
 
-const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData,productId}:any) => {
+const ConfirmationModal = ({ openDrawer, setOpenDrawer, groundData, productId, slot, date }: any) => {
 
   const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
- const navigate=useNavigate()
+  const navigate = useNavigate()
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -18,7 +18,7 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData,productId}:any) 
   console.log(groundData)
   const onClose = () => {
     setOpenDrawer(false);
-    navigate("/productDetails/cart-details/checkout-details",{state:{price:groundData?.price,groundId:groundData?.id}})
+    navigate("/productDetails/cart-details/checkout-details", { state: { price: groundData?.price, groundId: groundData?.id, slot, date } })
   };
 
   return (
@@ -31,19 +31,19 @@ const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData,productId}:any) 
         width={500}
         onClose={onClose}
         open={openDrawer}
-     
+
       >
         <p>Name : {groundData?.name}</p>
         <p>Description : {groundData?.description}</p>
-   {groundData?.seats &&     <p>Seats : {groundData?.seats}</p>}
+        {groundData?.seats && <p>Seats : {groundData?.seats}</p>}
         <p>Price : {groundData?.price}</p>
-        <p>Slots : {groundData?.slots?.map((data:any)=>{return <>{data}</>})}</p>
-        
+        <p>Slots : {groundData?.slots?.map((data: any) => { return <>{data}</> })}</p>
 
-     <Button type="primary"  disabled={!userRole} onClick={onClose}>
-              Confirm Booking
-            </Button>
-          {!userRole &&  <p>Please First SignIn For Booking Thanks!</p>}
+
+        <Button type="primary" disabled={!userRole} onClick={onClose}>
+          Confirm Booking
+        </Button>
+        {!userRole && <p>Please First SignIn For Booking Thanks!</p>}
       </Drawer>
     </>
   );

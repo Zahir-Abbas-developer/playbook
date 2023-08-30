@@ -29,6 +29,9 @@ import ApiLoader from "../../ApiLoader/ApiLoader";
 import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
 import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { firestore } from "../../../utils/firebase";
+import dayjs from "dayjs";
 
 const GroundInfo = (props: any) => {
   const { data, pagination, setPagination, total, grounds } = props;
@@ -51,9 +54,9 @@ const GroundInfo = (props: any) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
   const [groundId, setGroundId] = useState("");
- const [groundData ,setGroundData]=useState("")
+  const [groundData, setGroundData] = useState("")
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
-console.log(props?.values)
+  console.log(props?.values?.slot)
   useEffect(() => {
     // setOpenFeedbackPopup(true);
     // AppSnackbar({
@@ -340,12 +343,31 @@ console.log(props?.values)
                       <Col sm={24} style={{ textAlign: "end" }}>
                         <span>Rs 20,000 </span>
                         <Button
-                        disabled={!props?.values?.location && !props?.values?.date && !props?.values?.slot }
+                          disabled={!props?.values?.location && !props?.values?.date && !props?.values?.slot}
                           onClick={() => {
-                            setOpenFeedbackPopup(true);
-                            setGroundId(item.id);
-                            setOpenDrawer(true)
-                            setGroundData(item)
+                            const orderRef = collection(firestore, 'order');
+                            const q = query(orderRef,
+                              where('createdAt', '>', new Date(dayjs(props?.values?.date).format('YYYY-MM-DD'))),
+                              where('createdAt', '<', new Date(dayjs(props?.values?.date).add(1, 'day').format('YYYY-MM-DD'))),
+                              where("slot", '==', props?.values?.slot),
+                              where('groundId', '==', item.id)
+                            );
+                            getDocs(q).then((snapshot) => {
+                              if (snapshot.docs.length) {
+                                AppSnackbar({
+                                  type: "error",
+                                  messageHeading: "Error",
+                                  message: "Ground Already Booked",
+                                });
+                              } else {
+                                setOpenFeedbackPopup(true);
+                                setGroundId(item.id);
+                                setOpenDrawer(true)
+                                setGroundData(item)
+                              }
+                            })
+
+
                           }}
                           type="primary"
                           htmlType="submit"
@@ -355,7 +377,7 @@ console.log(props?.values)
                           Bookme
                         </Button>
                       </Col>
-                    
+
                     </Row>
                   </div>
                 </Col>
@@ -366,7 +388,7 @@ console.log(props?.values)
           )}
         </div>
       </div>
-      <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} groundData={groundData}    productId={groundId} />
+      <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} groundData={groundData} slot={props?.values?.slot} date={props?.values?.date} productId={groundId} />
       {/* <FeedbackPopup
         open={openFeedbackPopup}
         feedBack={setToggleSnackbar}

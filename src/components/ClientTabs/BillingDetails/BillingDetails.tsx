@@ -12,9 +12,10 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../store';
 import { usePostOrdersMutation } from '../../../store/Slices/Products';
 import { useLocation } from 'react-router-dom';
-import { addDoc, collection } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { firestore } from '../../../utils/firebase';
 import FeedbackPopup from '../../../shared/FeedbackPopup/feedback-popup';
+import dayjs from 'dayjs';
 const BillingDetails = () => {
   const [userInfo, setUserInfo] = useState({})
   const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
@@ -31,16 +32,16 @@ const BillingDetails = () => {
     isToggle: false,
     mode: "",
   });
-  const {id} : any = JSON.parse(localStorage.getItem("user") || "{}");
-  let payloadValues:{}
+  const { id }: any = JSON.parse(localStorage.getItem("user") || "{}");
+  let payloadValues: {}
   const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
   const onFinish = (values: any) => {
-   
-    payloadValues=values
+
+    payloadValues = values
     console.log(payloadValues)
-  
+
   }
-  
+
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
 
@@ -55,7 +56,7 @@ const BillingDetails = () => {
     });
   }, []);
 
-  const {state}=useLocation()
+  const { state } = useLocation()
   console.log(state)
   const onApprove = (data: any, actions: any) => {
     // Implement your logic to handle the approved payment
@@ -91,22 +92,22 @@ const BillingDetails = () => {
     return accumulator + currentValue.price;
   }, 0); // 0 is the initial value of the accumulator
 
-//   const shoeProducts = [{
-//     productId: "",
-//     quantity: "",
-//     price: totalPrice
-//   }]
-//   const {state}=useLocation()
-//   console.log(state)
- 
+  //   const shoeProducts = [{
+  //     productId: "",
+  //     quantity: "",
+  //     price: totalPrice
+  //   }]
+  //   const {state}=useLocation()
+  //   console.log(state)
+
   return (
     <>
 
       <div className="header-image">
         <div className="image-content">
-          <h1 className="" style={{color:"black"}} >CHECKOUT</h1>
+          <h1 className="" style={{ color: "black" }} >CHECKOUT</h1>
 
-          <p className="image-heading-subheading"  style={{color:"black"}} >We accept Visa, Mastercard,Anex,PayPal and more.</p>
+          <p className="image-heading-subheading" style={{ color: "black" }} >We accept Visa, Mastercard,Anex,PayPal and more.</p>
 
         </div>
       </div>
@@ -191,7 +192,7 @@ const BillingDetails = () => {
                 <Form.Item
                   label="POSTCODE / ZIP"
                   name="postcode"
-                  className="custom-form-item" 
+                  className="custom-form-item"
                   rules={[{ required: true, message: 'Required field' }]}
                 >
                   <Input placeholder="Type here" />
@@ -242,7 +243,7 @@ const BillingDetails = () => {
               <Col xs={12}>
                 <p style={{ color: "#ffffff" }}>{state?.price} Rs</p>
               </Col>
-             
+
               <Col xs={12}>
                 <p style={{ color: "#ffffff" }}>TOTAL</p>
               </Col>
@@ -253,7 +254,7 @@ const BillingDetails = () => {
             </Row>
             <Row>
               <Col xs={24} style={{ textAlign: "center" }}>
-                <PayPalButtons  createOrder={(data: any, actions: any) => {
+                <PayPalButtons createOrder={(data: any, actions: any) => {
                   return actions.order
                     .create({
                       purchase_units: [
@@ -274,29 +275,30 @@ const BillingDetails = () => {
                 }}
                   onApprove={
                     function (data: any, actions: any) {
-                    return actions.order.capture().then(function () {
-                      console.log("ressssssssss", data);
-                      form.submit()
-                      const addPayment = {
-                        ...payloadValues,subtotal: state?.price, total: state?.price,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,groundId:state?.groundId,userId:id,status:"Paid"
-                    
-                      };
-                      addDoc(collection(firestore, "order"), addPayment)
-                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role");  setOpenFeedbackPopup(true);})
-                        .catch((error:any) =>
-                          AppSnackbar({
-                            type: "error",
-                            messageHeading: "Error",
-                            message: error?.data?.message ?? "Something went wrong!",
-                          })
-                        )
-                        .finally(() =>    form.resetFields());
-                    }
-                    
-                    )
-                        }
+                      return actions.order.capture().then(function () {
+                        console.log("ressssssssss", data);
+                        form.submit()
+                        const addPayment = {
+                          ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
+                          createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                          date: dayjs(state?.date).format("YYYY-MM-DD")
+                        };
+                        addDoc(collection(firestore, "order"), addPayment)
+                          .then((response: any) => { AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true); })
+                          .catch((error: any) =>
+                            AppSnackbar({
+                              type: "error",
+                              messageHeading: "Error",
+                              message: error?.data?.message ?? "Something went wrong!",
+                            })
+                          )
+                          .finally(() => form.resetFields());
                       }
-                  />
+
+                      )
+                    }
+                  }
+                />
 
               </Col>
             </Row>

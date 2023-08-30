@@ -28,7 +28,7 @@ const handleStyling: any = {
 };
 
 const StaffAllocationFilters = (props: any) => {
-  
+
   const {
     filterValues,
     setFilterValues,
@@ -45,9 +45,9 @@ const StaffAllocationFilters = (props: any) => {
   const [inputValue, setInputValue] = useState(50);
   const [isAllocateCarerModal, setIsAllocateCarerModal] = useState(false);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const { grounds, }: any = useAppSelector((state:any) => state.playbook);
+  const { grounds, }: any = useAppSelector((state: any) => state.playbook);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [values,setValues]=useState<any>(null);
+  const [values, setValues] = useState<any>(null);
 
   const onChange = (newValue: number) => {
     setInputValue(newValue);
@@ -62,17 +62,17 @@ const StaffAllocationFilters = (props: any) => {
       clientId: [careHomeId],
       staffId: selectedRows,
     };
-    const { data ,error}: any = await allocateCare(payload);
+    const { data, error }: any = await allocateCare(payload);
     if (data) {
       setSelectedRowKeys([]);
       AppSnackbar({ type: "success", message: data?.message });
     }
-    if(error){
-        AppSnackbar({
-          type: "error",
-          messageHeading: "Error",
-          message: error?.data?.message ?? "Something went wrong!",
-        });
+    if (error) {
+      AppSnackbar({
+        type: "error",
+        messageHeading: "Error",
+        message: error?.data?.message ?? "Something went wrong!",
+      });
     }
   };
 
@@ -91,27 +91,26 @@ const StaffAllocationFilters = (props: any) => {
   };
 
   const fetchGrounds = () => {
-    const  locationCollection:CollectionReference=collection(firestore, "grounds");
-    let baseQuery:any = locationCollection;
-    if(values?.location) baseQuery =query(baseQuery,where("locationId",'==',values?.location));
-    if(values?.slot) baseQuery =query(baseQuery,where("slots",'array-contains',values?.slot));
-    console.log(baseQuery)
+    const locationCollection: CollectionReference = collection(firestore, "grounds");
+    let baseQuery: any = locationCollection;
+    if (values?.location) baseQuery = query(baseQuery, where("locationId", '==', values?.location));
+    if (values?.slot) baseQuery = query(baseQuery, where("slots", 'array-contains', values?.slot));
     setProductsLoading(true);
-    onSnapshot(baseQuery, (snapshot:any) => {
-      const groundsData: any = snapshot.docs.map((doc:any) => ({ id: doc.id, ...doc.data() }))
-      console.log("grounds",groundsData)
+    onSnapshot(baseQuery, (snapshot: any) => {
+      const groundsData: any = snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }))
+      console.log("grounds", groundsData)
       setProductsLoading(false);
       dispatch(setGrounds(groundsData))
     });
   };
   useEffect(() => {
-     fetchGrounds();
-  
+    fetchGrounds();
+
   }, [values]);
   return (
     <div className="inner-wrap-filters">
-     <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Ground</p>
-     <p>Find The Best Grounds In Your Area.</p>
+      <p style={{ fontWeight: "bold", fontSize: "30px", marginBottom: "0px" }}>Search for Ground</p>
+      <p>Find The Best Grounds In Your Area.</p>
       <div className="bottom-inset-filters d-flex justify-between align-center">
         <GroundInnerFilters
           careHomeOptions={careHomeOptions}
@@ -123,10 +122,10 @@ const StaffAllocationFilters = (props: any) => {
           setValues={setValues}
         />
 
-       
+
       </div>
-    
-    <GroundInfo grounds={grounds}  values={values} />
+
+      <GroundInfo grounds={grounds} values={values} />
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );
