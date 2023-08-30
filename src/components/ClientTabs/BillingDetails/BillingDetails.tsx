@@ -14,8 +14,10 @@ import { usePostOrdersMutation } from '../../../store/Slices/Products';
 import { useLocation } from 'react-router-dom';
 import { addDoc, collection } from 'firebase/firestore';
 import { firestore } from '../../../utils/firebase';
+import FeedbackPopup from '../../../shared/FeedbackPopup/feedback-popup';
 const BillingDetails = () => {
   const [userInfo, setUserInfo] = useState({})
+  const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
   const [form] = Form.useForm();
   const dispatchOld = useDispatch();
   const { products }: any = useAppSelector((state) => state.products);
@@ -24,6 +26,11 @@ const BillingDetails = () => {
     dispatchOld(removeProduct(id))
     AppSnackbar({ type: "success", messageHeading: "Success!", message: "Successful Deleted!" });
   }
+  const [toggleSnackbar, setToggleSnackbar] = useState({
+    message: "",
+    isToggle: false,
+    mode: "",
+  });
   const {id} : any = JSON.parse(localStorage.getItem("user") || "{}");
   let payloadValues:{}
   const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
@@ -275,7 +282,7 @@ const BillingDetails = () => {
                     
                       };
                       addDoc(collection(firestore, "order"), addPayment)
-                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role")})
+                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role");  setOpenFeedbackPopup(true);})
                         .catch((error:any) =>
                           AppSnackbar({
                             type: "error",
@@ -297,7 +304,12 @@ const BillingDetails = () => {
 
         </Col>
       </Row>
-
+      <FeedbackPopup
+        open={openFeedbackPopup}
+        feedBack={setToggleSnackbar}
+        setOpen={setOpenFeedbackPopup}
+        productId={state?.groundId}
+      />
 
     </>)
 }

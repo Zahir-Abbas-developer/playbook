@@ -4,7 +4,7 @@ import type { DrawerProps } from 'antd/es/drawer';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import { Link, useNavigate } from 'react-router-dom';
 
-const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData}:any) => {
+const ConfirmationModal = ({openDrawer,setOpenDrawer,groundData,productId}:any) => {
 
   const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
  const navigate=useNavigate()
