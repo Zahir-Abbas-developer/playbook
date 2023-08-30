@@ -294,8 +294,8 @@ const NavBar = () => {
                         >
                           <img
                             className="nav-img"
-                            height={40} 
-                            width={40}
+                            height={35} 
+                            width={35}
                             src={isDarkMode ? item.darkIcon : item.lightIcon}
                             alt={"icon"}
                             onClick={() => {
