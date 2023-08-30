@@ -45,7 +45,7 @@ const SliderCard = (props:any) => {
 
   return (
     <>
-    <Grid container>
+    <Grid container >
       <Grid item lg={12}>
         <Box className="slider" sx={{ p: 1 }}>
           <Box className="slide-track">

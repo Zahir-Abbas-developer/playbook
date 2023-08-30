@@ -25,10 +25,10 @@ const SelectServices = () => {
   <Carousel autoplay>
     <div style={{position:"relative"}}>
 
-      <img src={CricketGround} style={{width:"100%",height:"90vh"}} />
+      <img src={CricketGround} className='img-carousel' style={{width:"100%",height:"90vh"}} />
       <div style={{position:"absolute",  top: "30%" ,marginLeft:"50px"}} className='custom-product-carousel'>
-      <p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}}>CRICKET</p>
-  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}}>GROUND</h1>
+      <p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}} className='ground-size-name'>CRICKET</p>
+  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}} className='ground-size'>GROUND</h1>
   <Link to="/dashboard" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} onMouseOver={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} >LATEST OFFERS</Link>
 
       </div>
@@ -37,10 +37,10 @@ const SelectServices = () => {
 
     <div style={{position:"relative"}}>
 
-<img src={Footballground} style={{width:"100%",height:"90vh"}} />
+<img src={Footballground} className='img-carousel' style={{width:"100%",height:"90vh"}} />
 <div style={{position:"absolute",  top: "30%" ,marginLeft:"50px"}} className='custom-product-carousel'>
-<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}}>FOOTBALL</p>
-  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}}>GROUND</h1>
+<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}} className='ground-size-name'>FOOTBALL</p>
+  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}} className='ground-size'>GROUND</h1>
   <Link to="/jacket-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} onMouseOver={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} >LATEST OFFERS</Link>
 
 </div>
@@ -48,10 +48,10 @@ const SelectServices = () => {
 </div>
 <div style={{position:"relative"}}>
 
-<img src={hocketground} style={{width:"100%",height:"90vh"}} />
+<img src={hocketground} className='img-carousel' style={{width:"100%",height:"90vh"}} />
 <div style={{position:"absolute",  top: "30%" ,marginLeft:"50px"}} className='custom-product-carousel'>
-<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}}>HOCKEY</p>
-  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}}>GROUND</h1>
+<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}} className='ground-size-name'>HOCKEY</p>
+  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}} className='ground-size'>GROUND</h1>
   <Link to="/jacket-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} onMouseOver={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} >LATEST OFFERS</Link>
 
 </div>
@@ -59,10 +59,10 @@ const SelectServices = () => {
 </div>
 <div style={{position:"relative"}}>
 
-<img src={badminton} style={{width:"100%",height:"90vh"}} />
+<img src={badminton} className='img-carousel' style={{width:"100%",height:"90vh"}} />
 <div style={{position:"absolute",  top: "30%" ,marginLeft:"50px"}} className='custom-product-carousel'>
-<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}}>BADMINTON</p>
-  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}}>GROUND</h1>
+<p style={{fontSize:"40px",fontWeight:"400",color:"white",marginBottom:"0px"}} className='ground-size-name'>BADMINTON</p>
+  <h1 style={{fontSize:"70px",fontWeight:"600",color:"white",marginBottom:"18px",marginTop:"0PX"}} className='ground-size'>GROUND</h1>
   <Link to="/jacket-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} onMouseOver={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} >LATEST OFFERS</Link>
 
 </div>

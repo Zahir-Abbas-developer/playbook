@@ -4,3 +4,16 @@
     display: none;
 }
 }
+@media screen and (min-width: 200px) and (max-width: 1200px)   {
+.img-carousel{
+    height: 50vh !important;
+}
+}
+@media screen and (min-width: 200px) and (max-width: 1200px)   {
+    .ground-size{
+        font-size: 20px !important;
+    }
+    .ground-size-name{
+        font-size: 20px !important;
+    }
+    }

@@ -1,4 +1,4 @@
-import { Card, Col, Row, Spin } from "antd"
+import { Button, Card, Col, Rate, Row, Spin } from "antd"
 import jacketImage1 from "../../../assets/images/jackets/benjamin-voros-TnNo84AJJ5A-unsplash.jpg"
 import jacketImage2 from "../../../assets/images/jackets/caio-coelho-QRN47la37gw-unsplash.jpg"
 import jacketImage3 from "../../../assets/images/jackets/lea-ochel-nsRBbE6-YLs-unsplash.jpg"
@@ -56,8 +56,8 @@ const ShoeProductDetails = () => {
                     <Col xs={24} md={24} lg={24} >
                     {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
                 <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
-                {  <ParkSlider CricketGrounds={CricketGrounds}/>}
-                {/* {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} >
+                { <div className="grounds-details-slider"> <ParkSlider CricketGrounds={CricketGrounds}/> </div>}
+                {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} className="grounds-details" >
                     {CricketGrounds?.slice(0, 4)?.map((productData: any) => (
                         <Col xs={24} md={12} lg={6} key={productData.id}>
                             <Card
@@ -81,7 +81,7 @@ const ShoeProductDetails = () => {
                     <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
                         <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  GROUNDS</Link>
                     </Col>
-                </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>} */}
+                </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
 
 
 

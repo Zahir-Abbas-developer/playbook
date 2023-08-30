@@ -54,6 +54,16 @@
       display: flex;
     }
   }
+  @media only screen and (min-width: 200px) and (max-width:1500px) {
+    .grounds-details-slider{
+       display: none;
+    }
+  }
+  @media only screen and (min-width: 1500px)  {
+    .grounds-details{
+       display: none;
+    }
+  }
   @media only screen and (max-width: 1024px) {
     @keyframes scroll {
       0% {

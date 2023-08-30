@@ -50,8 +50,8 @@ const SelectServicesDetails = () => {
         <>
             {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
                 <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>GROUNDS</p>
-                {  <SliderCard CricketGrounds={CricketGrounds}/>}
-                {/* {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} >
+                { <div className="grounds-details-slider"> <SliderCard CricketGrounds={CricketGrounds}  /></div>}
+                {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} className="grounds-details" >
                     {CricketGrounds?.slice(0, 4)?.map((productData: any) => (
                         <Col xs={24} md={12} lg={6} key={productData.id}>
                             <Card
@@ -75,7 +75,7 @@ const SelectServicesDetails = () => {
                     <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
                         <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  GROUNDS</Link>
                     </Col>
-                </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>} */}
+                </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
 
 
 
