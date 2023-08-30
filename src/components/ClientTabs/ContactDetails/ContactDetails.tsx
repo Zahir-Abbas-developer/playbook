@@ -1,58 +1,37 @@
-import { useState } from "react";
 import { Button, Card, Col, Form, Input, Row, Select, Space, Spin } from 'antd';
-import { useGetAllCategoriessQuery, useGetAllColorsQuery, useGetAllMaterialsQuery, useGetAllProductsQuery } from '../../../store/Slices/Products';
-import CollectionTabFilter from '../CollectionTabFilter/CollectionTabFilter';
-import { useNavigate } from "react-router-dom";
-import Arrow from "../../../assets/images/OnBoarding/arrow.svg"
 import './ContactDetails.scss'
 import { text } from "stream/consumers";
 import { MailOutlined, WhatsAppOutlined } from "@ant-design/icons";
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { firestore } from '../../../utils/firebase';
+import AppSnackbar from '../../../utils/AppSnackbar';
 
 const { Meta } = Card;
 
 const ContactDetails = () => {
-    const [styleFilter, setStyleFilter] = useState("")
-    const [materialFilter, setMaterialFilter] = useState("")
-    const [colorFilter, setColorFilter] = useState("")
-    const [sortFilter, serSortFilter] = useState("")
-    const [form] = Form.useForm();
-    const { data, isSuccess } = useGetAllCategoriessQuery({})
-
-    const { data: isDataMaterial, isSuccess: isSuccessMaterial } = useGetAllMaterialsQuery({})
-    const { data: isColorData, isSuccess: isSuccessColor } = useGetAllColorsQuery({})
-
-    let categoryData: any
-    let materialFilterData: any
-    let colorFilterData: any
-    if (isSuccess) {
-        categoryData = data
-        materialFilterData = isDataMaterial
-        colorFilterData = isColorData
-    }
-    //query parameters of search and filter
-    const categoriesFilterValue = categoryData?.map((categoryFilter: any) => { return { value: categoryFilter?.name, label: categoryFilter?.name } })
-    const styleFilterValue = materialFilterData?.map((categoryFilter: any) => { return { value: categoryFilter?.name, label: categoryFilter?.name } })
-    const colorFilterValue = colorFilterData?.map((categoryFilter: any) => { return { value: categoryFilter?.name, label: categoryFilter?.name } })
-    const paramsObj: any = {};
-    if (styleFilter) paramsObj["categoryName"] = styleFilter;
-    if (materialFilter) paramsObj["materialName"] = materialFilter;
-    if (colorFilter) paramsObj["colorName"] = colorFilter;
-    if (sortFilter) paramsObj["sortBy"] = sortFilter;
-
-    const query = "?" + new URLSearchParams(paramsObj).toString();
-    const { data: dataProducts, isSuccess: isSuccessProducts } = useGetAllProductsQuery({ query })
-    let productsData: any
-    if (isSuccessProducts) {
-        productsData = dataProducts
-    }
+  const [form] = Form.useForm();
     const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
+    const { role: userRole, id: userId }: any = JSON.parse(localStorage.getItem("user") || "{}");
   const onFinish = (values: any) => {
    console.log(values)
+   const addProductValues = {
+    ...values,
+   
+    createdAt: serverTimestamp(),
+    createdBy: userId ?? "",
+  };
+  addDoc(collection(firestore, "contackdetails"), addProductValues)
+    .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Sent!", message: "Message has been sent successfully" }))
+    .catch((error) =>
+      AppSnackbar({
+        type: "error",
+        messageHeading: "Error",
+        message: error?.data?.message ?? "Something went wrong!",
+      })
+    )
+    .finally(() =>  form.resetFields());
   }
-    const handleApplicationStage = (applicationStageValue: any) => {
-        serSortFilter(applicationStageValue)
-    }
-    const navigate = useNavigate();
+   
     return (
         <>
             <div className="header-image-card-details">
