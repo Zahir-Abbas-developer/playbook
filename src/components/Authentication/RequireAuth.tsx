@@ -6,7 +6,7 @@ const RequireAuth = ({ children, allowedRoles }: any) => {
   const location = useLocation();
 
 
-  if(allowedRoles?.includes(role)){
+  if(allowedRoles?.includes(role || "newUser")){
     return  children || <Outlet />
   }
   

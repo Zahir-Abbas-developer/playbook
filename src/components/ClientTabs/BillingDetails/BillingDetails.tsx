@@ -30,9 +30,10 @@ const BillingDetails = () => {
   const onFinish = (values: any) => {
    
     payloadValues=values
-    
+    console.log(payloadValues)
   
   }
+  
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
 
@@ -245,7 +246,7 @@ const BillingDetails = () => {
             </Row>
             <Row>
               <Col xs={24} style={{ textAlign: "center" }}>
-                <PayPalButtons createOrder={(data: any, actions: any) => {
+                <PayPalButtons  createOrder={(data: any, actions: any) => {
                   return actions.order
                     .create({
                       purchase_units: [
@@ -264,15 +265,17 @@ const BillingDetails = () => {
                       return orderId;
                     });
                 }}
-                  onApprove={function (data: any, actions: any) {
+                  onApprove={
+                    function (data: any, actions: any) {
                     return actions.order.capture().then(function () {
                       console.log("ressssssssss", data);
+                      form.submit()
                       const addPayment = {
-                        ...payloadValues,subtotal: totalPrice, total: totalPrice,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,groundId:state?.groundId,userId:id
+                        ...payloadValues,subtotal: state?.price, total: state?.price,paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID,groundId:state?.groundId,userId:id,status:"Paid"
                     
                       };
                       addDoc(collection(firestore, "order"), addPayment)
-                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Added!", message: "Information added successfully" }); storage.removeItem("persist:role")})
+                        .then((response:any) =>{ AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role")})
                         .catch((error:any) =>
                           AppSnackbar({
                             type: "error",

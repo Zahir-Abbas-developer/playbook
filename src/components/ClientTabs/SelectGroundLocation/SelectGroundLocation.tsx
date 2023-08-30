@@ -126,7 +126,7 @@ const StaffAllocationFilters = (props: any) => {
        
       </div>
     
-    <GroundInfo grounds={grounds}/>
+    <GroundInfo grounds={grounds}  values={values} />
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

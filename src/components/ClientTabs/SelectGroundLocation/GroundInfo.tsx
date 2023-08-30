@@ -53,7 +53,7 @@ const GroundInfo = (props: any) => {
   const [groundId, setGroundId] = useState("");
  const [groundData ,setGroundData]=useState("")
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
-
+console.log(props?.values)
   useEffect(() => {
     // setOpenFeedbackPopup(true);
     // AppSnackbar({
@@ -340,6 +340,7 @@ const GroundInfo = (props: any) => {
                       <Col sm={24} style={{ textAlign: "end" }}>
                         <span>Rs 20,000 </span>
                         <Button
+                        disabled={!props?.values?.location && !props?.values?.date && !props?.values?.slot }
                           onClick={() => {
                             setOpenFeedbackPopup(true);
                             setGroundId(item.id);
@@ -354,6 +355,7 @@ const GroundInfo = (props: any) => {
                           Bookme
                         </Button>
                       </Col>
+                    
                     </Row>
                   </div>
                 </Col>

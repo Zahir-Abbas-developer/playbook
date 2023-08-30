@@ -154,7 +154,7 @@ export const routes: any = [
       {
         path: "select-grounds",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user,"newUser"]}
         >
           {" "}
           <SelectGroundPage />,
@@ -163,7 +163,7 @@ export const routes: any = [
       {
         path: "select-stadium-location",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user,"newUser"]}
         >
           {" "}
           <SelectGroundLocationPage />,
@@ -172,7 +172,7 @@ export const routes: any = [
       {
         path: "park-details",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user,"newUser"]}
         >
           {" "}
           <SelectParkLocationPage />
@@ -189,7 +189,7 @@ export const routes: any = [
       {
         path: "contact-details",
         element: <RequireAuth
-          allowedRoles={[ROLES.user]}
+          allowedRoles={[ROLES.user,"newUser"]}
         >
           {" "}
           <ContactDetailsPage />,
@@ -285,7 +285,7 @@ export const routes: any = [
       {
         path: "shoes-products",
         element: (
-          <RequireAuth allowedRoles={[ROLES.user]}>
+          <RequireAuth allowedRoles={[ROLES.user,"newUser"]}>
             <OurCollectionTabDetails />
           </RequireAuth>
         ),
