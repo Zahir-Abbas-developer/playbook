@@ -68,8 +68,9 @@ const ContactDetails = () => {
             <h2 className="elementor-heading-title elementor-size-default " style={{textAlign:"center",marginBottom:"0px",fontWeight:"600",fontSize:"30px"}}>Reach Out </h2>
              <p  style={{textAlign:"center",marginTop:"0px",fontWeight:"400",fontSize:"20px"}} >FOR CONSULTATION</p>
 
-             <p  style={{textAlign:"center",fontWeight:"100",fontSize:"1.4rem",lineHeight:"2.1em",}}>Whether have an inquiry related to larch shoes or looking for a quote, we are available for help and support. Just fill out the form or call  +92(307) 520-9625 Dedication to customers is our number one priority.</p>
+             <p  style={{textAlign:"center",fontWeight:"100",fontSize:"1.4rem",lineHeight:"2.1em",}}>Whether have an inquiry related to our services or looking for a quote, we are available for help and support. Just fill out the form or call  +92(307) 520-9625 Dedication to customers is our number one priority.</p>
             </Col>
+            </Row>
            <Row style={{ background: "linear-gradient(135deg, rgba(68,68,68,1) 6%, rgba(0,0,0,1) 95%)", padding: "40px" }}>
            <Col xs={24} lg={12} >
             <div style={{textAlign:"center"}}>
@@ -183,7 +184,7 @@ const ContactDetails = () => {
         </Col>
            </Row>
 
-            </Row>
+            
 
         </>
 
