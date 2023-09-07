@@ -254,48 +254,50 @@ const BillingDetails = () => {
             </Row>
             <Row>
               <Col xs={24} style={{ textAlign: "center" }}>
-                <PayPalButtons createOrder={(data: any, actions: any) => {
-                  return actions.order
-                    .create({
-                      purchase_units: [
-                        {
-                          amount: {
-                            currency_code: "USD",
-                            value: totalPrice + 10,
+                <PayPalButtons
+                  createOrder={(data: any, actions: any) => {
+                    return actions.order
+                      .create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              currency_code: "USD",
+                              value: totalPrice + 10,
+                            },
                           },
-                        },
-                      ],
-                    })
-                    .then((orderId: string) => {
-                      console.log("orderId", orderId);
+                        ],
+                      })
+                      .then((orderId: string) => {
+                        console.log("orderId", orderId);
 
-                      // Your code here after create the order
-                      return orderId;
-                    });
-                }}
+                        // Your code here after create the order
+                        return orderId;
+                      });
+                  }}
                   onApprove={
                     function (data: any, actions: any) {
-                      return actions.order.capture().then(function () {
-                        console.log("ressssssssss", data);
-                        form.submit()
-                        const addPayment = {
-                          ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
-                          createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                          date: dayjs(state?.date).format("YYYY-MM-DD")
-                        };
-                        addDoc(collection(firestore, "order"), addPayment)
-                          .then((response) => {
-                            addDoc(collection(firestore, "notifications"), {
-                              type: "order_booked",
-                              orderId: response.id,
-                              createdBy: id,
-                              groundId: state.groundId,
-                              createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                              date: dayjs(state?.date).format("YYYY-MM-DD")
+                      return actions.order.capture()
+                        .then(function () {
+                          console.log("ressssssssss", data);
+                          form.submit()
+                          const addPayment = {
+                            ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
+                            createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                            date: dayjs(state?.date).format("YYYY-MM-DD")
+                          };
+                          addDoc(collection(firestore, "order"), addPayment)
+                            .then((response) => {
+                              addDoc(collection(firestore, "notifications"), {
+                                type: "order_booked",
+                                orderId: response.id,
+                                createdBy: id,
+                                groundId: state.groundId,
+                                createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                                date: dayjs(state?.date).format("YYYY-MM-DD")
+                              })
+                              AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
                             })
-                            AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
-                          })
-                      })
+                        })
                         .catch((error: any) =>
                           AppSnackbar({
                             type: "error",
@@ -304,9 +306,6 @@ const BillingDetails = () => {
                           })
                         )
                         .finally(() => form.resetFields());
-                    }
-
-                      )
                     }
                   }
                 />
