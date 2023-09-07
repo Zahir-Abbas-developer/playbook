@@ -284,16 +284,27 @@ const BillingDetails = () => {
                           date: dayjs(state?.date).format("YYYY-MM-DD")
                         };
                         addDoc(collection(firestore, "order"), addPayment)
-                          .then((response: any) => { AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true); })
-                          .catch((error: any) =>
-                            AppSnackbar({
-                              type: "error",
-                              messageHeading: "Error",
-                              message: error?.data?.message ?? "Something went wrong!",
+                          .then((response) => {
+                            addDoc(collection(firestore, "notifications"), {
+                              type: "order_booked",
+                              orderId: response.id,
+                              createdBy: id,
+                              groundId: state.groundId,
+                              createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                              date: dayjs(state?.date).format("YYYY-MM-DD")
                             })
-                          )
-                          .finally(() => form.resetFields());
-                      }
+                            AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
+                          })
+                      })
+                        .catch((error: any) =>
+                          AppSnackbar({
+                            type: "error",
+                            messageHeading: "Error",
+                            message: error?.data?.message ?? "Something went wrong!",
+                          })
+                        )
+                        .finally(() => form.resetFields());
+                    }
 
                       )
                     }
