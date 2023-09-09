@@ -61,10 +61,9 @@ import {
       if (modalType !== "Add") {
         const updateProductValues = {
           ...values,
-          price: parseInt(values?.price),
         };
        
-        setDoc(doc(firestore, "categories", getTableRowValues?.id), updateProductValues)
+        setDoc(doc(firestore, "parkLocations", getTableRowValues?.id), updateProductValues)
           .then((response) => AppSnackbar({ type: "success", messageHeading: "Successfully Updated!", message: "Information updated successfully" }))
           .catch((error) =>
             AppSnackbar({

@@ -295,7 +295,7 @@ const AddCategories = () => {
               <div
                 className="border-color cursor-pointer"
                 onClick={() => {
-                  setJobID(text._id);
+                  setJobID(text.id);
                   setGetFieldValues(text);
                   handleCrossAllocationValues(text);
                 }}

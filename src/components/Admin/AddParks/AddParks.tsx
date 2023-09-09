@@ -141,7 +141,7 @@ const AddParks = () => {
   const getLocationName = (locationId: string) => {
     return locations?.find((location: any) => location.id === locationId)?.name || "N/A"
   }
-
+console.log(parkLocations)
   // ============================== Table Action Dropdowns Items ==============================
   const items: MenuProps["items"] = [
     {
@@ -337,7 +337,7 @@ const AddParks = () => {
         getTableRowValues={getTableRowValues}
         role={role}
         categoryOptions={categories.map((category: any) => ({ label: category.name, value: category.id }))}
-        locationOptions={parkLocations.map((location: any) => ({ label: location.location, value: location.id }))}
+        locationOptions={parkLocations.map((location: any) => ({ label: location?.name, value: location.id }))}
       />
 
       {/* ============================== Cross Allocation Modal For Job Role ============================== */}

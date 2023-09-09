@@ -24,11 +24,8 @@ const Login = () => {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const [signInPostRequest, { isLoading }] = useSignInPostRequestMutation();
-  const [forgetPasswordRequest, { isLoading: isLoadingForgetPassword }] = useForgetPasswordRequestMutation();
   const [resetPasswordRequest, { isLoading: isLoadingNewPassword }] = useNewPasswordRequestMutation();
-  
-  const [authSignUp] = useAuthSignUpMutation();
+
   const [changePasswordPostRequest, { isLoading: changePasswordLoading }] = useChangePasswordPostRequestMutation();
 
   function renderDashboard(role: string): string {
@@ -47,7 +44,7 @@ const Login = () => {
         email: values.email,
         password: values.password,
         username: values?.username,
-        role: "user",
+        role: "admin",
         url: window?.location?.origin + "/user-verification",
       };
       createUserWithEmailAndPassword(auth, values?.email, values.password)
@@ -359,7 +356,7 @@ const Login = () => {
                 <p style={{ color: "red" }}>{changePasswordErrorMessage}</p>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" loading={isLoading} className=" btn-signin fw-600 " block>
+                  <Button type="primary" htmlType="submit" className=" btn-signin fw-600 " block>
                     Save Password
                   </Button>
                 </Form.Item>

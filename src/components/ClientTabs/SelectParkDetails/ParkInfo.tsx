@@ -290,7 +290,7 @@ console.log(grounds)
                               className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
                               style={{ color: "#6E7191" }}
                             >
-                              Status:
+                              Price:
                             </h5>
                           
                             <h5
@@ -311,13 +311,13 @@ console.log(grounds)
                                 textTransform: "capitalize",
                               }}
                             >
-                              {item?.name}
+                              {item?.price} Rs
                             </h5>
                             <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
                               style={{ color: "#4E4B66", marginTop: "8px" }}
                             >
-                              {`${item?.seats}`}
+                              {/* {`${item?.seats}`} */}
                             </h5>
                             <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
@@ -327,16 +327,16 @@ console.log(grounds)
                                 textTransform: "capitalize",
                               }}
                             >
-                              {item?.name ? item.name : "No data"}
+                              {item?.slots ? item.slots.map((slot:any)=>{return slot}) : "No data"}
                             </h5>
                           </div>
                         </div>
                       </Col>
                       <Col sm={24} style={{ textAlign: "end" }}>
-                        <span>Rs 20,000 </span>
+                        {/* <span>Rs 20,000 </span> */}
                         <Button
                           onClick={() => {
-                            setOpenFeedbackPopup(true);
+                            // setOpenFeedbackPopup(true);
                             setGroundId(item.id);
                             setOpenDrawer(true)
                             setGroundData(item)

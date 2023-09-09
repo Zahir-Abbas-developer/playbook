@@ -284,7 +284,7 @@ const AddParkLocation = () => {
               <div
                 className="border-color cursor-pointer"
                 onClick={() => {
-                  setJobID(text._id);
+                  setJobID(text.id);
                   setGetFieldValues(text);
                   handleCrossAllocationValues(text);
                 }}
@@ -298,7 +298,7 @@ const AddParkLocation = () => {
     },
   ];
 
-
+console.log("Park Locations+++++++++++" ,parkLocations)
 
   return (
     <>
@@ -417,6 +417,7 @@ const AddParkLocation = () => {
         getTableRowValues={getTableRowValues}
         role={role}
         jobID={jobID}
+      
       />
 
       {/* ============================== Cross Allocation Modal For Job Role ============================== */}

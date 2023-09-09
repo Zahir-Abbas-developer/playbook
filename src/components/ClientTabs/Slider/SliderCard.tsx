@@ -71,7 +71,7 @@ const SliderCard = (props:any) => {
                                     <p style={{ color: "white", padding: "0px", margin: "2px" }}>{productData?.description}</p>
                                     <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px" }}>{productData?.location}</p>
                                     <Rate disabled defaultValue={productData?.ratingStars} style={{display:"block"}} />
-                                    <Link to="" > <Button style={{marginTop:"20px"}}>View Details</Button></Link>
+                                    {/* <Link to="" > <Button style={{marginTop:"20px"}}>View Details</Button></Link> */}
                                 </div>
                             </Card>
                         

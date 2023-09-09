@@ -226,7 +226,7 @@ const GroundInfo = (props: any) => {
                         className="fs-14 fw-400 line-height-18 m-0"
                         style={{ color: "#A0A3BD" }}
                       >
-                        {item?.name}
+                        {item?.description}
                       </p>
                       {/* <p
                         className="fs-14 fw-400 line-height-18 m-0"
@@ -257,7 +257,7 @@ const GroundInfo = (props: any) => {
                             }}
                           >
                             <img src={EmailIcon} alt="email" />
-                            <p className="m-0">{item?.name}</p>
+                            <p className="m-0">{item?.email}</p>
                           </div>
                           <div
                             className="d-flex align-center contact-content"
@@ -281,7 +281,7 @@ const GroundInfo = (props: any) => {
                               <img src={CallImg} alt="email" />
                             </div>
                             <p className="m-0" style={{ margin: "0" }}>
-                              {item?.name}
+                              {item?.phone}
                             </p>
                           </div>
                         </div>
@@ -289,12 +289,12 @@ const GroundInfo = (props: any) => {
                       <Col xs={24} sm={14} md={12} xxl={6}>
                         <div className="d-flex align-center justify-between">
                           <div>
-                            <h5
+                            {/* <h5
                               className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
                               style={{ color: "#6E7191" }}
                             >
                               Status:
-                            </h5>
+                            </h5> */}
                             <h5
                               className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
                               style={{ color: "#6E7191", marginTop: "8px" }}
@@ -309,7 +309,7 @@ const GroundInfo = (props: any) => {
                             </h5>
                           </div>
                           <div>
-                            <h5
+                            {/* <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
                               style={{
                                 color:
@@ -320,7 +320,7 @@ const GroundInfo = (props: any) => {
                               }}
                             >
                               {item?.name}
-                            </h5>
+                            </h5> */}
                             <h5
                               className="staff-manager-contact fs-16 fw-700 line-height-24 m-0 status-data"
                               style={{ color: "#4E4B66", marginTop: "8px" }}
@@ -335,7 +335,7 @@ const GroundInfo = (props: any) => {
                                 textTransform: "capitalize",
                               }}
                             >
-                              {item?.name ? item.name : "No data"}
+                              {item?.slots ? item.slots.map((slot:any)=> {return <p>{slot}</p>}) : "No data"}
                             </h5>
                           </div>
                         </div>

@@ -282,8 +282,8 @@ const BillingDetails = () => {
                           form.submit()
                           const addPayment = {
                             ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
-                            createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                            date: dayjs(state?.date).format("YYYY-MM-DD")
+                            // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                            // date: dayjs(state?.date).format("YYYY-MM-DD")
                           };
                           addDoc(collection(firestore, "order"), addPayment)
                             .then((response) => {
@@ -292,8 +292,8 @@ const BillingDetails = () => {
                                 orderId: response.id,
                                 createdBy: id,
                                 groundId: state.groundId,
-                                createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                                date: dayjs(state?.date).format("YYYY-MM-DD")
+                                // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                                // date: dayjs(state?.date).format("YYYY-MM-DD")
                               })
                               AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
                             })

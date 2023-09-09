@@ -161,14 +161,14 @@ const NavBar = () => {
   const overlayStyle = { borderRadius: 0 };
   return (
     <>
-      <div className=" header-main-wrapper-ecommerce header-bg " style={{ position: "sticky", top: "0", zIndex: "2000",padding:"0 30px" }}>
+      <div className=" header-main-wrapper-ecommerce header-bg " style={{ position: "sticky", top: "0", zIndex: "100",padding:"0 30px" }}>
       
    
           <div style={{display:"flex" ,justifyContent:"space-between"}}>
       <p style={{color:"white"}} className="solace-leather-online">SOLACE LEATHER ONLINE PLATFORM</p>
       <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"10px" ,marginBottom:"0px"}}>Play Book</h1>
       <div className="short_hands">
-        <img src={SearchImg}  onClick={handleOpenGlobalSearchDrawer}  style={{cursor:"pointer"}}/>
+        {/* <img src={SearchImg}  onClick={handleOpenGlobalSearchDrawer}  style={{cursor:"pointer"}}/> */}
           <Switch
             className="switch fs-12"
             checkedChildren="Dark"
