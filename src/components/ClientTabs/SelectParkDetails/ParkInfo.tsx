@@ -80,7 +80,7 @@ console.log(grounds)
       });
     }
   };
-
+console.log(groundId)
   const handleProfileViewById = (record: any) => {
     setProfileViewData(record?._id);
     setSelectProfileData(record);

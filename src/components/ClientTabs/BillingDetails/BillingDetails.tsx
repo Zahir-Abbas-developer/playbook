@@ -289,11 +289,11 @@ const BillingDetails = () => {
                             .then((response) => {
                               addDoc(collection(firestore, "notifications"), {
                                 type: "order_booked",
-                                orderId: response.id,
+                                orderId: response?.id,
                                 createdBy: id,
-                                groundId: state.groundId,
-                                // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                                // date: dayjs(state?.date).format("YYYY-MM-DD")
+                                groundId: state?.groundId,
+                                createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                                date: dayjs(state?.date).format("YYYY-MM-DD")
                               })
                               AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
                             })
