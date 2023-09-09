@@ -292,8 +292,8 @@ const BillingDetails = () => {
                                 orderId: response?.id,
                                 createdBy: id,
                                 groundId: state?.groundId,
-                                createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                                date: dayjs(state?.date).format("YYYY-MM-DD")
+                                // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
+                                // date: dayjs(state?.date).format("YYYY-MM-DD")
                               })
                               AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
                             })
