@@ -20,6 +20,7 @@ export const navItems = [
     title: "HOME",
     path: "/services",
     lightIcon: home,
+    darkIcon:home,
     alt: "dashboard",
     
   },
@@ -30,6 +31,7 @@ export const navItems = [
     title: "Grounds",
     path: "/select-grounds",
     lightIcon: shoes,
+    darkIcon: shoes,
     alt: "dashboard",
   },
   {
@@ -39,6 +41,7 @@ export const navItems = [
     title: "Parks",
     path: "/park-details",
     lightIcon: parks,
+    darkIcon: parks,
     alt: "dashboard"
   },
   {
@@ -48,6 +51,7 @@ export const navItems = [
     title: "Contact Us",
     path: "/contact-details",
     lightIcon: contact,
+    darkIcon: contact,
     alt: "dashboard"
   },
   {

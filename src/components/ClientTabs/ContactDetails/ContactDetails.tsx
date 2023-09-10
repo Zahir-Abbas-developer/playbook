@@ -36,8 +36,8 @@ const ContactDetails = () => {
         <>
             <div className="header-image-card-details">
                 <div className="image-content">
-                    <h1 className="image-heading-title">Contact</h1>
-                    <p className="image-heading-subheading">Our experts are here to help you with orders, fittings and more</p>
+                    <h1 className="image-heading-title" >Contact</h1>
+                    <p className="image-heading-subheading" > Our experts are here to help you with orders, fittings and more</p>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@ const ContactDetails = () => {
             <h2 className="elementor-heading-title elementor-size-default " style={{textAlign:"center",marginBottom:"0px",fontWeight:"600",fontSize:"30px"}}>Reach Out </h2>
              <p  style={{textAlign:"center",marginTop:"0px",fontWeight:"400",fontSize:"20px"}} >FOR CONSULTATION</p>
 
-             <p  style={{textAlign:"center",fontWeight:"100",fontSize:"1.4rem",lineHeight:"2.1em",}}>Whether have an inquiry related to our services or looking for a quote, we are available for help and support. Just fill out the form or call  +92(307) 520-9625 Dedication to customers is our number one priority.</p>
+             <p  style={{textAlign:"center",fontWeight:"100",fontSize:"1.4rem",lineHeight:"2.1em",}}>Whether have an inquiry related to our services or looking for a quote, we are available for help and support. Just fill out the form or call  +92(300) 520-9625 Dedication to customers is our number one priority.</p>
             </Col>
             </Row>
            <Row style={{ background: "linear-gradient(135deg, rgba(68,68,68,1) 6%, rgba(0,0,0,1) 95%)", padding: "40px" }}>
@@ -64,7 +64,7 @@ const ContactDetails = () => {
                     <MailOutlined  style={{color:"white",fontSize:"50px"}} />
                     <p style={{color:"white",fontWeight:"600",fontSize:"20px"}}>CONTACT</p>
                     <p style={{color:"white",fontWeight:"400",fontSize:"15px",margin:"0px"}}>playbook@gmail.com</p>
-                    <p style={{color:"white",fontWeight:"400",fontSize:"15px",marginTop:"0px"}}>+92307-520-9625</p>
+                    <p style={{color:"white",fontWeight:"400",fontSize:"15px",marginTop:"0px"}}>+92307-500-9620</p>
                     </div>
                     <div style={{textAlign:"center"}}>
                     
