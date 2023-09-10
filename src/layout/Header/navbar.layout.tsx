@@ -106,7 +106,7 @@ const NavBar = () => {
   ];
 
   // const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
-  const { role,permissions }: any = JSON.parse(
+  const { role,username }: any = JSON.parse(
     localStorage.getItem("user") || "{}"
   );
   const handleOpenDrawer=()=>{
@@ -222,9 +222,7 @@ const NavBar = () => {
         >
           <Space onClick={() => setOpen(!open)}>
             {!role ? <Link to="/login"><UserOutlined style={{fontSize: '24px'}} /></Link>:
-            <Avatar style={{ verticalAlign: "middle" }} size="large">
-             
-            </Avatar>}
+           <img height={40} width={40}  src={`https://ui-avatars.com/api/?rounded=true&name=${username} `}></img>}
             <div
               className="details"
               style={{ display: "flex", flexDirection: "column" }}
@@ -239,7 +237,7 @@ const NavBar = () => {
               >
                {role && <> <span style={{ height: "20px" }}>
                  
-                  <CaretDownOutlined className="fs-16" style={{fontSize: '24px'}} />
+                  <CaretDownOutlined className="fs-16" style={{fontSize: '24px',marginTop:"5px"}} />
                 </span>
                 <span
                   className="fs-12 fw-400"

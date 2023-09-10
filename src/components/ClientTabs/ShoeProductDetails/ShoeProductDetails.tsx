@@ -57,9 +57,9 @@ const ShoeProductDetails = () => {
                     {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
                 <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
                 { <div className="grounds-details-slider"> <ParkSlider CricketGrounds={CricketGrounds}/> </div>}
-                {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} className="grounds-details" >
+                {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{paddingTop:"40px"}} className="grounds-details" >
                     {CricketGrounds?.slice(0, 4)?.map((productData: any) => (
-                        <Col xs={24} md={12} lg={6} key={productData.id}>
+                        <Col sm={24} xs={24} md={12} lg={6} key={productData.id}>
                             <Card
                                 
                                 style={{ background: "rgba(44 ,43 ,42,0.9)", border: "1px solid rgba(44 ,43 ,42,0.9)" }}
@@ -79,7 +79,7 @@ const ShoeProductDetails = () => {
                         
                     ))}
                     <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
-                        <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  GROUNDS</Link>
+                        <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  PARKS</Link>
                     </Col>
                 </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
 
