@@ -28,7 +28,7 @@ import dayjs from "dayjs";
 import ApiLoader from "../../ApiLoader/ApiLoader";
 
 const GroundInfo = (props: any) => {
-  const { data, pagination, setPagination,  grounds } = props;
+  const { data, pagination, setPagination, grounds } = props;
   const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
 
   const [staffDetails, setStaffDetails] = useState<any>({});
@@ -328,7 +328,7 @@ const GroundInfo = (props: any) => {
                                 textTransform: "capitalize",
                               }}
                             >
-                              {item?.slots ? item.slots.map((slot:any)=> {return <p>{slot}</p>}) : "No data"}
+                              {item?.slots ? item.slots.map((slot: any) => { return <p>{slot}</p> }) : "No data"}
                             </h5>
                           </div>
                         </div>
@@ -340,7 +340,7 @@ const GroundInfo = (props: any) => {
                           onClick={() => {
                             const orderRef = collection(firestore, 'order');
                             const q = query(orderRef,
-                              where('createdAt', '>', new Date(dayjs(props?.values?.date).format('YYYY-MM-DD'))),
+                              where('createdAt', '>', new Date(dayjs(props?.values?.date).startOf('day').valueOf())),
                               where('createdAt', '<', new Date(dayjs(props?.values?.date).add(1, 'day').format('YYYY-MM-DD'))),
                               where("slot", '==', props?.values?.slot),
                               where('groundId', '==', item.id)

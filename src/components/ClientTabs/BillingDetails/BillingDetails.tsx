@@ -36,7 +36,6 @@ const BillingDetails = () => {
   let payloadValues: {}
   const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
   const onFinish = (values: any) => {
-
     payloadValues = values
     console.log(payloadValues)
 
@@ -278,12 +277,12 @@ const BillingDetails = () => {
                     function (data: any, actions: any) {
                       return actions.order.capture()
                         .then(function () {
-                          console.log("ressssssssss", data);
+                          console.log("ressssssssss", state);
                           form.submit()
                           const addPayment = {
                             ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
-                            // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                            // date: dayjs(state?.date).format("YYYY-MM-DD")
+                            createdAt: Timestamp.fromDate(new Date(state?.date)),
+                            date: state?.date
                           };
                           addDoc(collection(firestore, "order"), addPayment)
                             .then((response) => {
@@ -292,8 +291,8 @@ const BillingDetails = () => {
                                 orderId: response?.id,
                                 createdBy: id,
                                 groundId: state?.groundId,
-                                // createdAt: Timestamp.fromDate(new Date(dayjs(state?.date).format('YYYY-MM-DD'))),
-                                // date: dayjs(state?.date).format("YYYY-MM-DD")
+                                createdAt: Timestamp.fromDate(new Date(state?.date)),
+                                date: state?.date
                               })
                               AppSnackbar({ type: "success", messageHeading: "Successfully Paid!", message: "Payment Paid Successfully" }); storage.removeItem("persist:role"); setOpenFeedbackPopup(true);
                             })

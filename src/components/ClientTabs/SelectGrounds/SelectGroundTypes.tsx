@@ -11,18 +11,18 @@ import AddUserType from "../../../assets/icons/ManageUser/add-user-type.svg";
 import BreadCrumb from "../../../layout/BreadCrumb/BreadCrumb";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import ApiLoader from "../../ApiLoader/ApiLoader";
-import { selectUserType } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
+// import { selectUserType } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
 import { firestore } from "../../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../../store/Slices/Playbook";
 import { useAppSelector } from "../../../store";
 const SelectGroundTypes = () => {
   const [isOpenUserTypeModal, setIsOpenuserTypeModal] = useState<any>(false);
-  const { categories, }: any = useAppSelector((state:any) => state.playbook);
+  const { categories, }: any = useAppSelector((state: any) => state.playbook);
   const [categoriesLoading, setCategoriesLoading] = useState<boolean>(false);
   const { isError, isSuccess, isLoading, data } =
     useGetAuthUserTypeRequestQuery({});
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
   let UserType: any;
   if (isSuccess) {
     UserType = data;
@@ -42,17 +42,17 @@ const SelectGroundTypes = () => {
       { title: "User Type", path: "", }
       , { title: "Dashboard", path: "/dashboard", },
     ];
-    const fetchCategories = () => {
-      setCategoriesLoading(true);
-      onSnapshot(collection(firestore, "categories"), (snapshot) => {
-        const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        dispatch(setCategories(categoriesData))
-        setCategoriesLoading(false);
-      });
-    };
-    useEffect(()=>{
-      if (!categories?.length) fetchCategories()
-    },[])
+  const fetchCategories = () => {
+    setCategoriesLoading(true);
+    onSnapshot(collection(firestore, "categories"), (snapshot) => {
+      const categoriesData: any = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      dispatch(setCategories(categoriesData))
+      setCategoriesLoading(false);
+    });
+  };
+  useEffect(() => {
+    if (!categories?.length) fetchCategories()
+  }, [])
   console.log(categories)
   return (
     <div>
@@ -70,64 +70,64 @@ const SelectGroundTypes = () => {
             SELECT GROUND
           </p>
         </div>
-        {categories.length>0 ?
-        <Row gutter={[80, 30]}>
-          {categories.map((card: any) => (
-            <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8} key={card._id}>
-              <Card
-                className="card-hover-color cursor-pointer"
-                style={{
-                  boxShadow: "none",
-                  borderRadius: "22px",
-                  minHeight: "260px",
-                }}
-                onClick={() =>
-                  navigate("/select-stadium-location", { state: card })
-                }
-              >
-                <div
+        {categories.length > 0 ?
+          <Row gutter={[80, 30]}>
+            {categories.map((card: any) => (
+              <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8} key={card._id}>
+                <Card
+                  className="card-hover-color cursor-pointer"
                   style={{
-                    display: "flex",
-                    color: "#212121",
-                    paddingTop: "4px",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    borderRadius: "6px",
+                    boxShadow: "none",
+                    borderRadius: "22px",
+                    minHeight: "260px",
                   }}
+                  onClick={() =>
+                    navigate("/select-stadium-location", { state: card })
+                  }
                 >
-                   <img
-                  src={card?.thumbnail}
-                  alt="icon"
-                  className={"add-user-image"}
-                  height={51}
-                  width={51}
-                  style={{
-                    display: "block",
-                    margin: "auto",
-                  }}
-                />
-                  <div style={{ display: "block", textAlign: "center" }}>
-                    <p
-                      className="fs-16 fw-500"
+                  <div
+                    style={{
+                      display: "flex",
+                      color: "#212121",
+                      paddingTop: "4px",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    <img
+                      src={card?.thumbnail}
+                      alt="icon"
+                      className={"add-user-image"}
+                      height={51}
+                      width={51}
                       style={{
-                        color: "#14142B",
-                        marginTop: "18px 18px",
-                        textTransform: "capitalize",
+                        display: "block",
+                        margin: "auto",
                       }}
-                    >
-                      {card?.name.replace("_", ' ')}
-                    </p>
-                    <p className="fs-16 fw-400" style={{ color: "#4E4B66" }}>
-                      {card?.description}
-                    </p>
+                    />
+                    <div style={{ display: "block", textAlign: "center" }}>
+                      <p
+                        className="fs-16 fw-500"
+                        style={{
+                          color: "#14142B",
+                          marginTop: "18px 18px",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {card?.name.replace("_", ' ')}
+                      </p>
+                      <p className="fs-16 fw-400" style={{ color: "#4E4B66" }}>
+                        {card?.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
 
-            </Col>
-          ))}
+              </Col>
+            ))}
 
-          {/* <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8}>
+            {/* <Col xs={24} md={24} sm={24} lg={24} xl={24} xxl={8}>
             <Card
               className="card-hover-color cursor-pointer"
               onClick={() => {
@@ -174,12 +174,12 @@ const SelectGroundTypes = () => {
             </Card>
           </Col> */}
 
-          {/* <AddUserTypeModal
+            {/* <AddUserTypeModal
             handleSave={handleSaveSelectUser}
             setIsOpenuserTypeModal={setIsOpenuserTypeModal}
             isOpenUserTypeModal={isOpenUserTypeModal}
           /> */}
-        </Row>:<ApiLoader/>}
+          </Row> : <ApiLoader />}
       </Layout>
     </div>
   );

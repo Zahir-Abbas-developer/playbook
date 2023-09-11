@@ -26,7 +26,7 @@ import PostCodeImg from "../../../assets/images/staffManager/postCodeImg.png";
 import { useDeleteProfileMutation } from "../../../store/Slices/StaffManager";
 import AppSnackbar from "../../../utils/AppSnackbar";
 import ApiLoader from "../../ApiLoader/ApiLoader";
-import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
+// import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
 import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
@@ -51,9 +51,9 @@ const GroundInfo = (props: any) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectProfileData, setSelectProfileData] = useState<any>(null);
   const [groundId, setGroundId] = useState("");
- const [groundData ,setGroundData]=useState("")
+  const [groundData, setGroundData] = useState("")
   const [deleteProfile] = useDeleteProfileMutation({ id: staffDetails?._id });
-console.log(grounds)
+  console.log(grounds)
   useEffect(() => {
     // setOpenFeedbackPopup(true);
     // AppSnackbar({
@@ -80,7 +80,7 @@ console.log(grounds)
       });
     }
   };
-console.log(groundId)
+  console.log(groundId)
   const handleProfileViewById = (record: any) => {
     setProfileViewData(record?._id);
     setSelectProfileData(record);
@@ -292,7 +292,7 @@ console.log(groundId)
                             >
                               Price:
                             </h5>
-                          
+
                             <h5
                               className="staff-manager-contact fs-16 fw-600 line-height-24 m-0 status-title"
                               style={{ color: "#6E7191", marginTop: "6px" }}
@@ -327,7 +327,7 @@ console.log(groundId)
                                 textTransform: "capitalize",
                               }}
                             >
-                              {item?.slots ? item.slots.map((slot:any)=>{return slot}) : "No data"}
+                              {item?.slots ? item.slots.map((slot: any) => { return slot }) : "No data"}
                             </h5>
                           </div>
                         </div>
