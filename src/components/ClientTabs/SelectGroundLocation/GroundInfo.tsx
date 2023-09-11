@@ -3,9 +3,6 @@ import {
   Row,
   Col,
   Avatar,
-  Dropdown,
-  Space,
-  Progress,
   Pagination,
   Button,
 } from "antd";
@@ -16,26 +13,22 @@ import SendIcon from "../../../assets/images/staffManager/sendEmailIcon.png";
 import AllocateStaffIcon from "../../../assets/images/staffManager/allocateStaffIcon.png";
 import StaffSummaryImg from "../../../assets/images/staffManager/staffSummaryImg.png";
 import DeleteIcon from "../../../assets/images/staffManager/DeleteIcon.png";
-import ActionImg from "../../../assets/images/staffManager/actionImg.png";
 import CallImg from "../../../assets/images/staffManager/callImg.png";
 import { useNavigate } from "react-router-dom";
 
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
 
-import PostCodeImg from "../../../assets/images/staffManager/postCodeImg.png";
 import { useDeleteProfileMutation } from "../../../store/Slices/StaffManager";
 import AppSnackbar from "../../../utils/AppSnackbar";
-import ApiLoader from "../../ApiLoader/ApiLoader";
-import { GroundDetails } from "../../../mock/SelectGroundTypes/SelectGroundTypes";
-import FeedbackPopup from "../../../shared/FeedbackPopup/feedback-popup";
+
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { firestore } from "../../../utils/firebase";
 import dayjs from "dayjs";
+import ApiLoader from "../../ApiLoader/ApiLoader";
 
 const GroundInfo = (props: any) => {
-  const { data, pagination, setPagination, total, grounds } = props;
-  const [staffId, setStaffId] = useState("");
+  const { data, pagination, setPagination,  grounds } = props;
   const [openFeedbackPopup, setOpenFeedbackPopup] = useState<boolean>(false);
 
   const [staffDetails, setStaffDetails] = useState<any>({});
@@ -207,7 +200,7 @@ const GroundInfo = (props: any) => {
                 style={{ marginBlock: "0.7rem" }}
                 align="middle"
               >
-                <Col xs={24} lg={6} xl={4} className="staff-info">
+                <Col xs={12} lg={6} xl={4} className="staff-info">
                   <div className="border-right">
                     <Avatar
                       src={item?.thumbnail}
@@ -237,7 +230,7 @@ const GroundInfo = (props: any) => {
                     </div>
                   </div>
                 </Col>
-                <Col xs={24} lg={18} xl={20}>
+                <Col xs={12} lg={18} xl={20}>
                   <div className="staff-manager-details">
                     <Row gutter={[15, 20]}>
                       <Col xs={24} sm={10} md={12} xxl={5}>
@@ -286,7 +279,7 @@ const GroundInfo = (props: any) => {
                           </div>
                         </div>
                       </Col>
-                      <Col xs={24} sm={14} md={12} xxl={6}>
+                      <Col xs={12} sm={14} md={12} xxl={6}>
                         <div className="d-flex align-center justify-between">
                           <div>
                             {/* <h5

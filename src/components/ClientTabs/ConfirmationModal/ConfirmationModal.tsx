@@ -28,7 +28,8 @@ const handleConfirmBooking=()=>{
       <Space>
       </Space>
       <Drawer
-        title=""
+        title="Details"
+        className="confirmation-drawer"
         placement={placement}
         width={500}
         onClose={onClose}
