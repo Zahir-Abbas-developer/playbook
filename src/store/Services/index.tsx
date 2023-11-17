@@ -29,9 +29,6 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: async (headers) => {
     const userData: any = localStorage.getItem("careUserData")
     const token: any = JSON.parse(userData);
-    console.log("userData", userData);
-    headers.set("Authorization", `Bearer ${token.token}`);
-    headers.set("Content-Type", "application/json");
     return headers;
   },
 });
