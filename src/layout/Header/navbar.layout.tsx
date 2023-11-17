@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Badge, Drawer, Dropdown, Popover, Space, Switch } from "antd";
 import { v4 as uuidv4 } from "uuid";
-import SearchImg from "../../assets/images/sidebar/Search.png";
+import Logo from "../../assets/Logo/logo.jpg";
 import ClickAwayListener from "react-click-away-listener";
 import { navItems } from "./nav-data";
 import { ReactComponent as Logout } from "../../assets/icons/sidebar/logout.svg";
@@ -165,8 +165,9 @@ const NavBar = () => {
       
    
           <div style={{display:"flex" ,justifyContent:"space-between"}}>
-      <p style={{color:"white"}} className="solace-leather-online">ONLINE PLAYBOOK BOOKING SYSTEM</p>
-      <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"10px" ,marginBottom:"0px"}}>Play Book</h1>
+      {/* <p style={{color:"white"}} className="solace-leather-online">ONLINE PLAYBOOK BOOKING SYSTEM</p> */}
+      <img src={Logo} alt="Logo" width={110} height={110} />
+      <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"20px" ,marginBottom:"0px"}}>Play Book</h1>
       <div className="short_hands">
         {/* <img src={SearchImg}  onClick={handleOpenGlobalSearchDrawer}  style={{cursor:"pointer"}}/> */}
           <Switch
