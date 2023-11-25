@@ -216,7 +216,7 @@ const Login = () => {
           <div className="inner-left-div">
             <div>
               <h1 className="heading-1">
-                <span className="pink-color" style={{ color: "#e76f51" }}>
+                <span className="pink-color" style={{ color: "#3c3b91" }}>
                   {location?.pathname === "/login" ? "Sign In" : location?.pathname === "/sign-up" ? "Sign Up" :  location?.pathname === "/forget-password"?"Forgot Password":"Change Password"}
                 </span>
                 <span> to</span>

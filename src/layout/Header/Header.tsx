@@ -150,7 +150,7 @@ const handleRole = (item: any) => {
                           <span
                             className="fs-12 nav-text title-color"
                             style={{
-                              color: active === item.title ? "#e76f51" : "",
+                              color: active === item.title ? "#3c3b91" : "",
                               fontSize:"large"
                             }}
                             onClick={() => {
@@ -189,7 +189,7 @@ const handleRole = (item: any) => {
                                         style={{
                                           color:
                                             activeChild === subNav.title
-                                              ? "#e76f51"
+                                              ? "#3c3b91"
                                               : "",
                                         }}
                                       >

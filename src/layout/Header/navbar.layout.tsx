@@ -109,12 +109,7 @@ const NavBar = () => {
   const { role,username }: any = JSON.parse(
     localStorage.getItem("user") || "{}"
   );
-  const handleOpenDrawer=()=>{
-    dispatch(openDrawer())
-  }
-  const handleOpenGlobalSearchDrawer=()=>{
-    dispatch(openGlobalSearchDrawer())
-  }
+  
   const handleRole = (item: any) => {
     if (role === "EMPLOYEE" && item.title === "Reports") {
       navigate("reports/project-task/1");
@@ -304,7 +299,7 @@ const NavBar = () => {
                           <span
                             className="fs-12 nav-text title-color"
                             style={{
-                              color: active === item.title ? "#e76f51" : "",
+                              color: active === item.title ? "#3c3b91" : "",
                               fontSize:"large"
                             }}
                             onClick={() => {
@@ -343,7 +338,7 @@ const NavBar = () => {
                                         style={{
                                           color:
                                             activeChild === subNav.title
-                                              ? "#e76f51"
+                                              ? "#3c3b91"
                                               : "",
                                         }}
                                       >

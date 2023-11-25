@@ -49,7 +49,7 @@ const DrawerNavsLinks = (props: any) => {
           {navItems.map((items: any) => (
             <li
               style={{
-                color: active === items.title ? "#e76f51" : "black",
+                color: active === items.title ? "#3c3b91" : "black",
                 listStyle: "none",
               }}
               key={items.title}
@@ -120,7 +120,7 @@ const DrawerNavsLinks = (props: any) => {
                             }}
                             style={{
                               color:
-                                activeChild === item.title ? "#e76f51" : "",
+                                activeChild === item.title ? "#3c3b91" : "",
                             }}
                             // onClick={() => {
                             //   setActive(item.title);

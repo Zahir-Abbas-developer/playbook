@@ -126,7 +126,7 @@ const selectLocations=locations?.map((location:any)=>{return({value:location?.id
       </div>
     </div>
     <Form.Item>
-                  <Button type="primary" htmlType="submit" className='search-button' style={{backgroundColor:"#E76F51"}}>
+                  <Button type="primary" htmlType="submit" className='search-button' style={{backgroundColor:"#3c3b91"}}>
                     Search
                   </Button>
                 </Form.Item>
