@@ -1,9 +1,10 @@
 import Football from "../../assets/images/faysalhills/footballfaysalhills.jpg"
 import Melbourne from "../../assets/images/faysalhills/cricketfaysalhills.jpg"
-import hocketground from "../../assets/images/hocketground.jpg"
+import hocketground from "../../assets/images/faysalhills/HOCKEYFAISALHILLS.jpg"
 import Park from "../../assets/images/faysalhills/parksfaysal.jpg"
 
-import badminton from "../../assets/images/badminton.jpg"
+
+import badminton from "../../assets/images/faysalhills/FAYSALHILLSCRICKETGROUND.jpg"
 export const CricketGrounds=[
     //Cricket Grounds Data
     {
@@ -23,7 +24,7 @@ export const CricketGrounds=[
    
      {
         image:badminton,
-        name:"Badminton Ground",
+        name:"Faysal Hills Cricket Ground",
         ratingStars:"4",
         seats:"30000",
         location:"Rawalpindi", 

@@ -257,7 +257,7 @@ const Login = () => {
                     { validator: validateEmail },
                   ]}
                 >
-                  <Input placeholder="Username" className="input-style" />
+                  <Input placeholder="Useremail" className="input-style" />
                 </Form.Item>
                 <Form.Item
                   name="password"

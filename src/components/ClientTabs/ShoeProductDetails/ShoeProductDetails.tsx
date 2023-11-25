@@ -15,7 +15,7 @@ const ShoeProductDetails = () => {
     const query = "&" + new URLSearchParams(paramsObj).toString();
     const { data: dataProducts, isSuccess: isSuccessProducts } = useJacketsAllProductsQuery({ query })
     const [hoverImage, setHoverImage] = useState(false)
-    const [viewAllProductsBackground, setViewAllProductsBackground] = useState("#FE5C36")
+    const [viewAllProductsBackground, setViewAllProductsBackground] = useState("#3c3b91")
     const [viewAllProductsText, setViewAllProductsText] = useState("white")
     let productsData: any
     if (isSuccessProducts) {
@@ -79,7 +79,7 @@ const ShoeProductDetails = () => {
                         
                     ))}
                     <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
-                        <Link className="btn btn-2 hover-slide-right" to="/park-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#3c3b91");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  PARKS</Link>
+                        <Link className="btn btn-2 hover-slide-right" to="/park-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #3c3b91" }} onMouseLeave={()=>{setViewAllProductsBackground("#3c3b91");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  PARKS</Link>
                     </Col>
                 </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
 

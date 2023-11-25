@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Drawer, Radio, Space } from 'antd';
+import { Button, Col, Drawer, Radio, Space } from 'antd';
 import type { DrawerProps } from 'antd/es/drawer';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import { Link, useNavigate } from 'react-router-dom';
@@ -43,7 +43,10 @@ const ConfirmationModal = ({ openDrawer, setOpenDrawer, groundData, productId, s
         <p>Price : {groundData?.price}</p>
         <p>Slots : {groundData?.slots?.map((data: any) => { return <>{data}</> })}</p>
 
-
+        <Col xs={24}>
+        <h3>Please Read The GuideLines Carefully Before Proceeding Further.Thank You!</h3>
+        <p > This  reservation system offers versatile facilities, including 24/7 availability for bookings, ensuring flexibility for users. Night matches are facilitated with available lighting, enhancing the  usability beyond daylight hours. Continuous water availability adds convenience. Teams benefit from a dedicated room, fostering a comfortable and organized environment. To maintain fairness and punctuality, a penalty of 5000 rupees per hour is imposed on those exceeding their allotted time slot, promoting responsible use of the  resources.</p>
+      </Col>
         <Button type="primary" disabled={!userRole} onClick={handleConfirmBooking}>
           Confirm Booking
         </Button>

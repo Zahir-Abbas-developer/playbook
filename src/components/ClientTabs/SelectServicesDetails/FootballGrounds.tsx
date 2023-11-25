@@ -13,7 +13,7 @@ const FootballDetails = () => {
     const query = "&" + new URLSearchParams(paramsObj).toString();
     const { data: dataProducts, isSuccess: isSuccessProducts } = useGetAllProductsQuery({ query })
     const [hoverImage ,setHoverImage]=useState(false)
-    const [viewAllProductsBackground ,setViewAllProductsBackground]=useState("#FE5C36")
+    const [viewAllProductsBackground ,setViewAllProductsBackground]=useState("#3c3b91")
     const [viewAllProductsText ,setViewAllProductsText]=useState("white")
     let productsData: any
     if (isSuccessProducts) {

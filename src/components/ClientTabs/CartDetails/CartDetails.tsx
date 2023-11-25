@@ -143,10 +143,7 @@ const totalPrice = products?.products?.reduce((accumulator:any, currentValue:any
       <Col xs={12}>
       <p style={{color:"#ffffff"}}>$ {totalPrice + 10}</p>
       </Col>
-      <Col xs={12}>
-        <h3>Please Read The GuideLines Carefully Before Proceeding Further.Thank You!</h3>
-        <p style={{color:"#ffffff"}}> This  reservation system offers versatile facilities, including 24/7 availability for bookings, ensuring flexibility for users. Night matches are facilitated with available lighting, enhancing the  usability beyond daylight hours. Continuous water availability adds convenience. Teams benefit from a dedicated room, fostering a comfortable and organized environment. To maintain fairness and punctuality, a penalty of 5000 rupees per hour is imposed on those exceeding their allotted time slot, promoting responsible use of the  resources.</p>
-      </Col>
+      
       <Col span={24}>
         {!role &&
        <p style={{color:"red"}}>Please Sign In First</p>}
