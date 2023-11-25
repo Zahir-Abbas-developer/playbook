@@ -6,7 +6,7 @@ import jacketImage4 from "../../../assets/images/jackets/tobias-tullius-Fg15Ldqp
 import { Link } from "react-router-dom"
 import { useJacketsAllProductsQuery } from "../../../store/Slices/Products"
 import { useState } from "react"
-import { CricketGrounds } from "../../../mock/PlayBookData/Grounds"
+import { CricketGrounds, Parks } from "../../../mock/PlayBookData/Grounds"
 import SliderCard from "../Slider/SliderCard"
 import ParkSlider from "../Slider/ParkSlider"
 const ShoeProductDetails = () => {
@@ -58,7 +58,7 @@ const ShoeProductDetails = () => {
                 <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
                 { <div className="grounds-details-slider"> <ParkSlider CricketGrounds={CricketGrounds}/> </div>}
                 {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{paddingTop:"40px"}} className="grounds-details" >
-                    {CricketGrounds?.slice(0, 4)?.map((productData: any) => (
+                    {Parks?.slice(0, 1)?.map((productData: any) => (
                         <Col sm={24} xs={24} md={12} lg={6} key={productData.id}>
                             <Card
                                 
@@ -68,7 +68,7 @@ const ShoeProductDetails = () => {
                                 <div style={{ textAlign: "center", padding: "0" }}>
                                 <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px",fontFamily:" Oswald,sans-serif" }}> {productData?.name} </p>
 
-                                    <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px",fontFamily:" Oswald,sans-serif" }}> {productData?.seats} Seats</p>
+                                  
                                     <p style={{ color: "white", padding: "0px", margin: "2px" }}>{productData?.description}</p>
                                     <p style={{ fontWeight: "bold", color: "white", padding: "0px", margin: "2px" }}>{productData?.location}</p>
                                     <Rate disabled defaultValue={productData?.ratingStars} style={{display:"block"}} />
@@ -79,7 +79,7 @@ const ShoeProductDetails = () => {
                         
                     ))}
                     <Col xs={24} sm={24} style={{ textAlign: "center", marginTop: "10px" }} >
-                        <Link className="btn btn-2 hover-slide-right" to="/select-grounds" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  PARKS</Link>
+                        <Link className="btn btn-2 hover-slide-right" to="/park-details" style={{ background: viewAllProductsBackground, padding: "14px", color: viewAllProductsText ,border:"1px solid #FE5C36" }} onMouseLeave={()=>{setViewAllProductsBackground("#FE5C36");setViewAllProductsText("white")}} onMouseOver={()=>{setViewAllProductsBackground("white");setViewAllProductsText("#FE5C36")}} >VIEW  PARKS</Link>
                     </Col>
                 </Row> : <p style={{  fontSize: "large", textAlign: "center" }}>No Products Added</p>}
 

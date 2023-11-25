@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Carousel } from 'antd';
-import CricketGround from "../../../assets/images/ground.jpg"
-import Footballground from "../../../assets/images/football.jpg"
+import {  Carousel } from 'antd';
+import CricketGround from "../../../assets/images/faysalhills/cricketfaysalhills.jpg"
+import Footballground from "../../../assets/images/faysalhills/footballfaysalhills.jpg"
 import badminton from "../../../assets/images/badminton.jpg"
 import hocketground from "../../../assets/images/hocketground.jpg"
 
-import shoesImage1 from "../../../assets/images/MicrosoftTeams-image (8).png"
-import shoesImage2 from "../../../assets/images/MicrosoftTeams-image (9).png"
-import shoesImage3 from "../../../assets/images/MicrosoftTeams-image (10).png"
 import { Link } from 'react-router-dom';
 import './SelectServices.scss'
-const contentStyle: React.CSSProperties = {
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
 
 const SelectServices = () => {
   const [viewAllProductsBackground ,setViewAllProductsBackground]=useState("white")
