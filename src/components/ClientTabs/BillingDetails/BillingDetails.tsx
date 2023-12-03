@@ -277,7 +277,7 @@ const BillingDetails = () => {
                     function (data: any, actions: any) {
                       return actions.order.capture()
                         .then(function () {
-                          console.log("ressssssssss", state);
+                         
                           form.submit()
                           const addPayment = {
                             ...payloadValues, subtotal: state?.price, total: state?.price, paymentMethod: "PAYPAL", paymentTransactionId: data?.orderID, groundId: state?.groundId, userId: id, status: "Paid", slot: state.slot,
