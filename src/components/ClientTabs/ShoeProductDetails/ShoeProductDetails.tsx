@@ -55,7 +55,7 @@ const ShoeProductDetails = () => {
 
                     <Col xs={24} md={24} lg={24} >
                     {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
-                <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
+                <p className="title-color" style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
                 { <div className="grounds-details-slider"> <ParkSlider CricketGrounds={CricketGrounds}/> </div>}
                 {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{paddingTop:"40px"}} className="grounds-details" >
                     {Parks?.slice(0, 4)?.map((productData: any) => (

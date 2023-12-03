@@ -49,7 +49,7 @@ const SelectServicesDetails = () => {
     return (
         <>
             {(CricketGrounds?.length > 0 || CricketGrounds?.length==0)  ? <div style={{marginTop:"18px"}}>
-                <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>GROUNDS</p>
+                <p className="title-color" style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>GROUNDS</p>
                 { <div className="grounds-details-slider"> <SliderCard CricketGrounds={CricketGrounds}  /></div>}
                 {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{padding:"40px"}} className="grounds-details" >
                     {CricketGrounds?.slice(0, 4)?.map((productData: any) => (

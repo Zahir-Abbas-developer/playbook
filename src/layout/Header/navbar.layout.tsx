@@ -162,7 +162,7 @@ const NavBar = () => {
           <div style={{display:"flex" ,justifyContent:"space-between"}}>
       {/* <p style={{color:"white"}} className="solace-leather-online">ONLINE PLAYBOOK BOOKING SYSTEM</p> */}
       <img src={Logo} alt="Logo" width={110} height={110} />
-      <h1 style={{fontWeight:"500" ,fontSize:"32px",marginTop:"40px" ,marginBottom:"0px"}}>Play Book</h1>
+      <h1 className="title-color" style={{fontWeight:"500" ,fontSize:"32px",marginTop:"40px" ,marginBottom:"0px"}}>Play Book</h1>
       <div className="short_hands">
         {/* <img src={SearchImg}  onClick={handleOpenGlobalSearchDrawer}  style={{cursor:"pointer"}}/> */}
           <Switch
