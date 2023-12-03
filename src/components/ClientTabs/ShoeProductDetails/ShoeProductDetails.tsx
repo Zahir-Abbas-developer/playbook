@@ -58,7 +58,7 @@ const ShoeProductDetails = () => {
                 <p style={{ textAlign: "center", fontSize: "18px" ,marginBottom:"0px",fontFamily:" Oswald,sans-serif"}}>PARKS</p>
                 { <div className="grounds-details-slider"> <ParkSlider CricketGrounds={CricketGrounds}/> </div>}
                 {CricketGrounds?.length > 0 ? <Row gutter={[16,16]} style={{paddingTop:"40px"}} className="grounds-details" >
-                    {Parks?.slice(0, 1)?.map((productData: any) => (
+                    {Parks?.slice(0, 4)?.map((productData: any) => (
                         <Col sm={24} xs={24} md={12} lg={6} key={productData.id}>
                             <Card
                                 

@@ -1,7 +1,11 @@
 import Football from "../../assets/images/faysalhills/footballfaysalhills.jpg"
 import Melbourne from "../../assets/images/faysalhills/cricketfaysalhills.jpg"
-import hocketground from "../../assets/images/faysalhills/HOCKEYFAISALHILLS.jpg"
+import hocketground from "../../assets/images/faysalhills/HOCKEYFAISALHILLS.jpeg"
 import Park from "../../assets/images/faysalhills/parksfaysal.jpg"
+import Park1 from "../../assets/images/faysalhills/parksfaysal1.jpg"
+import Park2 from "../../assets/images/faysalhills/parksfaysal2.jpg"
+import Park3 from "../../assets/images/faysalhills/parksfaysal3.jpg"
+
 
 
 import badminton from "../../assets/images/faysalhills/FAYSALHILLSCRICKETGROUND.jpg"
@@ -48,19 +52,19 @@ export const Parks=[
       location:"Rawalpindi", 
    },
    {
-      image:Park,
+      image:Park1,
       name:"Faysal Hills Park",
       ratingStars:"4",
       location:"Rawalpindi", 
    },
    {
-      image:Park,
+      image:Park2,
       name:"Faysal Hills Park",
       ratingStars:"4",
       location:"Rawalpindi", 
    },
    {
-      image:Park,
+      image:Park3,
       name:"Faysal Hills Park",
       ratingStars:"4",
       location:"Rawalpindi", 

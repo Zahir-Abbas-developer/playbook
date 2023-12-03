@@ -3,7 +3,7 @@ import {  Carousel } from 'antd';
 import CricketGround from "../../../assets/images/faysalhills/cricketfaysalhills.jpg"
 import Footballground from "../../../assets/images/faysalhills/footballfaysalhills.jpg"
 import badminton from "../../../assets/images/faysalhills/parksfaysal.jpg"
-import hocketground from "../../../assets/images/faysalhills/HOCKEYFAISALHILLS.jpg"
+import hocketground from "../../../assets/images/faysalhills/HOCKEYFAISALHILLS.jpeg"
 
 import { Link } from 'react-router-dom';
 import './SelectServices.scss'
