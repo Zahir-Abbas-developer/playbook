@@ -368,58 +368,7 @@ const AddOrders = () => {
           </Button> */}
 
           {/* ============================== Job Role Top Filters ============================== */}
-          <Row gutter={[0, 20]} className='job-role-filters-wrapper'>
-            <Col xs={24} md={10} lg={8} xl={6} xxl={4}>
-              <p className='fs-14 fw-600 title-color line-height-17 m-0' style={{ marginBottom: "0.563rem" }}>User Role</p>
-              <div className="filter-column">
-                <Select
-                  size="large"
-                  placeholder="Select user role"
-                  optionFilterProp="children"
-                  className="app-select-wrap-class"
-                  defaultValue="All"
-                  popupClassName="app-select-popup-wrap-class"
-                  style={{ width: "100%" }}
-                  value={selectedFilterValue}
-                  onChange={(value: string) =>
-                    value
-                      ? (setPagination({ ...pagination, page: 1 }), setSelectedFilterValue(value))
-                      : setSelectedFilterValue("")
-                  }
-
-                  options={optimizedUserRoleDropdown}
-                />
-              </div>
-            </Col>
-
-            {role === ROLES.coordinator && (
-              <Col xs={24} md={10} lg={8} xl={6} xxl={4}>
-                <p className='fs-14 fw-600 title-color line-height-17 m-0' style={{ marginBottom: "0.563rem" }}>Care Home</p>
-                <div className="filter-column">
-                  <Select
-                    size="large"
-                    placeholder="Select care home"
-                    optionFilterProp="children"
-                    defaultValue="All"
-                    className="app-select-wrap-class"
-                    popupClassName="app-select-popup-wrap-class"
-                    style={{ width: "100%" }}
-                    onChange={(value: string) => {
-                      if (selectedCareHomeFilterValue === value) {
-                        setSelectedCareHomeFilterValue("")
-
-                      } else {
-                        setSelectedCareHomeFilterValue(value)
-                      }
-                    }}
-                    value={selectedCareHomeFilterValue}
-                    options={careHomeDataDropdown}
-                  />
-                </div>
-              </Col>
-            )}
-          </Row>
-
+        
         </div>
 
         <div className="filter-bar">
