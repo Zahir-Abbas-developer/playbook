@@ -61,6 +61,7 @@ export const navItems = [
     title: "GROUNDS",
     path: "/add-products",
     lightIcon: add,
+    darkIcon: add,
     alt: "dashboard"
   },
   {
@@ -70,6 +71,7 @@ export const navItems = [
     title: "PARKS",
     path: "/add-parks",
     lightIcon: category,
+    darkIcon: category,
     alt: "dashboard"
   },
   
@@ -80,6 +82,7 @@ export const navItems = [
     title: "GROUND CATEGORIES",
     path: "/add-categories",
     lightIcon: add,
+    darkIcon: add,
     alt: "dashboard"
   },
   {
@@ -89,6 +92,7 @@ export const navItems = [
     title: "GROUND LOCATIONS",
     path: "/add-colors",
     lightIcon: add,
+    darkIcon: add,
     alt: "dashboard"
   },
   {
@@ -98,6 +102,7 @@ export const navItems = [
     title: "PARK LOCATIONS",
     path: "/add-park-location",
     lightIcon: add,
+    darkIcon: add,
     alt: "dashboard"
   },
   
@@ -109,6 +114,7 @@ export const navItems = [
     title: "ORDERS",
     path: "/add-orders",
     lightIcon: order,
+    darkIcon: order,
     alt: "dashboard"
   },
   
