@@ -1,31 +1,18 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Slider } from "antd";
 import { firestore } from "../../../utils/firebase";
 import "./GroundStaffFilters.scss";
-import {
-  useAllocateCarersMutation,
-  useDeleteStaffMutation,
-} from "../../../store/Slices/StaffAllocation";
-import AppSnackbar from "../../../utils/AppSnackbar";
+
+
 import DeleteModal from "../../../shared/DeleteModal/DeleteModal";
-import { CollectionReference, collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
+import { CollectionReference, collection,  onSnapshot, query, where } from "firebase/firestore";
 import GroundInnerFilters from "./GroundInnerFilters";
 import GroundInfo from "./GroundInfo";
 import { useDispatch } from "react-redux";
 import { setGrounds } from "../../../store/Slices/Playbook";
 import { useAppSelector } from "../../../store";
-import SliderCard from "../Slider/SliderCard";
+import { useLocation } from "react-router-dom";
 
-const handleStyling: any = {
-  color: "blue",
-  border: "7px solid white",
-  borderRadius: 5,
-  height: 29,
-  width: 16,
-  position: "absolute",
-  top: -4,
-  boxShadow: "0px 0px 4px 1px rgba(0, 0, 0, 0.25)",
-};
+
 
 const StaffAllocationFilters = (props: any) => {
 
@@ -34,62 +21,21 @@ const StaffAllocationFilters = (props: any) => {
     setFilterValues,
     careHomeOptions,
     userTypeOptions,
-    selectedRows,
-    careHomeId,
-    selectedRowKeys,
-    setSelectedRowKeys,
     paginationStaff,
     setPagination
   } = props;
 
-  const [inputValue, setInputValue] = useState(50);
-  const [isAllocateCarerModal, setIsAllocateCarerModal] = useState(false);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const { grounds, }: any = useAppSelector((state: any) => state.playbook);
   const [deleteModal, setDeleteModal] = useState(false);
   const [values, setValues] = useState<any>(null);
 
-  const onChange = (newValue: number) => {
-    setInputValue(newValue);
-  };
-
+ 
   const dispatch = useDispatch()
   //Allocate Carer
-  const [allocateCare] = useAllocateCarersMutation();
 
-  const handleAllocate = async () => {
-    const payload = {
-      clientId: [careHomeId],
-      staffId: selectedRows,
-    };
-    const { data, error }: any = await allocateCare(payload);
-    if (data) {
-      setSelectedRowKeys([]);
-      AppSnackbar({ type: "success", message: data?.message });
-    }
-    if (error) {
-      AppSnackbar({
-        type: "error",
-        messageHeading: "Error",
-        message: error?.data?.message ?? "Something went wrong!",
-      });
-    }
-  };
 
-  //Delete Staff
-  const [deleteStaff] = useDeleteStaffMutation();
-
-  const handleDeleteSubmit = async () => {
-    const payload: any = {
-      staffId: selectedRows,
-    };
-    const { data }: any = await deleteStaff({ id: careHomeId, payload });
-    if (data) {
-      setSelectedRowKeys([]);
-      AppSnackbar({ type: "success", message: data?.message });
-    }
-  };
-
+ 
   const fetchGrounds = () => {
     const locationCollection: CollectionReference = collection(firestore, "grounds");
     let baseQuery: any = locationCollection;
@@ -107,6 +53,12 @@ const StaffAllocationFilters = (props: any) => {
     fetchGrounds();
 
   }, [values]);
+  const location = useLocation();
+  const card = location.state;
+  console.log(card)
+  console.log(grounds)
+ const filterData=grounds?.filter((id:any)=>id?.categoryId===card?.id)
+ console.log(filterData)
   return (
     <div className="inner-wrap-filters">
       <p style={{ fontWeight: "bold", fontSize: "30px", marginBottom: "0px" }}>Search for Ground</p>
@@ -125,7 +77,7 @@ const StaffAllocationFilters = (props: any) => {
 
       </div>
 
-      <GroundInfo grounds={grounds} values={values} />
+      <GroundInfo grounds={filterData} values={values} />
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

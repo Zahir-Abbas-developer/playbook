@@ -376,9 +376,7 @@ const GroundInfo = (props: any) => {
                 </Col>
               </Row>
             ))
-          ) : (
-            <ApiLoader />
-          )}
+          ) : <p style={{textAlign:"center",fontSize:"30px"}}>No Ground Available!</p>}
         </div>
       </div>
       <ConfirmationModal openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} groundData={groundData} slot={props?.values?.slot} date={props?.values?.date} productId={groundId} />
