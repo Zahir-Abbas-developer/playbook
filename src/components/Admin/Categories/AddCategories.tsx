@@ -403,10 +403,22 @@ const AddCategories = () => {
               className="search-input"
               placeholder="Search by category name"
               onChange={(event: any) => {
-                debouncedSearch(event.target.value, setSearchName);
-                setPagination({ ...pagination, page: 1 })
-              }
-              }
+                // debouncedSearch(event.target.value, setSearchName);
+                // setPagination({ ...pagination, page: 1 });
+              
+                if (event.target.value) {
+                  dispatch(
+                    setCategories(
+                      categories.filter(({ name }: any) =>
+                        name
+                          ?.toLowerCase()
+                          .includes(event.target.value?.toLowerCase())
+                      )
+                    )
+                  );
+                } else fetchCategories();
+              }}
+              
               prefix={
                 <img
                   src={searchIcon}

@@ -350,8 +350,20 @@ const AddProducts = () => {
               className="search-input"
               placeholder="Search by product name"
               onChange={(event: any) => {
-                debouncedSearch(event.target.value, setSearchName);
-                setPagination({ ...pagination, page: 1 });
+                // debouncedSearch(event.target.value, setSearchName);
+                // setPagination({ ...pagination, page: 1 });
+              
+                if (event.target.value) {
+                  dispatch(
+                    setGrounds(
+                      grounds.filter(({ name }: any) =>
+                        name
+                          ?.toLowerCase()
+                          .includes(event.target.value?.toLowerCase())
+                      )
+                    )
+                  );
+                } else fetchGrounds();
               }}
               prefix={<img src={searchIcon} alt="searchIcon" width={22} height={22} style={{ marginRight: "0.623rem" }} />}
             />

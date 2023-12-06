@@ -431,10 +431,21 @@ const AddOrders = () => {
               className="search-input"
               placeholder="Search by position name"
               onChange={(event: any) => {
-                debouncedSearch(event.target.value, setSearchName);
-                setPagination({ ...pagination, page: 1 })
-              }
-              }
+                // debouncedSearch(event.target.value, setSearchName);
+                // setPagination({ ...pagination, page: 1 });
+               
+                if (event.target.value) {
+                  dispatch(
+                    setOrders(
+                      orders.filter(({ name }: any) =>
+                        name
+                          ?.toLowerCase()
+                          .includes(event.target.value?.toLowerCase())
+                      )
+                    )
+                  );
+                } else fetchOrders();
+              }}
               prefix={
                 <img
                   src={searchIcon}

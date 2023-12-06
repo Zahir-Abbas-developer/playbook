@@ -296,9 +296,22 @@ console.log(parkLocations)
               className="search-input"
               placeholder="Search by product name"
               onChange={(event: any) => {
-                debouncedSearch(event.target.value, setSearchName);
-                setPagination({ ...pagination, page: 1 });
+                // debouncedSearch(event.target.value, setSearchName);
+                // setPagination({ ...pagination, page: 1 });
+              
+                if (event.target.value) {
+                  dispatch(
+                    setParks(
+                      parks.filter(({ name }: any) =>
+                        name
+                          ?.toLowerCase()
+                          .includes(event.target.value?.toLowerCase())
+                      )
+                    )
+                  );
+                } else fetchParks();
               }}
+              
               prefix={<img src={searchIcon} alt="searchIcon" width={22} height={22} style={{ marginRight: "0.623rem" }} />}
             />
             {/* <Space size={[25, 0]}>
