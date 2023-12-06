@@ -110,6 +110,7 @@ const StaffAllocationFilters = (props: any) => {
   
   }, [values]);
   return (
+
     <div className="inner-wrap-filters">
      <p style={{fontWeight:"bold",fontSize:"30px",marginBottom:"0px"}}>Search for Parks</p>
      <p>Find The Best Parks In Your Area.</p>
@@ -127,7 +128,7 @@ const StaffAllocationFilters = (props: any) => {
        
       </div>
     
-    <GroundInfo grounds={parks}/>
+    <GroundInfo grounds={parks} values={values}/>
       <DeleteModal deleteModal={deleteModal} title={"Are you sure you want to remove this record?"} submitTitle={"Yes, Remove"} cancelTitle={"Cancel"} setDeleteModal={() => setDeleteModal(false)} />
     </div>
   );

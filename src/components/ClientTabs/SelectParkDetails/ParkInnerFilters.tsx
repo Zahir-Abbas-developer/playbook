@@ -26,16 +26,19 @@ const GroundInnerFilters = (props:any) => {
 
   const fetchLocations = () => {
   
-    onSnapshot(collection(firestore, "parkLocations"), (snapshot) => {
-      dispatch(setParkLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+    onSnapshot(collection(firestore, "locations"), (snapshot) => {
+      dispatch(setLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
    
     });
   };
   const handleFinish=(valuesObject:any)=>{
     setValues(valuesObject)
   }
-
+console.log("selectLocations",locations)
+console.log(fetchLocations)
 const selectLocations=locations?.map((location:any)=>{return({value:location?.id ,label:location?.location})})
+console.log("selectLocations",selectLocations)
+
   return (
     <Form className='filter-form' onFinish={handleFinish}>
       
