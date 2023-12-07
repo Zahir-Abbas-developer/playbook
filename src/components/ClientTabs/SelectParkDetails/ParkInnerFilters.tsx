@@ -26,7 +26,7 @@ const GroundInnerFilters = (props:any) => {
 
   const fetchLocations = () => {
   
-    onSnapshot(collection(firestore, "locations"), (snapshot) => {
+    onSnapshot(collection(firestore, "parkLocations"), (snapshot) => {
       dispatch(setLocations(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
    
     });
@@ -36,7 +36,7 @@ const GroundInnerFilters = (props:any) => {
   }
 console.log("selectLocations",locations)
 console.log(fetchLocations)
-const selectLocations=locations?.map((location:any)=>{return({value:location?.id ,label:location?.location})})
+const selectLocations=locations?.map((location:any)=>{return({value:location?.id ,label:location?.name})})
 console.log("selectLocations",selectLocations)
 
   return (
